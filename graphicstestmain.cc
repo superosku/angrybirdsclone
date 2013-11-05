@@ -12,7 +12,7 @@ int main()
     bg.setTexture(bgt);
     Map m;
 
-    //ground is and 'object' too and should be created here
+    //ground is and 'object' too and should be created here instead of being static part of background
     
     while(window.isOpen())
     {
