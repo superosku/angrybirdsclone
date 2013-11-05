@@ -11,6 +11,7 @@ class Graphics {
     sf::RenderWindow window;
     //sf::Texture bgt;
     //sf::Sprite bg;
+    sf::Texture fox;
     Map m;
     // the constant used to change coordinates
     size_t c;
@@ -23,6 +24,7 @@ class Graphics {
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
+      fox.loadFromFile("kettu.png");
       c = 50;
       cam_x = 0;
       cam_y = 5;
@@ -72,7 +74,8 @@ class Graphics {
           if (type == 2) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            circle.setFillColor(sf::Color(200, 100, 100));
+            //circle.setFillColor(sf::Color(200, 100, 100));
+            circle.setTexture(&fox);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
