@@ -12,6 +12,8 @@ int main()
     bg.setTexture(bgt);
     Map m;
 
+    //ground is and 'object' too and should be created here
+    
     while(window.isOpen())
     {
 	sf::Event event;
@@ -22,6 +24,7 @@ int main()
 	}
 	window.clear();
 	window.draw(bg);
+        //draw ground
 
         std::vector<MoveableObject*> objects = m.getObjects();
       
