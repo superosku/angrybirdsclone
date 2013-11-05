@@ -5,24 +5,33 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "Test");
+    // Declare and create a new window
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "Game");
+    // Limit the framerate to 60 frames per second (this step is optional)
+    window.setFramerateLimit(60);
+
     sf::Texture bgt;
     sf::Sprite bg;
+   
     sf::CircleShape circle(50);
     circle.setOrigin(50,50);
     sf::RectangleShape rect(sf::Vector2f(100, 100));
+    //ground is and 'object' too and should be created here instead of being static part of background
     sf::RectangleShape ground(sf::Vector2f(1280, 150));
+    
     rect.setOrigin(50,50);
     circle.setFillColor(sf::Color(100, 250, 50));
     rect.setFillColor(sf::Color(100, 100, 100));
     ground.setFillColor(sf::Color(100, 250, 50));
     ground.setPosition(0, 570);
+    
     bgt.loadFromFile("kentta.png");
     bg.setTexture(bgt);
     Map m;
-    size_t c = 50;
-    //ground is and 'object' too and should be created here instead of being static part of background
     
+    //the constant used to change coordinates
+    size_t c = 50;
+
     while(window.isOpen())
     {
 	sf::Event event;
