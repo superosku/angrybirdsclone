@@ -36,8 +36,9 @@ class Map {
       //BasicBird* b = new BasicBird(m_world);
       
       objects.push_back(new BasicBird(m_world));
-      objects.push_back(new BasicBird(m_world, 3.1, 5));
-      objects.push_back(new BasicObstacle(m_world, 2, 1));
+      objects.push_back(new BasicBird(m_world, 3.1, 10));
+      objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, -2, 1));
       objects.push_back(new BasicObstacle(m_world, -3.5, 5));
      

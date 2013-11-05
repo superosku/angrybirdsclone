@@ -9,51 +9,69 @@
 class Graphics {
   private:
     sf::RenderWindow window;
-    sf::Texture bgt;
-    sf::Sprite bg;
+    //sf::Texture bgt;
+    //sf::Sprite bg;
     Map m;
-    //the constant used to change coordinates
+    // the constant used to change coordinates
     size_t c;
+    // Things for camera movenment. In box2d meters
+    // 0,0 means center of the screen
+    float cam_x, cam_y;
 
   public:
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou") {
       window.setFramerateLimit(60);
+      //bgt.loadFromFile("kentta.png");
+      //bg.setTexture(bgt);
       c = 50;
+      cam_x = 0;
+      cam_y = 5;
+    }
+    size_t convertX(float x) {
+      return x * c + 1280/2 + cam_x * c;
+    }
+    size_t convertY(float y) {
+      return -y * c + 720/2 + cam_y * c;
+    }
+    size_t convertDistance(float d) {
+      return c * d;
     }
     void run() {
-      bgt.loadFromFile("kentta.png");
-      bg.setTexture(bgt);
       while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
           if (event.type == sf::Event::Closed)
             window.close();
         }
-        window.clear();
-        window.draw(bg);
+        window.clear(sf::Color(160,160,255));
+        //window.draw(bg);
+        sf::RectangleShape ground(sf::Vector2f(1280, 720 - convertY(0)));
+        ground.setPosition(0, convertY(0));
+        ground.setFillColor(sf::Color(100,255,100));
+        window.draw(ground);
         
         std::vector<MoveableObject*> objects = m.getObjects();
       
         //TODO get type and radius/lengths of sides/etc
         for(auto& i: objects)
         {
-          size_t x = i->getX()*c + 12*c;
-          size_t y = i->getY()*(-1)*c + 12*c;
+          size_t x = convertX(i->getX());
+          size_t y = convertY(i->getY());
           size_t type = i->getType();
           //getType
           //getImagepath
 
           if (type == 1) { // Kuutio / Neliö
-            sf::RectangleShape rect(sf::Vector2f(i->getW()*c*2, i->getH()*c*2));
-            rect.setOrigin(i->getW()*c, i->getH()*c);
-            rect.setFillColor(sf::Color(100, 100, 100));
+            sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+            rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            rect.setFillColor(sf::Color(255, 128, 64));
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
           if (type == 2) { // Pallo
-            sf::CircleShape circle(i->getW()*c);
-            circle.setOrigin(i->getW()*c, i->getH()*c);
+            sf::CircleShape circle(convertDistance(i->getW()));
+            circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             circle.setFillColor(sf::Color(200, 100, 100));
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
