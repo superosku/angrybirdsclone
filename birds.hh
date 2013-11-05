@@ -6,6 +6,8 @@
 class Bird : public MoveableObject
 {
   size_t actions;
+  protected:
+  float radius;
   
   public:
   Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, size_t actions = 0) : MoveableObject(world, x, y /*TODO: Parametres of MoveableObject()*/), actions(actions)
@@ -13,6 +15,7 @@ class Bird : public MoveableObject
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
     shape.m_radius = 0.5f;
+    radius = 0.5f;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -44,6 +47,15 @@ class BasicBird : public Bird
   BasicBird(b2World* world, float x = 0.0f, float y = 0.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y)
   {
     //TODO: Initialization (might be empty).
+  }
+  size_t getType() {
+    return 2;
+  }
+  float getH() {
+    return radius;
+  }
+  float getW() {
+    return radius;
   }
   // virtual ~BasicBird() {}
   

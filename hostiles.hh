@@ -33,13 +33,17 @@ class Hostile : public MoveableObject
 
 class BasicObstacle : public Hostile
 {
+  private:
+    float w, h;
   // No private stuff yet :(
 
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f) : Hostile(/*TODO: Parametres of MoveableObject()*/world, x, y)
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f) : Hostile(/*TODO: Parametres of MoveableObject()*/world, x, y)
   {
     b2PolygonShape shape;
-    shape.SetAsBox(1.0f, 1.0f);
+    shape.SetAsBox(w, h);
+    this->w = w;
+    this->h = h;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -47,6 +51,15 @@ class BasicObstacle : public Hostile
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
+  }
+  float getH() {
+    return h;
+  }
+  float getW() {
+    return w;
+  }
+  size_t getType() {
+    return 1;
   }
 
   // virtual ~BasicObstacle();

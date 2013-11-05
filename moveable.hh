@@ -10,7 +10,7 @@ class MoveableObject
   public:
     typedef float mass_t;
     // TODO: Overloaded constructors for circle and square formed objects.
-    MoveableObject(b2World* world, float x = 0.0f, int y= 10.0f, float angle = 0.0f, float density = 1.0f)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float angle = 0.0f, float density = 1.0f)
     {
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
@@ -40,6 +40,15 @@ class MoveableObject
     }
     float getAngle() { 
       return body->GetAngle();
+    }
+    virtual float getH() {
+      return 1.0f;
+    }
+    virtual float getW() {
+      return 1.0f;
+    }
+    virtual size_t getType() {
+      return 0;
     }
     mass_t getMass() {
       return body->GetMass();
