@@ -161,7 +161,7 @@ int main()
             //getType
             //getImagepath
 
-              /*if("pallo")
+              *if("pallo")
                   i->getRadius
                   //create new ball accordingly 
                 else if("nelio")

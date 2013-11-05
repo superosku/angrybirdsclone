@@ -12,6 +12,8 @@ class MoveableObject
     // TODO: Overloaded constructors for circle and square formed objects.
     MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float angle = 0.0f, float density = 1.0f)
     {
+      (void) angle;
+      (void) density;
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
       bodyDef.position.Set(x, y);
