@@ -86,15 +86,20 @@ class Graphics {
         window.draw(ground);
 
         // Drawing the catapult
+        sf::CircleShape catapult_bg(convertDistance(0.5));
+        catapult_bg.setFillColor(sf::Color(100,100,200));
+        catapult_bg.setOrigin(convertDistance(0.5), convertDistance(0.5));
+        catapult_bg.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
+
         sf::CircleShape catapult(convertDistance(0.5));
+        catapult.setTexture(&fox);
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
-        catapult.setFillColor(sf::Color(0,0,0));
-        catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
-        window.draw(catapult);
-        if (shoot_aiming) {
+        if (shoot_aiming) 
           catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-          window.draw(catapult);
-        }
+        else
+          catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
+        window.draw(catapult_bg);
+        window.draw(catapult);
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
@@ -119,6 +124,15 @@ class Graphics {
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&fox);
+            circle.setPosition(x,y);
+            circle.setRotation(i->getAngle() * -57.295);
+            window.draw(circle);
+          }
+          if (type == MoveableObject::BasicEnemy) { // Pallo
+            sf::CircleShape circle(convertDistance(i->getW()));
+            circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            //circle.setFillColor(sf::Color(200, 100, 100));
+            circle.setTexture(&sheep);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);

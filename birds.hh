@@ -48,9 +48,6 @@ class BasicBird : public Bird
   {
     //TODO: Initialization (might be empty).
   }
-  size_t getType() {
-    return 2;
-  }
   float getH() {
     return radius;
   }
