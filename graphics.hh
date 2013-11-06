@@ -11,6 +11,7 @@ class Graphics {
     sf::RenderWindow window;
     //sf::Texture bgt;
     //sf::Sprite bg;
+    sf::Font font;
     sf::Texture fox;
     sf::Texture sheep;
     sf::ContextSettings settings;
@@ -28,6 +29,9 @@ class Graphics {
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
+      if (!font.loadFromFile("QuinzeNarrow.ttf")) {
+        //Throw error or something
+      }
       fox.loadFromFile("kettu.png");
       sheep.loadFromFile("lammas.png");
       fox.setSmooth(true);
@@ -138,6 +142,7 @@ class Graphics {
             window.draw(circle);
           }
         }     
+        window.draw(sf::Text("<POINTS>", font));
         window.display();
         m.Step();
       }
