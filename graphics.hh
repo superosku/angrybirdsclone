@@ -120,6 +120,8 @@ class Graphics {
             sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
             rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             rect.setFillColor(sf::Color(255, 128, 64));
+            rect.setOutlineColor(sf::Color(128, 64, 32));
+            rect.setOutlineThickness(2);
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
