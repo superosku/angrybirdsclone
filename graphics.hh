@@ -22,7 +22,7 @@ class Graphics {
     float cam_x, cam_y;
 
   public:
-    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default, settings) {
+    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
@@ -30,7 +30,7 @@ class Graphics {
       sheep.loadFromFile("lammas.png");
       fox.setSmooth(true);
       sheep.setSmooth(true);
-      settings.antialiasingLevel = 8;
+      //settings.aliasingLevel = 8;
       c = 50;
       cam_x = 0;
       cam_y = 5;

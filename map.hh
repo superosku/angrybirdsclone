@@ -2,6 +2,9 @@
 #define MAP
 
 #include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
 //#include <Box2D/Box2D.h>
 #include <Box2D/Box2D.h>
 #include "moveable.hh"
@@ -83,6 +86,7 @@ class Map : public b2ContactListener {
       }
       totalScore += deltaEnergy;
       //if energy is <=0 remove object from map
+      std::cout << "tatsi!" << std::endl;
     }
 
     //We do nothing when contact ends
@@ -92,6 +96,18 @@ class Map : public b2ContactListener {
   private:
     //Should the dimensions of the world be saved? To ease changing the coordinate systems.
     //List of MoveableObjects currently present in the map
+    void loadMap(std::string filepath)
+    {
+      std::string tmp;
+      std::ifstream input(filepath);
+      // First line is for map parameters
+      std::getline(input,tmp);
+      while (std::getline(input,tmp))
+      {
+        // TODO
+      }
+    }
+    
     std::vector<MoveableObject*> objects;
     b2World* m_world;
     //b2Body* m_groundBody;
