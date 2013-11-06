@@ -22,7 +22,7 @@ std::vector<std::string> toSTRVEC(std::string in)
   return(out);
 }
 
-std::string toCSV(std::vector<std::string> in)
+std::string toCSVSTR(std::vector<std::string> in)
 {
   std::string out;
   
