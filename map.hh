@@ -83,16 +83,16 @@ class Map : public b2ContactListener {
       }
       totalScore += deltaEnergy;
       //if energy is <=0 remove object from map
-      std::cout << "tatsi!" << std::endl;
+      //std::cout << "tatsi!" << std::endl;
     }
 
     //We do nothing when contact ends
     void EndContact(b2Contact*) {}
 
     //This can be called to shoot the bird
-    void ShootBird(float force, float angle) {
+    void ShootBird(float x, float y) {
       BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
-      bird->setImpulse(10,-2);
+      bird->setImpulse(x, y);
       objects.push_back(bird);
     }
 

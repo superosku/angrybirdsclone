@@ -16,10 +16,12 @@ class Graphics {
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
-    size_t c;
+    int c;
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;
+    // Mouse pos. needed for cannon
+    int shoot_x, shoot_y, shoot_aiming;
 
   public:
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
@@ -34,25 +36,49 @@ class Graphics {
       c = 50;
       cam_x = 0;
       cam_y = 5;
+      shoot_x = shoot_y = shoot_aiming = 0;
     }
-    size_t convertX(float x) {
+    int convertX(float x) {
       return x * c + 1280/2 + cam_x * c;
     }
-    size_t convertY(float y) {
+    int convertY(float y) {
       return -y * c + 720/2 + cam_y * c;
     }
-    size_t convertDistance(float d) {
+    int convertDistance(float d) {
       return c * d;
+    }
+    float convertDistanceReverse(int d) {
+      return d / c;
     }
     void run() {
       while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-          if (event.type == sf::Event::Closed)
+          if (event.type == sf::Event::Closed) {
             window.close();
-          if (event.type == sf::Event::KeyPressed)
-            if (event.key.code == sf::Keyboard::Space)
-              m.ShootBird(1,0);
+          }
+          if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+              std::cout << "Mouse was pressed" << std::endl;
+              shoot_x = event.mouseButton.x;
+              shoot_y = event.mouseButton.y;
+              // Check if we are pressing near catapult
+              if (shoot_x < convertX(m.getCatapultX()+0.5) and shoot_x > convertX(m.getCatapultX()-0.5) and
+                  shoot_y > convertY(m.getCatapultY()+0.5) and shoot_y < convertY(m.getCatapultY()-0.5))
+                shoot_aiming = 1;
+            }
+          }
+          if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+              if (shoot_aiming) {
+                std::cout << "Mouse was relased" << std::endl;
+                m.ShootBird(
+                    5*convertDistanceReverse(shoot_x - event.mouseButton.x),
+                    -5*convertDistanceReverse(shoot_y - event.mouseButton.y));
+                shoot_aiming = 0;
+              }
+            }
+          }
         }
         window.clear(sf::Color(160,160,255));
 
@@ -68,6 +94,10 @@ class Graphics {
         catapult.setFillColor(sf::Color(0,0,0));
         catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
         window.draw(catapult);
+        if (shoot_aiming) {
+          catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+          window.draw(catapult);
+        }
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
