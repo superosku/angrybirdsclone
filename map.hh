@@ -23,6 +23,9 @@ class Map {
       //Creating a world with gravity
       m_world = new b2World(b2Vec2(0.0f, -10.0f));
 
+      //Create collision callback -> Box2D calls this instance of map-class when contact happens
+      m_world->SetContactListener(this);
+
       //Adding a default line to the world at 0-level so blocks dont fall freely
       b2BodyDef line_def;
       line_def.position.Set(0.0f, 0.0f);
@@ -61,6 +64,7 @@ class Map {
     //Calculate score and new energies after the impact
     void BeginContact(b2Contact* contact)
     {
+      //If FixtureA has energy, calculate lost energy according to masses and add that to totalscore
       if(contact->GetFixtureA()->GetBody()->GetUserData()->hasEnergy)
       {
         int deltaEnergy = contact->GetFixtureB()->GetBody()->GetMass() / contact->GetFixtureA()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
@@ -68,6 +72,7 @@ class Map {
       }
       totalScore += deltaEnergy;
 
+      //If FixtureB has energy, calculate lost energy according to masses and add that to totalscore
       if(contact->GetFixtureB()->GetBody()->GetUserData()->hasEnergy)
       {
         int deltaEnergy = contact->GetFixtureA()->GetBody()->GetMass() / contact->GetFixtureB()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
