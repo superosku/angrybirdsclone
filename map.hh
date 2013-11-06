@@ -15,13 +15,9 @@ class Map : public b2ContactListener {
   public:
     Map()
     {
-      //TODO:
-      //Creation of the Box2D world and ground
-      //Creation of birds to the objects variable
-
-      //TODO:
-      //Load map (firstly just some background?) from file -> If file does not exists load default map. (Default map could be hardcoded to help test process.)
-      
+      //Set cannon coordinates
+      catapult_x = -9;
+      catapult_y = 6;
 
       //Creating a world with gravity
       m_world = new b2World(b2Vec2(0.0f, -10.0f));
@@ -33,20 +29,21 @@ class Map : public b2ContactListener {
       b2BodyDef line_def;
       line_def.position.Set(0.0f, 0.0f);
       b2Body* line_body = m_world->CreateBody(&line_def);
-
       b2EdgeShape line_shape;
       line_shape.Set( b2Vec2(-50,0), b2Vec2(50,0) );
-
       line_body->CreateFixture(&line_shape, 0.0f);
 
-      //BasicBird* b = new BasicBird(m_world);
-
-      objects.push_back(new BasicBird(m_world));
-      objects.push_back(new BasicBird(m_world, 3.1, 10));
+      //Add some test structures
       objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
       objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, -2, 1));
       objects.push_back(new BasicObstacle(m_world, -3.5, 5));
+      objects.push_back(new BasicObstacle(m_world, 0, 1, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 2, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 3, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 4, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));
 
     }
     ~Map()
@@ -92,6 +89,20 @@ class Map : public b2ContactListener {
     //We do nothing when contact ends
     void EndContact(b2Contact*) {}
 
+    //This can be called to shoot the bird
+    void ShootBird(float force, float angle) {
+      BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
+      bird->setImpulse(10,-2);
+      objects.push_back(bird);
+    }
+
+    float getCatapultX() {
+      return catapult_x;
+    }
+    float getCatapultY() {
+      return catapult_y;
+    }
+
     std::vector<MoveableObject*> getObjects() {return objects;}
   private:
     //Should the dimensions of the world be saved? To ease changing the coordinate systems.
@@ -112,6 +123,7 @@ class Map : public b2ContactListener {
     b2World* m_world;
     //b2Body* m_groundBody;
     size_t totalScore=0;
+    float catapult_x, catapult_y;
 };
 
 #endif

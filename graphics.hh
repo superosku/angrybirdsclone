@@ -50,17 +50,27 @@ class Graphics {
         while (window.pollEvent(event)) {
           if (event.type == sf::Event::Closed)
             window.close();
+          if (event.type == sf::Event::KeyPressed)
+            if (event.key.code == sf::Keyboard::Space)
+              m.ShootBird(1,0);
         }
         window.clear(sf::Color(160,160,255));
-        //window.draw(bg);
+
+        // Drawing the ground
         sf::RectangleShape ground(sf::Vector2f(1280, 720 - convertY(0)));
         ground.setPosition(0, convertY(0));
         ground.setFillColor(sf::Color(100,255,100));
         window.draw(ground);
+
+        // Drawing the catapult
+        sf::CircleShape catapult(convertDistance(0.5));
+        catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
+        catapult.setFillColor(sf::Color(0,0,0));
+        catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
+        window.draw(catapult);
         
+        // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
-      
-        //TODO get type and radius/lengths of sides/etc
         for(auto& i: objects)
         {
           size_t x = convertX(i->getX());
@@ -86,24 +96,6 @@ class Graphics {
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
           }
-          /*if("pallo")
-          i->getRadius
-          //create new ball accordingly 
-          else if("nelio")
-          i->getXlength
-          i->getYlength
-          //create new square
-          */
-
-          //TODO get x and y
-          //i->getX
-          //i->getY
-
-          //set position
-          //rect.setPosition(x,y);
-          //rect.setRotation(i->getAngle() * -57.295);
-          //draw
-          //window.draw(rect);
         }     
         window.display();
         m.Step();

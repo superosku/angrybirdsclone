@@ -14,10 +14,8 @@ class MoveableObject
   public:
     typedef float mass_t;
     // TODO: Overloaded constructors for circle and square formed objects.
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float angle = 0.0f, float density = 1.0f)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f)
     {
-      (void) angle;
-      (void) density;
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
       bodyDef.position.Set(x, y);
@@ -35,12 +33,12 @@ class MoveableObject
     MoveableObject& operator=(const MoveableObject&) = delete;
     MoveableObject(const MoveableObject&) = delete;
 
-    //TODO: Scaling (Static/dynamic?) and 
-    //int getX() { return body->x; }
+    void setImpulse(float x, float y) {
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+    }
     float getX() {
       return body->GetPosition().x;
     }
-    //int getY() { return body->y; }
     float getY() {
       return body->GetPosition().y;
     }
