@@ -12,6 +12,7 @@ class Graphics {
     //sf::Texture bgt;
     //sf::Sprite bg;
     sf::Texture fox;
+    sf::Texture sheep;
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
@@ -26,7 +27,9 @@ class Graphics {
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
       fox.loadFromFile("kettu.png");
+      sheep.loadFromFile("lammas.png");
       fox.setSmooth(true);
+      sheep.setSmooth(true);
       settings.antialiasingLevel = 8;
       c = 50;
       cam_x = 0;
@@ -78,7 +81,7 @@ class Graphics {
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
-            circle.setTexture(&fox);
+            circle.setTexture(&sheep);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
