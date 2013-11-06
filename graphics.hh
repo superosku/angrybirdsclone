@@ -59,7 +59,6 @@ class Graphics {
           }
           if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-              std::cout << "Mouse was pressed" << std::endl;
               // Check if we are pressing near catapult
               if (event.mouseButton.x < convertX(m.getCatapultX()+0.5) and event.mouseButton.x > convertX(m.getCatapultX()-0.5) and
                   event.mouseButton.y > convertY(m.getCatapultY()+0.5) and event.mouseButton.y < convertY(m.getCatapultY()-0.5))
@@ -69,7 +68,7 @@ class Graphics {
           if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
               if (shoot_aiming) {
-                std::cout << "Mouse was relased" << std::endl;
+                std::cout << "Shot Bird" << std::endl;
                 m.ShootBird(
                      (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
                     -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
@@ -99,15 +98,15 @@ class Graphics {
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
+        //std::cout << "jou" << std::endl;
         for(auto& i: objects)
         {
           size_t x = convertX(i->getX());
           size_t y = convertY(i->getY());
-          size_t type = i->getType();
+          MoveableObject::Type type = i->getType();
           //getType
           //getImagepath
-
-          if (type == 1) { // Kuutio / Neliö
+          if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
             sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
             rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             rect.setFillColor(sf::Color(255, 128, 64));
@@ -115,7 +114,7 @@ class Graphics {
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
-          if (type == 2) { // Pallo
+          if (type == MoveableObject::BasicBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));

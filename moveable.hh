@@ -12,10 +12,17 @@ struct bodyData {
 class MoveableObject 
 {
   public:
+    enum Type {
+      Else,
+      BasicBird,
+      BasicEnemy,
+      BasicObstacle
+    };
     typedef float mass_t;
     // TODO: Overloaded constructors for circle and square formed objects.
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, MoveableObject::Type type = MoveableObject::Type::Else)
     {
+      this->type = type;
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
       bodyDef.position.Set(x, y);
@@ -36,6 +43,9 @@ class MoveableObject
     void setImpulse(float x, float y) {
       body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
     }
+    MoveableObject::Type getType() {
+      return type;
+    }
     float getX() {
       return body->GetPosition().x;
     }
@@ -51,9 +61,6 @@ class MoveableObject
     virtual float getW() {
       return 1.0f;
     }
-    virtual size_t getType() {
-      return 0;
-    }
     mass_t getMass() {
       return body->GetMass();
     }
@@ -62,6 +69,7 @@ class MoveableObject
     const std::string imagePath;
   protected:
     b2Body* body;
+    MoveableObject::Type type;
 };
 
 #endif

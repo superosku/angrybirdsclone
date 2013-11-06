@@ -10,7 +10,7 @@ class Bird : public MoveableObject
   float radius;
   
   public:
-  Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, size_t actions = 0) : MoveableObject(world, x, y /*TODO: Parametres of MoveableObject()*/), actions(actions)
+  Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, size_t actions = 0) : MoveableObject(world, x, y, MoveableObject::Type::BasicBird), actions(actions)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
