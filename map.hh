@@ -8,7 +8,7 @@
 #include "birds.hh"
 #include "hostiles.hh"
 
-class Map {
+class Map : public b2ContactListener {
   public:
     Map()
     {
@@ -65,25 +65,28 @@ class Map {
     void BeginContact(b2Contact* contact)
     {
       //If FixtureA has energy, calculate lost energy according to masses and add that to totalscore
-      if(contact->GetFixtureA()->GetBody()->GetUserData()->hasEnergy)
+      bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
+      bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
+      int deltaEnergy=0;
+      if(bodyDataA)
       {
-        int deltaEnergy = contact->GetFixtureB()->GetBody()->GetMass() / contact->GetFixtureA()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
-        contact->GetFixtureA()->GetBody()->GetUserData()->energy -= deltaEnergy;
+        deltaEnergy = contact->GetFixtureB()->GetBody()->GetMass() / contact->GetFixtureA()->GetBody()->GetMass() * bodyDataA->energy * 0.1;
+        bodyDataA->energy -= deltaEnergy;
       }
       totalScore += deltaEnergy;
 
       //If FixtureB has energy, calculate lost energy according to masses and add that to totalscore
-      if(contact->GetFixtureB()->GetBody()->GetUserData()->hasEnergy)
+      if(bodyDataB)
       {
-        int deltaEnergy = contact->GetFixtureA()->GetBody()->GetMass() / contact->GetFixtureB()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
-        contact->GetFixtureB()->GetBody()->GetUserData()->energy -= deltaEnergy;
+        deltaEnergy = contact->GetFixtureA()->GetBody()->GetMass() / contact->GetFixtureB()->GetBody()->GetMass() * bodyDataB->energy * 0.1;
+        bodyDataB->energy -= deltaEnergy;
       }
       totalScore += deltaEnergy;
       //if energy is <=0 remove object from map
     }
 
     //We do nothing when contact ends
-    void EndContact(b2Contact* contact) {}
+    void EndContact(b2Contact*) {}
 
     std::vector<MoveableObject*> getObjects() {return objects;}
   private:

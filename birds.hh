@@ -23,11 +23,6 @@ class Bird : public MoveableObject
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
-
-    bodyData* data = new bodyData;
-    data->energy = 0;
-    data->hasEnergy = 0;
-    body->SetUserData(data);
   }
   virtual ~Bird() {}
   

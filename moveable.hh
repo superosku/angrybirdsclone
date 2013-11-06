@@ -5,7 +5,6 @@
 #include "Box2D/Box2D.h"
 
 struct bodyData {
-  bool hasEnergy;
   float energy;
 };
 
