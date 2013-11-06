@@ -4,6 +4,11 @@
 #include <string>
 #include "Box2D/Box2D.h"
 
+struct bodyData {
+  bool hasEnergy;
+  float energy;
+};
+
 //Abstract base class. Provides API to get coordinates of objects.
 class MoveableObject 
 {

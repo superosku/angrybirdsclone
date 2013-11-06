@@ -6,29 +6,21 @@
 
 class Hostile : public MoveableObject
 {
-  size_t energy;// Energy of hostile, something from 100 to 1000
+  // Energy of the hostile is saved to box2d userdata, something from 100 to 1000
 
   public:
-  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 100) : MoveableObject(/*TODO: Parametres of MoveableObject()*/world, x, y), energy(energy)
+  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 100) : MoveableObject(/*TODO: Parametres of MoveableObject()*/world, x, y)
   {
-    //TODO: Initialization (might be empty).
+    bodyData* data = new bodyData;
+    data->energy = energy;
+    data->hasEnergy = 1;
+    body->SetUserData(data);
   }
   virtual ~Hostile() {}
   /*Hostile& operator=(const Hostile&) = delete;
   Hostile(const Hostile&) = delete;*/
 
   // Function to check if hostile has energy left after hit, returns energy after hit as size_t.
-  virtual size_t hit(mass_t mass)
-  {
-    size_t strength = (mass/MoveableObject::getMass())*100;
-    if (energy > strength)
-    {
-      energy -= strength;
-    }
-    else
-      energy = 0;
-    return energy;
-  }
 };
 
 class BasicObstacle : public Hostile
@@ -65,7 +57,7 @@ class BasicObstacle : public Hostile
   // virtual ~BasicObstacle();
 
   // Function to perform special action of obstacles/enemies. Returns energy left after hit as size_t value.
-  virtual size_t hit(mass_t mass)
+  virtual size_t hit(mass_t)
   {
     /* DEMO:
      * For use in obstacles/enemies that have special action in case of hit or destruction.
@@ -82,7 +74,7 @@ class BasicObstacle : public Hostile
     }
     return (new_energy);
      */
-    return(Hostile::hit(mass));
+    return 0;
   }
 };
 

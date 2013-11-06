@@ -34,14 +34,13 @@ class Map {
       line_body->CreateFixture(&line_shape, 0.0f);
 
       //BasicBird* b = new BasicBird(m_world);
-      
+
       objects.push_back(new BasicBird(m_world));
       objects.push_back(new BasicBird(m_world, 3.1, 10));
       objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
       objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, -2, 1));
       objects.push_back(new BasicObstacle(m_world, -3.5, 5));
-     
 
     }
     ~Map()
@@ -58,6 +57,28 @@ class Map {
     {
       m_world->Step(1.0/60.0, 6, 2);
     }
+
+    //Calculate score and new energies after the impact
+    void BeginContact(b2Contact* contact)
+    {
+      if(contact->GetFixtureA()->GetBody()->GetUserData()->hasEnergy)
+      {
+        int deltaEnergy = contact->GetFixtureB()->GetBody()->GetMass() / contact->GetFixtureA()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
+        contact->GetFixtureA()->GetBody()->GetUserData()->energy -= deltaEnergy;
+      }
+      totalScore += deltaEnergy;
+
+      if(contact->GetFixtureB()->GetBody()->GetUserData()->hasEnergy)
+      {
+        int deltaEnergy = contact->GetFixtureA()->GetBody()->GetMass() / contact->GetFixtureB()->GetBody()->GetMass() * (contact->GetFixtureA()->GetBody()->GetUserData()->energy * 0.1;
+        contact->GetFixtureB()->GetBody()->GetUserData()->energy -= deltaEnergy;
+      }
+      totalScore += deltaEnergy;
+      //if energy is <=0 remove object from map
+    }
+
+    //We do nothing when contact ends
+    void EndContact(b2Contact* contact) {}
 
     std::vector<MoveableObject*> getObjects() {return objects;}
   private:
