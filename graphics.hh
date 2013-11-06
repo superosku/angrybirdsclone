@@ -21,7 +21,7 @@ class Graphics {
     // 0,0 means center of the screen
     float cam_x, cam_y;
     // Mouse pos. needed for cannon
-    int shoot_x, shoot_y, shoot_aiming;
+    size_t shoot_aiming;
 
   public:
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
@@ -36,7 +36,7 @@ class Graphics {
       c = 50;
       cam_x = 0;
       cam_y = 5;
-      shoot_x = shoot_y = shoot_aiming = 0;
+      shoot_aiming = 0;
     }
     int convertX(float x) {
       return x * c + 1280/2 + cam_x * c;
@@ -60,11 +60,9 @@ class Graphics {
           if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
               std::cout << "Mouse was pressed" << std::endl;
-              shoot_x = event.mouseButton.x;
-              shoot_y = event.mouseButton.y;
               // Check if we are pressing near catapult
-              if (shoot_x < convertX(m.getCatapultX()+0.5) and shoot_x > convertX(m.getCatapultX()-0.5) and
-                  shoot_y > convertY(m.getCatapultY()+0.5) and shoot_y < convertY(m.getCatapultY()-0.5))
+              if (event.mouseButton.x < convertX(m.getCatapultX()+0.5) and event.mouseButton.x > convertX(m.getCatapultX()-0.5) and
+                  event.mouseButton.y > convertY(m.getCatapultY()+0.5) and event.mouseButton.y < convertY(m.getCatapultY()-0.5))
                 shoot_aiming = 1;
             }
           }
@@ -73,8 +71,8 @@ class Graphics {
               if (shoot_aiming) {
                 std::cout << "Mouse was relased" << std::endl;
                 m.ShootBird(
-                    5*convertDistanceReverse(shoot_x - event.mouseButton.x),
-                    -5*convertDistanceReverse(shoot_y - event.mouseButton.y));
+                     (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
+                    -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
                 shoot_aiming = 0;
               }
             }
