@@ -105,6 +105,9 @@ class Map : public b2ContactListener {
     float getCatapultY() {
       return catapult_y;
     }
+    size_t getScore() {
+      return totalScore;
+    }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
   private:

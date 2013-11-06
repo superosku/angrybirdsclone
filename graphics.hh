@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <string>
 #include "map.hh"
 
 class Graphics {
@@ -142,7 +143,7 @@ class Graphics {
             window.draw(circle);
           }
         }     
-        window.draw(sf::Text("<POINTS>", font));
+        window.draw(sf::Text(/*std::string(m.getScore())*/"testscore", font));
         window.display();
         m.Step();
       }
