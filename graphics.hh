@@ -22,7 +22,8 @@ class Graphics {
     float cam_x, cam_y;
 
   public:
-    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default, settings) {
+    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default//, settings) {
+                 ) {
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
@@ -81,7 +82,7 @@ class Graphics {
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
-            circle.setTexture(&sheep);
+            circle.setTexture(&fox);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
