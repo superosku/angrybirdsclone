@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> toSTR(std::string in)
+std::vector<std::string> toSTRVEC(std::string in)
 {
   std::vector<std::string> out;
   size_t i = 0,j = 0;
