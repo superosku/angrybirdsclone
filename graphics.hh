@@ -22,12 +22,7 @@ class Graphics {
     float cam_x, cam_y;
 
   public:
-<<<<<<< HEAD
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
-=======
-    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default//, settings) {
-                 ) {
->>>>>>> 9b80d92f06e23588d1877aa96949824053d33805
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
