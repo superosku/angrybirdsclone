@@ -10,7 +10,7 @@ class Bird : public MoveableObject
   float radius;
   
   public:
-  Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, size_t actions = 0) : MoveableObject(world, x, y, MoveableObject::Type::BasicBird), actions(actions)
+  Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t actions = 0) : MoveableObject(world, x, y, MoveableObject::Type::BasicBird), actions(actions)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
@@ -19,7 +19,7 @@ class Bird : public MoveableObject
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density= 1.0f;
+    fixtureDef.density= d;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);

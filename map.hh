@@ -10,6 +10,7 @@
 #include "moveable.hh"
 #include "birds.hh"
 #include "hostiles.hh"
+#include "CSVparser.hh"
 
 class Map : public b2ContactListener {
   public:
@@ -34,19 +35,20 @@ class Map : public b2ContactListener {
       line_body->CreateFixture(&line_shape, 0.0f);
 
       //Add some test structures
-      objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, -2, 1));
-      objects.push_back(new BasicObstacle(m_world, -3.5, 5));
-      objects.push_back(new BasicObstacle(m_world, 0, 1, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 2, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 3, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 4, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
-      objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
-      objects.push_back(new BasicEnemy(m_world, 0, 8));
-      objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));
+      //objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, -2, 1));
+      //objects.push_back(new BasicObstacle(m_world, -3.5, 5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 1, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 2, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 3, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 4, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
+      //objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
+      //objects.push_back(new BasicEnemy(m_world, 0, 8));
+      //objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));
+      loadMap("csvMAP");
 
     }
     ~Map()
@@ -115,13 +117,24 @@ class Map : public b2ContactListener {
     //List of MoveableObjects currently present in the map
     void loadMap(std::string filepath)
     {
-      std::string tmp;
+      std::string tmpStr;
+      std::vector<std::string> tmpVec;
       std::ifstream input(filepath);
       // First line is for map parameters
-      std::getline(input,tmp);
-      while (std::getline(input,tmp))
+      std::getline(input,tmpStr);
+      // Object_id,x,y,w,h,d,actions,energy,image_path
+      while (std::getline(input,tmpStr))
       {
-        // TODO
+        tmpVec = toSTRVEC(tmpStr);
+        switch(std::stoi(tmpVec[0]))
+        {
+          case (100):
+            objects.push_back(new BasicBird(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2], std::stof(tmpVec[3])));
+            break;
+          case (200):
+            objects.push_back(new BasicObstacle(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3]), std::stof(tmpVec[4]),std::stof(tmpVec[5])));
+            break;
+        }
       }
     }
     

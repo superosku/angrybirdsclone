@@ -50,7 +50,7 @@ class BasicObstacle : public Hostile
   // No private stuff yet :(
 
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicObstacle)
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicObstacle)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -59,7 +59,7 @@ class BasicObstacle : public Hostile
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density= 1.0f;
+    fixtureDef.density= d;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
