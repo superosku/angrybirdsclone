@@ -126,16 +126,40 @@ class Map : public b2ContactListener {
       while (std::getline(input,tmpStr))
       {
         tmpVec = toSTRVEC(tmpStr);
-        switch(std::stoi(tmpVec[0]))
+        if (validSTRVEC(tmpVec))
         {
-          case (100):
-            objects.push_back(new BasicBird(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2], std::stof(tmpVec[3])));
-            break;
-          case (200):
-            objects.push_back(new BasicObstacle(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3]), std::stof(tmpVec[4]),std::stof(tmpVec[5])));
-            break;
+          switch(std::stoi(tmpVec[0]))
+          {
+            case (100):
+              objects.push_back(new BasicBird(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3])));
+              break;
+            case (200):
+              objects.push_back(new BasicObstacle(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3]), std::stof(tmpVec[4]),std::stof(tmpVec[5])));
+              break;
+          }
         }
       }
+    }
+    
+    bool validSTRVEC(std::vector<std::string> vec)
+    {
+      try
+      {
+        if (vec.size() < 5)
+          return(false);
+        std::stoi(vec[0]);std::stof(vec[1]);std::stof(vec[2]);std::stof(vec[3]);
+        if (std::stoi(vec[0]) >= 200 && vec.size() >= 6)
+        {
+          std::stof(vec[4]);std::stof(vec[5]);
+        }
+        else
+          return (false);
+      }
+      catch (...)
+      {
+        return (false);
+      }
+      return (true);
     }
     
     std::vector<MoveableObject*> objects;

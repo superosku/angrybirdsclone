@@ -44,7 +44,7 @@ class BasicBird : public Bird
   // No private stuff yet :(
   
   public:
-  BasicBird(b2World* world, float x = 0.0f, float y = 0.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y)
+  BasicBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y, d)
   {
     //TODO: Initialization (might be empty).
   }

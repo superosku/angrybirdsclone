@@ -81,7 +81,7 @@ class BasicEnemy : public Hostile
   float radius;
   
   public:
-  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicEnemy)
+  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicEnemy)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
@@ -90,7 +90,7 @@ class BasicEnemy : public Hostile
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density= 1.0f;
+    fixtureDef.density= d;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
