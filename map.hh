@@ -86,7 +86,7 @@ class Map : public b2ContactListener {
      if(impulse->normalImpulses[0] > 1)
      {
       float maxImpulse = 0.0f;
-      for (int32 i = 0; i < contact->GetManifold()->pointCount; ++i)
+      for (size_t i = 0; i < contact->GetManifold()->pointCount; ++i)
       {
         maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
       }
