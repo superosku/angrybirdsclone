@@ -47,8 +47,8 @@ class Map : public b2ContactListener {
       objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
-      objects.push_back(new BasicEnemy(m_world, 0, 8));
       objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));*/
+      objects.push_back(new BasicEnemy(m_world, 0, 0));
       loadMap("csvMAP");
 
     }
@@ -150,6 +150,9 @@ class Map : public b2ContactListener {
               break;
             case (200):
               objects.push_back(new BasicObstacle(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3]), std::stof(tmpVec[4]),std::stof(tmpVec[5])));
+              break;
+            case (300):
+              objects.push_back(new BasicEnemy(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3])));
               break;
           }
         }

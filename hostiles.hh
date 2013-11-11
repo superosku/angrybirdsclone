@@ -82,7 +82,7 @@ class BasicEnemy : public Hostile
   float radius;
   
   public:
-  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicEnemy)
+  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f) : Hostile(world, x, y, 1, MoveableObject::Type::BasicEnemy)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
