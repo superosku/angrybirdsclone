@@ -36,8 +36,12 @@ class Graphics {
       if (!font.loadFromFile("QuinzeNarrow.ttf")) {
         //Throw error or something
       }
-      fox.loadFromFile("kettu.png");
-      sheep.loadFromFile("lammas.png");
+      if(!fox.loadFromFile("kettu.png")){
+        //Throw error
+      }
+      if(!sheep.loadFromFile("lammas.png")){
+        //Throw error
+      }
       fox.setSmooth(true);
       sheep.setSmooth(true);
       //settings.aliasingLevel = 8;
