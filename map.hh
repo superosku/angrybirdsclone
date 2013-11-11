@@ -64,7 +64,10 @@ class Map : public b2ContactListener {
 
     void Step()
     {
+      //Advance Box2D simulation by one step
       m_world->Step(1.0/60.0, 6, 2);
+
+      //Removing of objects which have no energy left
       for(auto i=objects.begin();i!=objects.end();)
       {
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
