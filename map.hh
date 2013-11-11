@@ -145,32 +145,32 @@ class Map : public b2ContactListener {
         tmpVec = toSTRVEC(tmpStr);
         if (validSTRVEC(tmpVec))
         {
-          switch(std::stoi(tmpVec[0]))
+          switch(std::atoi(tmpVec[0].c_str()))
           {
             case (100):
-              objects.push_back(new BasicBird(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3])));
+              objects.push_back(new BasicBird(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str())));
               break;
             case (200):
-              objects.push_back(new BasicObstacle(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3]), std::stof(tmpVec[4]),std::stof(tmpVec[5])));
+              objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str())));
               break;
             case (300):
-              objects.push_back(new BasicEnemy(m_world, std::stof(tmpVec[1]), std::stof(tmpVec[2]), std::stof(tmpVec[3])));
+              objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str())));
               break;
           }
         }
       }
     }
-    
+
     bool validSTRVEC(std::vector<std::string> vec)
     {
       try
       {
         if (vec.size() < 5)
           return(false);
-        std::stoi(vec[0]);std::stof(vec[1]);std::stof(vec[2]);std::stof(vec[3]);
-        if (std::stoi(vec[0]) >= 200 && vec.size() >= 6)
+        std::atoi(vec[0].c_str());std::atof(vec[1].c_str());std::atof(vec[2].c_str());std::atof(vec[3].c_str());
+        if (std::atoi(vec[0].c_str()) >= 200 && vec.size() >= 6)
         {
-          std::stof(vec[4]);std::stof(vec[5]);
+          std::atof(vec[4].c_str());std::atof(vec[5].c_str());
         }
         else
           return (false);
