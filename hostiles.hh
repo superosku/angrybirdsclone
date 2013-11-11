@@ -13,6 +13,7 @@ class Hostile : public MoveableObject
   {
     bodyData* data = new bodyData;
     data->energy = energy;
+    data->object = this;
     body->SetUserData(data);
   }
   virtual ~Hostile() {}

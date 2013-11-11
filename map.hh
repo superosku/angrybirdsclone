@@ -5,7 +5,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-//#include <Box2D/Box2D.h>
+#include <algorithm> 
+
 #include <Box2D/Box2D.h>
 #include "moveable.hh"
 #include "birds.hh"
@@ -35,19 +36,19 @@ class Map : public b2ContactListener {
       line_body->CreateFixture(&line_shape, 0.0f);
 
       //Add some test structures
-      //objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, -2, 1));
-      //objects.push_back(new BasicObstacle(m_world, -3.5, 5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 1, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 2, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 3, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 4, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
-      //objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
-      //objects.push_back(new BasicEnemy(m_world, 0, 8));
-      //objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));
+/*      objects.push_back(new BasicObstacle(m_world, 3, 2, 2, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 2, 1, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, -2, 1));
+      objects.push_back(new BasicObstacle(m_world, -3.5, 5));
+      objects.push_back(new BasicObstacle(m_world, 0, 1, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 2, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 3, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 4, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 5, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
+      objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
+      objects.push_back(new BasicEnemy(m_world, 0, 8));
+      objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));*/
       loadMap("csvMAP");
 
     }
@@ -64,6 +65,16 @@ class Map : public b2ContactListener {
     void Step()
     {
       m_world->Step(1.0/60.0, 6, 2);
+      for(auto i=objects.begin();i!=objects.end();)
+      {
+        bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
+        if(bodyDataA && bodyDataA->energy <= 0){
+         delete *i;
+         i = objects.erase(i);
+        }
+        else
+         ++i;
+      }
     }
 
     //Calculate score and new energies after the impact

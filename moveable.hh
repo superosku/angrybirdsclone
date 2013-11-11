@@ -4,9 +4,7 @@
 #include <string>
 #include "Box2D/Box2D.h"
 
-struct bodyData {
-  float energy;
-};
+class Map;
 
 //Abstract base class. Provides API to get coordinates of objects.
 class MoveableObject 
@@ -33,15 +31,14 @@ class MoveableObject
     }
     virtual ~MoveableObject()
     {
-     //TODO:
-     //Free reserved pointer
+     body->GetWorld()->DestroyBody(body);
     }
     //Ro3
     MoveableObject& operator=(const MoveableObject&) = delete;
     MoveableObject(const MoveableObject&) = delete;
 
     void setImpulse(float x, float y) {
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
     }
     MoveableObject::Type getType() {
       return type;
@@ -70,6 +67,12 @@ class MoveableObject
   protected:
     b2Body* body;
     MoveableObject::Type type;
+  friend class Map;
+};
+
+struct bodyData {
+  float energy;
+  MoveableObject* object;
 };
 
 #endif
