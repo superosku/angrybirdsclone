@@ -62,24 +62,20 @@ class Graphics {
           if (event.type == sf::Event::Closed) {
             window.close();
           }
-          if (event.type == sf::Event::MouseButtonPressed) {
-            if (event.mouseButton.button == sf::Mouse::Left) {
-              // Check if we are pressing near catapult
-              if (event.mouseButton.x < convertX(m.getCatapultX()+0.5) and event.mouseButton.x > convertX(m.getCatapultX()-0.5) and
-                  event.mouseButton.y > convertY(m.getCatapultY()+0.5) and event.mouseButton.y < convertY(m.getCatapultY()-0.5))
-                shoot_aiming = 1;
-            }
+          if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+            // Check if we are pressing near catapult
+            if (event.mouseButton.x < convertX(m.getCatapultX()+0.5) and event.mouseButton.x > convertX(m.getCatapultX()-0.5) and
+                event.mouseButton.y > convertY(m.getCatapultY()+0.5) and event.mouseButton.y < convertY(m.getCatapultY()-0.5))
+              shoot_aiming = 1;
           }
-          if (event.type == sf::Event::MouseButtonReleased) {
-            if (event.mouseButton.button == sf::Mouse::Left) {
-              if (shoot_aiming) {
-                std::cout << "Shot Bird" << std::endl;
-                m.ShootBird(
-                     (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
-                    -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
-                shoot_aiming = 0;
+          if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+            if (shoot_aiming) {
+              std::cout << "Shot Bird" << std::endl;
+              m.ShootBird(
+                   (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
+                  -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
+              shoot_aiming = 0;
               }
-            }
           }
         }
         window.clear(sf::Color(160,160,255));

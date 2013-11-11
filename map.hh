@@ -54,8 +54,10 @@ class Map : public b2ContactListener {
     }
     ~Map()
     {
-      for(auto object: objects)
+      for(auto object: objects){
+        delete static_cast<bodyData*>(object->body->GetUserData());
         delete object;
+      }
       delete m_world; //This deletes all box2d stuff, movable object doesnt need to do anything about that
     }
     //Ro3
@@ -73,6 +75,7 @@ class Map : public b2ContactListener {
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
         if(bodyDataA && bodyDataA->energy <= 0){
          delete *i;
+         delete bodyDataA;
          i = objects.erase(i);
         }
         else
@@ -101,8 +104,6 @@ class Map : public b2ContactListener {
         bodyDataB->energy -= deltaEnergy;
       }
       totalScore += deltaEnergy;
-      //if energy is <=0 remove object from map
-      //std::cout << "tatsi!" << std::endl;
     }
 
     //We do nothing when contact ends
