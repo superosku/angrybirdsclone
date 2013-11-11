@@ -19,6 +19,7 @@ class Bird : public MoveableObject
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density= d;
+    fixtureDef.restitution = 0.4f;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
