@@ -9,7 +9,7 @@ class Hostile : public MoveableObject
   // Energy of the hostile is saved to box2d userdata, something from 100 to 1000
 
   public:
-  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 100, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, type)
+  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, type)
   {
     bodyData* data = new bodyData;
     data->energy = energy;
@@ -51,7 +51,7 @@ class BasicObstacle : public Hostile
   // No private stuff yet :(
 
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f) : Hostile(world, x, y, 100, MoveableObject::Type::BasicObstacle)
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f) : Hostile(world, x, y, 10, MoveableObject::Type::BasicObstacle)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

@@ -4,8 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "map.hh"
+#include "moveable.hh"
 
 class Graphics {
   private:
@@ -140,8 +142,24 @@ class Graphics {
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
           }
-        }     
-        window.draw(sf::Text(/*std::string(m.getScore())*/"testscore", font));
+
+          //Draw energy of an object (for debugging purposes)
+          bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
+          if(data)
+          {
+            std::ostringstream ss;
+            ss << data->energy;
+            sf::Text t;
+            t.setPosition(x,y);
+            t.setString(ss.str());
+            t.setFont(font);
+            window.draw(t);
+          }
+        }
+        //Draw score, display and advance the simulation one step ahead
+        std::ostringstream ss;
+        ss << m.getScore();
+        window.draw(sf::Text(ss.str(), font));
         window.display();
         m.Step();
       }

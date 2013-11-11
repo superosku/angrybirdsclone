@@ -61,6 +61,9 @@ class MoveableObject
     mass_t getMass() {
       return body->GetMass();
     }
+    b2Body* getBody(){
+      return body;
+    }
 
     //Public variable to store path to the image of an object
     const std::string imagePath;

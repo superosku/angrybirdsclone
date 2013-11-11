@@ -25,7 +25,6 @@ class Map : public b2ContactListener {
       m_world = new b2World(b2Vec2(0.0f, -10.0f));
 
       //Create collision callback -> Box2D calls this instance of map-class when contact happens
-      m_world->SetContactListener(this);
 
       //Adding a default line to the world at 0-level so blocks dont fall freely
       b2BodyDef line_def;
@@ -50,6 +49,7 @@ class Map : public b2ContactListener {
       objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));*/
       objects.push_back(new BasicEnemy(m_world, 0, 0));
       loadMap("csvMAP");
+      m_world->SetContactListener(this);
 
     }
     ~Map()
@@ -86,24 +86,34 @@ class Map : public b2ContactListener {
     //Calculate score and new energies after the impact
     void BeginContact(b2Contact* contact)
     {
+    }
+    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse){
+     if(impulse->normalImpulses[0] > 1)
+     {
+      float maxImpulse = 0.0f;
+      for (int32 i = 0; i < contact->GetManifold()->pointCount; ++i)
+      {
+        maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
+      }
       //If FixtureA has energy, calculate lost energy according to masses and add that to totalscore
       bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
       bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
-      int deltaEnergy=0;
+      float deltaEnergy=0;
       if(bodyDataA)
       {
-        deltaEnergy = contact->GetFixtureB()->GetBody()->GetMass() / contact->GetFixtureA()->GetBody()->GetMass() * bodyDataA->energy * 0.1;
-        bodyDataA->energy -= deltaEnergy;
+        deltaEnergy = maxImpulse * 0.1;
+        bodyDataA->energy =  bodyDataA->energy > deltaEnergy? bodyDataA->energy - deltaEnergy: 0 ;
       }
       totalScore += deltaEnergy;
 
       //If FixtureB has energy, calculate lost energy according to masses and add that to totalscore
       if(bodyDataB)
       {
-        deltaEnergy = contact->GetFixtureA()->GetBody()->GetMass() / contact->GetFixtureB()->GetBody()->GetMass() * bodyDataB->energy * 0.1;
-        bodyDataB->energy -= deltaEnergy;
+        deltaEnergy = maxImpulse * 0.1;
+        bodyDataB->energy =  bodyDataB->energy > deltaEnergy? bodyDataB->energy - deltaEnergy: 0 ;
       }
       totalScore += deltaEnergy;
+     }
     }
 
     //We do nothing when contact ends
@@ -183,7 +193,7 @@ class Map : public b2ContactListener {
     std::vector<MoveableObject*> objects;
     b2World* m_world;
     //b2Body* m_groundBody;
-    size_t totalScore=0;
+    float totalScore=0;
     float catapult_x, catapult_y;
 };
 
