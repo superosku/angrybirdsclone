@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include <string>
 #include "map.hh"
 #include "moveable.hh"
@@ -148,9 +149,10 @@ class Graphics {
           if(data)
           {
             std::ostringstream ss;
-            ss << data->energy;
+            ss << std::setprecision(2) << data->energy;
             sf::Text t;
             t.setPosition(x,y);
+            t.setCharacterSize(20);
             t.setString(ss.str());
             t.setFont(font);
             window.draw(t);

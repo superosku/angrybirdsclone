@@ -25,6 +25,7 @@ class Map : public b2ContactListener {
       m_world = new b2World(b2Vec2(0.0f, -10.0f));
 
       //Create collision callback -> Box2D calls this instance of map-class when contact happens
+      m_world->SetContactListener(this);
 
       //Adding a default line to the world at 0-level so blocks dont fall freely
       b2BodyDef line_def;
@@ -47,10 +48,7 @@ class Map : public b2ContactListener {
       objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));*/
-      objects.push_back(new BasicEnemy(m_world, 0, 0));
       loadMap("csvMAP");
-      m_world->SetContactListener(this);
-
     }
     ~Map()
     {
@@ -84,9 +82,6 @@ class Map : public b2ContactListener {
     }
 
     //Calculate score and new energies after the impact
-    void BeginContact(b2Contact* contact)
-    {
-    }
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse){
      if(impulse->normalImpulses[0] > 1)
      {
@@ -95,7 +90,7 @@ class Map : public b2ContactListener {
       {
         maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
       }
-      //If FixtureA has energy, calculate lost energy according to masses and add that to totalscore
+      //If FixtureA has energy, calculate lost energy according to impulse strength and add that to totalscore
       bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
       bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
       float deltaEnergy=0;
@@ -106,7 +101,7 @@ class Map : public b2ContactListener {
       }
       totalScore += deltaEnergy;
 
-      //If FixtureB has energy, calculate lost energy according to masses and add that to totalscore
+      //If FixtureB has energy, calculate lost energy according to impulse strength and add that to totalscore
       if(bodyDataB)
       {
         deltaEnergy = maxImpulse * 0.1;
@@ -115,9 +110,6 @@ class Map : public b2ContactListener {
       totalScore += deltaEnergy;
      }
     }
-
-    //We do nothing when contact ends
-    void EndContact(b2Contact*) {}
 
     //This can be called to shoot the bird
     void ShootBird(float x, float y) {
