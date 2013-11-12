@@ -48,7 +48,7 @@ class Map : public b2ContactListener {
       objects.push_back(new BasicObstacle(m_world, 0, 6, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 0, 7, 0.5, 0.5));
       objects.push_back(new BasicObstacle(m_world, 9, 2, 2, 4));*/
-      loadMap("csvMAP");
+      loadMap("basic_map.csv");
     }
     ~Map()
     {
