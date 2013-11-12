@@ -110,7 +110,7 @@ class Graphics {
         window.draw(catapult);
         
         // Drawing current bird.
-        if (m.getCurrentBird() != nullptr) {
+        /*if (m.getCurrentBird() != nullptr) {
           Bird* i = m.getCurrentBird();
           size_t x = convertX(i->getX());
           size_t y = convertY(i->getY());
@@ -121,7 +121,7 @@ class Graphics {
           circle.setPosition(x,y);
           circle.setRotation(i->getAngle() * -57.295);
           window.draw(circle);
-        }
+        }*/
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();

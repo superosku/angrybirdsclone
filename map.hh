@@ -71,10 +71,15 @@ class Map : public b2ContactListener {
       for(auto i=objects.begin();i!=objects.end();)
       {
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
-        if(bodyDataA && bodyDataA->hasEnergy && bodyDataA->energy <= 0){
+        if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
          delete *i;
          delete bodyDataA;
          i = objects.erase(i);
+        }
+        else if(bodyDataA && !bodyDataA->hasEnergy)
+        {
+         --bodyDataA->object->timer;
+         ++i;
         }
         else
          ++i;
@@ -110,8 +115,14 @@ class Map : public b2ContactListener {
         if(bodyDataB && !bodyDataA->energy)
           contact->GetFixtureB()->GetBody()->SetLinearVelocity(bodyDataB->object->velocity);
       }
+      else if (bodyDataA)
+      {
+       bodyDataA->object->timer = 300;
+      }
+
       totalScore += deltaEnergy;
 
+      deltaEnergy=0;
       //If FixtureB has energy, calculate lost energy according to impulse strength and add that to totalscore
       if(bodyDataB && bodyDataB->hasEnergy)
       {
@@ -120,6 +131,10 @@ class Map : public b2ContactListener {
         if(bodyDataA && !bodyDataB->energy)
           contact->GetFixtureA()->GetBody()->SetLinearVelocity(bodyDataA->object->velocity);
       }
+      else if (bodyDataB)
+      {
+       bodyDataB->object->timer = 300;
+      }
       totalScore += deltaEnergy;
      }
     }
@@ -127,24 +142,19 @@ class Map : public b2ContactListener {
     //This can be called to shoot the bird
     void ShootBird(float x, float y) {
       //BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
-      if (current_b != nullptr)
-      {
-        delete current_b;
-        birds.pop_back();
-        current_b = nullptr;
-      }
       if (birds.empty())
       {
         std::cout << "No birds left..." << std::endl;
-        current_b = nullptr;
         return;
       }
-      if (!birds.empty()) {
-        current_b = birds.back();
+      else
+      {
+        Bird* current_b = birds.back();
         current_b->getBody()->SetActive(true);
         current_b->setImpulse(x, y);
         std::cout << "Shot Bird!" << std::endl;
-        //objects.push_back(bird);
+        objects.push_back(current_b);
+        birds.pop_back();
       }
     }
 
@@ -159,7 +169,7 @@ class Map : public b2ContactListener {
     }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
-    Bird* getCurrentBird() {return(current_b);}
+    //Bird* getCurrentBird() {return(current_b);}
   private:
     //Should the dimensions of the world be saved? To ease changing the coordinate systems.
     //List of MoveableObjects currently present in the map
@@ -220,7 +230,7 @@ class Map : public b2ContactListener {
     std::vector<MoveableObject*> objects;
     b2World* m_world;
     //b2Body* m_groundBody;
-    Bird* current_b = nullptr;
+    //Bird* current_b = nullptr;
     float totalScore=0;
     float catapult_x, catapult_y;
 };
