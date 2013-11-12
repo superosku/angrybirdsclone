@@ -83,7 +83,6 @@ class BasicBird : public Bird
 
 class BouncyBird : public Bird
 {
-  
   public:
   BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a){}
   

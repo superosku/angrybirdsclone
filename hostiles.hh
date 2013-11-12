@@ -52,7 +52,7 @@ class BasicObstacle : public Hostile
   // No private stuff yet :(
 
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f) : Hostile(world, x, y, 10, MoveableObject::Type::BasicObstacle)
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f, float e = 10) : Hostile(world, x, y, e, MoveableObject::Type::BasicObstacle)  
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -83,7 +83,7 @@ class BasicEnemy : public Hostile
   float radius;
   
   public:
-  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f) : Hostile(world, x, y, 1, MoveableObject::Type::BasicEnemy)
+  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f,float e = 1) : Hostile(world, x, y, e, MoveableObject::Type::BasicEnemy)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;

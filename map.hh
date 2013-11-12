@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm> 
+#include <map>
 
 #include <Box2D/Box2D.h>
 #include "moveable.hh"
@@ -24,7 +25,7 @@ class Map : public b2ContactListener {
       //Creating a world with gravity
       m_world = new b2World(b2Vec2(0.0f, -10.0f));
 
-      //Create collision callback -> Box2D calls this instance of map-class when contact happens
+      //Create collision callback -> Box2D calls this instance of Map-class when contact happens
       m_world->SetContactListener(this);
 
       //Adding a default line to the world at 0-level so blocks dont fall freely
@@ -191,7 +192,7 @@ class Map : public b2ContactListener {
       std::ifstream input(filepath);
       // First line is for map parameters
       std::getline(input,tmpStr);
-      // Object_id,x,y,w,h,d,actions,energy,image_path
+      // Object_id,x,y,w,h,d,energy,image_path
       while (std::getline(input,tmpStr))
       {
         tmpVec = toSTRVEC(tmpStr);
@@ -206,10 +207,10 @@ class Map : public b2ContactListener {
               birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
             case (200):
-              objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str())));
+              objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
               break;
             case (300):
-              objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str())));
+              objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
               break;
           }
         }
@@ -221,13 +222,15 @@ class Map : public b2ContactListener {
     {
       try
       {
-        if (vec.size() < 6)
+        if (vec.size() < 7)
         {
-          std::cout << "Invalid line in map-file: Not enough data." << std::endl;
+          std::cout << "Invalid line in map-file: Not enough columns." << std::endl;
           return(false);
         }
-        //std::atoi(vec[0].c_str());std::atof(vec[1].c_str());std::atof(vec[2].c_str());std::atof(vec[3].c_str());
-        for (size_t i = 0; i < 6; i++) {
+        size_t t_id = std::atoi(vec[0].c_str());
+        
+        for (auto i : valid[t_id])
+        {
           std::atoi(vec[i].c_str());
           std::atof(vec[i].c_str());
         }
@@ -247,6 +250,10 @@ class Map : public b2ContactListener {
     Bird* current_b = nullptr;
     float totalScore=0;
     float catapult_x, catapult_y;
+    std::map<size_t,std::vector<size_t>> valid = {{100,{0,5}},
+                                                  {101,{0,5}},
+                                                  {200,{0,1,2,3,4,5,6}},
+                                                  {300,{0,1,2,5,6}}};
 };
 
 #endif
