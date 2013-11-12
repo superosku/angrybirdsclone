@@ -150,7 +150,7 @@ class Graphics {
 
           //Draw energy of an object (for debugging purposes)
           bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
-          if(data)
+          if(data->hasEnergy)
           {
             std::ostringstream ss;
             ss << std::setprecision(2) << data->energy;

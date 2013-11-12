@@ -71,7 +71,7 @@ class Map : public b2ContactListener {
       for(auto i=objects.begin();i!=objects.end();)
       {
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
-        if(bodyDataA && bodyDataA->energy <= 0){
+        if(bodyDataA && bodyDataA->hasEnergy && bodyDataA->energy <= 0){
          delete *i;
          delete bodyDataA;
          i = objects.erase(i);
@@ -79,6 +79,15 @@ class Map : public b2ContactListener {
         else
          ++i;
       }
+    }
+    void PreSolve(b2Contact* contact, const b2Manifold*)
+    {
+      bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
+      bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
+      if(bodyDataA)
+       bodyDataA->object->velocity = contact->GetFixtureA()->GetBody()->GetLinearVelocity();
+      if(bodyDataB)
+       bodyDataB->object->velocity = contact->GetFixtureB()->GetBody()->GetLinearVelocity();
     }
 
     //Calculate score and new energies after the impact
@@ -94,18 +103,22 @@ class Map : public b2ContactListener {
       bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
       bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
       float deltaEnergy=0;
-      if(bodyDataA)
+      if(bodyDataA && bodyDataA->hasEnergy)
       {
         deltaEnergy = maxImpulse * 0.1;
         bodyDataA->energy =  bodyDataA->energy > deltaEnergy? bodyDataA->energy - deltaEnergy: 0 ;
+        if(bodyDataB && !bodyDataA->energy)
+          contact->GetFixtureB()->GetBody()->SetLinearVelocity(bodyDataB->object->velocity);
       }
       totalScore += deltaEnergy;
 
       //If FixtureB has energy, calculate lost energy according to impulse strength and add that to totalscore
-      if(bodyDataB)
+      if(bodyDataB && bodyDataB->hasEnergy)
       {
         deltaEnergy = maxImpulse * 0.1;
         bodyDataB->energy =  bodyDataB->energy > deltaEnergy? bodyDataB->energy - deltaEnergy: 0 ;
+        if(bodyDataA && !bodyDataB->energy)
+          contact->GetFixtureA()->GetBody()->SetLinearVelocity(bodyDataA->object->velocity);
       }
       totalScore += deltaEnergy;
      }

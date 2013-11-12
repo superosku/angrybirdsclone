@@ -5,6 +5,13 @@
 #include "Box2D/Box2D.h"
 
 class Map;
+class MoveableObject;
+
+struct bodyData {
+  float energy;
+  bool hasEnergy;
+  MoveableObject* object;
+};
 
 //Abstract base class. Provides API to get coordinates of objects.
 class MoveableObject 
@@ -18,16 +25,19 @@ class MoveableObject
     };
     typedef float mass_t;
     // TODO: Overloaded constructors for circle and square formed objects.
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, MoveableObject::Type type = MoveableObject::Type::Else)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f)
     {
       this->type = type;
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
       bodyDef.position.Set(x, y);
       body = world->CreateBody(&bodyDef);
-      // TODO:
-      //Initialize Box2D, save returned pointer to private variable
-      //Initialize imagePath which tells SFML where to find images to draw
+
+      bodyData* data = new bodyData;
+      data->energy = energy;
+      data->hasEnergy = energy?1:0;
+      data->object = this;
+      body->SetUserData(data);
     }
     virtual ~MoveableObject()
     {
@@ -69,13 +79,9 @@ class MoveableObject
     const std::string imagePath;
   protected:
     b2Body* body;
+    b2Vec2 velocity;
     MoveableObject::Type type;
   friend class Map;
-};
-
-struct bodyData {
-  float energy;
-  MoveableObject* object;
 };
 
 #endif

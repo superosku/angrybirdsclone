@@ -9,12 +9,13 @@ class Hostile : public MoveableObject
   // Energy of the hostile is saved to box2d userdata, something from 100 to 1000
 
   public:
-  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, type)
+  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, type, energy)
   {
-    bodyData* data = new bodyData;
+/*    bodyData* data = new bodyData;
     data->energy = energy;
     data->object = this;
-    body->SetUserData(data);
+    body->SetUserData(data);*/
+
   }
   virtual ~Hostile() {}
   /*Hostile& operator=(const Hostile&) = delete;
