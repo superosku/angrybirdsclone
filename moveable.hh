@@ -49,7 +49,7 @@ class MoveableObject
     MoveableObject(const MoveableObject&) = delete;
 
     void setImpulse(float x, float y) {
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter()/*,true*/);
     }
     MoveableObject::Type getType() {
       return type;
