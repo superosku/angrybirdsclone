@@ -141,6 +141,7 @@ class Map : public b2ContactListener {
       }
       if (!birds.empty()) {
         current_b = birds.back();
+        current_b->getBody()->SetActive(true);
         current_b->setImpulse(x, y);
         std::cout << "Shot Bird!" << std::endl;
         //objects.push_back(bird);

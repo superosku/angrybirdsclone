@@ -24,7 +24,7 @@ class MoveableObject
       BasicObstacle
     };
     typedef float mass_t;
-    // TODO: Overloaded constructors for circle and square formed objects.
+    
     MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f)
     {
       this->type = type;
@@ -48,7 +48,7 @@ class MoveableObject
     MoveableObject(const MoveableObject&) = delete;
 
     void setImpulse(float x, float y) {
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter()/*,true*/);
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
     }
     MoveableObject::Type getType() {
       return type;
