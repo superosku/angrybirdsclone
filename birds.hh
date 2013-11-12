@@ -27,9 +27,17 @@ class Bird : public MoveableObject
   }
   virtual ~Bird() {}
   
+  float getH() {
+    return radius;
+  }
+  float getW() {
+    return radius;
+  }
+  
   // Function to check if bird has actions left, returns boolean value.
-  virtual bool Action()
+  virtual bool action()
   {
+    std::cout << "action in Bird-class" << std::endl;
     if (actions > 0)
     {
       actions--;
@@ -49,16 +57,16 @@ class BasicBird : public Bird
   {
     //TODO: Initialization (might be empty).
   }
-  float getH() {
+  /*float getH() {
     return radius;
   }
   float getW() {
     return radius;
-  }
+  }*/
   // virtual ~BasicBird() {}
   
   // Function to perform special action of bird. Returns boolean value to tell if action was performed correctly.
-  virtual bool Action()
+  virtual bool action()
   {
     /* DEMO:
      * For use in birds that have special action to check if action is allowed; if bird has actions left.
@@ -69,6 +77,25 @@ class BasicBird : public Bird
     // If bird has some special action: implement here.
     return(true);
     */
+    return(true);
+  }
+};
+
+class BouncyBird : public Bird
+{
+  
+  public:
+  BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a){}
+  
+  virtual bool action()
+  {
+    if (!Bird::action())
+      return(false);
+    
+    std::cout << "action in BouncyBird-class" << std::endl;
+    
+    setImpulse(0,7.5);
+    
     return(true);
   }
 };

@@ -72,6 +72,7 @@ class Map : public b2ContactListener {
       {
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
         if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
+         killCurrentBird(*i);
          delete *i;
          delete bodyDataA;
          i = objects.erase(i);
@@ -149,7 +150,7 @@ class Map : public b2ContactListener {
       }
       else
       {
-        Bird* current_b = birds.back();
+        current_b = birds.back();
         current_b->getBody()->SetActive(true);
         current_b->setImpulse(x, y);
         std::cout << "Shot Bird!" << std::endl;
@@ -169,7 +170,17 @@ class Map : public b2ContactListener {
     }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
-    //Bird* getCurrentBird() {return(current_b);}
+    Bird* getCurrentBird() {return(current_b);}
+    
+    void killCurrentBird() {current_b = nullptr;std::cout << "killed current bird" << std::endl;}
+    
+    void killCurrentBird(MoveableObject* a)
+    {
+      if (a == current_b) {
+        current_b = nullptr;
+        std::cout << "killed current bird" << std::endl;
+      }
+    }
   private:
     //Should the dimensions of the world be saved? To ease changing the coordinate systems.
     //List of MoveableObjects currently present in the map
@@ -189,8 +200,10 @@ class Map : public b2ContactListener {
           switch(std::atoi(tmpVec[0].c_str()))
           {
             case (100):
-              std::cout << "Loading bird..." << std::endl;
               birds.push_back(new BasicBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
+              break;
+            case (101):
+              birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
             case (200):
               objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str())));
@@ -202,7 +215,8 @@ class Map : public b2ContactListener {
         }
       }
     }
-
+    
+    // TODO better validation...
     bool validSTRVEC(std::vector<std::string> vec)
     {
       try
@@ -230,7 +244,7 @@ class Map : public b2ContactListener {
     std::vector<MoveableObject*> objects;
     b2World* m_world;
     //b2Body* m_groundBody;
-    //Bird* current_b = nullptr;
+    Bird* current_b = nullptr;
     float totalScore=0;
     float catapult_x, catapult_y;
 };

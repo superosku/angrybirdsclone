@@ -76,6 +76,12 @@ class Graphics {
               shoot_aiming = 1;
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+            if ((!shoot_aiming) && (m.getCurrentBird() != nullptr)) {
+                std::cout << "action event" << std::endl;
+                m.getCurrentBird()->action();
+            }
+          }
+          if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
             if (shoot_aiming) {
               //std::cout << "Shot Bird" << std::endl;
               m.ShootBird(
