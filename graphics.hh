@@ -77,7 +77,7 @@ class Graphics {
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
             if (shoot_aiming) {
-              std::cout << "Shot Bird" << std::endl;
+              //std::cout << "Shot Bird" << std::endl;
               m.ShootBird(
                    (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
                   -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
@@ -108,6 +108,20 @@ class Graphics {
           catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
         window.draw(catapult_bg);
         window.draw(catapult);
+        
+        // Drawing current bird.
+        if (m.getCurrentBird() != nullptr) {
+          Bird* i = m.getCurrentBird();
+          size_t x = convertX(i->getX());
+          size_t y = convertY(i->getY());
+          sf::CircleShape circle(convertDistance(i->getW()));
+          circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+          //circle.setFillColor(sf::Color(200, 100, 100));
+          circle.setTexture(&fox);
+          circle.setPosition(x,y);
+          circle.setRotation(i->getAngle() * -57.295);
+          window.draw(circle);
+        }
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();

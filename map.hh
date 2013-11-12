@@ -126,9 +126,25 @@ class Map : public b2ContactListener {
 
     //This can be called to shoot the bird
     void ShootBird(float x, float y) {
-      BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
-      bird->setImpulse(x, y);
-      objects.push_back(bird);
+      //BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
+      if (current_b != nullptr)
+      {
+        delete current_b;
+        birds.pop_back();
+        current_b = nullptr;
+      }
+      if (birds.empty())
+      {
+        std::cout << "No birds left..." << std::endl;
+        current_b = nullptr;
+        return;
+      }
+      if (!birds.empty()) {
+        current_b = birds.back();
+        current_b->setImpulse(x, y);
+        std::cout << "Shot Bird!" << std::endl;
+        //objects.push_back(bird);
+      }
     }
 
     float getCatapultX() {
@@ -142,6 +158,7 @@ class Map : public b2ContactListener {
     }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
+    Bird* getCurrentBird() {return(current_b);}
   private:
     //Should the dimensions of the world be saved? To ease changing the coordinate systems.
     //List of MoveableObjects currently present in the map
@@ -161,7 +178,8 @@ class Map : public b2ContactListener {
           switch(std::atoi(tmpVec[0].c_str()))
           {
             case (100):
-              objects.push_back(new BasicBird(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str())));
+              std::cout << "Loading bird..." << std::endl;
+              birds.push_back(new BasicBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
             case (200):
               objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str())));
@@ -178,26 +196,30 @@ class Map : public b2ContactListener {
     {
       try
       {
-        if (vec.size() < 5)
-          return(false);
-        std::atoi(vec[0].c_str());std::atof(vec[1].c_str());std::atof(vec[2].c_str());std::atof(vec[3].c_str());
-        if (std::atoi(vec[0].c_str()) >= 200 && vec.size() >= 6)
+        if (vec.size() < 6)
         {
-          std::atof(vec[4].c_str());std::atof(vec[5].c_str());
+          std::cout << "Invalid line in map-file: Not enough data." << std::endl;
+          return(false);
         }
-        else
-          return (false);
+        //std::atoi(vec[0].c_str());std::atof(vec[1].c_str());std::atof(vec[2].c_str());std::atof(vec[3].c_str());
+        for (size_t i = 0; i < 6; i++) {
+          std::atoi(vec[i].c_str());
+          std::atof(vec[i].c_str());
+        }
       }
       catch (...)
       {
+        std::cout << "Invalid line in map-file: Data threw an error" << std::endl;
         return (false);
       }
       return (true);
     }
     
+    std::vector<Bird*> birds;
     std::vector<MoveableObject*> objects;
     b2World* m_world;
     //b2Body* m_groundBody;
+    Bird* current_b = nullptr;
     float totalScore=0;
     float catapult_x, catapult_y;
 };
