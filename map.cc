@@ -15,7 +15,7 @@
     Map::Map()
     {
       //Set cannon coordinates
-      catapult_x = -9;
+      catapult_x = -20;
       catapult_y = 6;
 
       //Creating a world with gravity
