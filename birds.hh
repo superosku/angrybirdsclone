@@ -36,7 +36,7 @@ class Bird : public MoveableObject
   }
   
   // Function to check if bird has actions left, returns boolean value.
-  virtual bool action(Map&)
+  virtual bool action()
   {
     std::cout << "action in Bird-class" << std::endl;
     if (actions > 0)
@@ -112,7 +112,9 @@ class TangentBird : public Bird
       
     std::cout << "action in TangentBird-class" << std::endl;
     
-    setImpulse(15*cos(getAngle()),15*sin(getAngle()));
+    b2Vec2 v = body->GetLinearVelocity();
+    float a = atan(v.y/v.x);
+    setImpulse(15*cos(a),15*sin(a));
     
     return(true);
   }
