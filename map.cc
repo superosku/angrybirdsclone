@@ -70,6 +70,7 @@
           ++enemiesLeft;
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
         if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
+         (*i)->destroy(this);
          killCurrentBird(*i);
          delete *i;
          delete bodyDataA;
@@ -180,22 +181,22 @@
         {
           switch(std::atoi(tmpVec[0].c_str()))
           {
-            case (100):
+            case (MoveableObject::Type::BasicBird):
               birds.push_back(new BasicBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
-            case (101):
+            case (MoveableObject::Type::BouncyBird):
               birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
-            case (102):
+            case (MoveableObject::Type::TangentBird):
               birds.push_back(new TangentBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
-            case (103):
+            case (MoveableObject::Type::BombBird):
               birds.push_back(new BombBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
-            case (200):
+            case (MoveableObject::Type::BasicObstacle):
               objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
               break;
-            case (300):
+            case (MoveableObject::Type::BasicEnemy):
               objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
               break;
           }
