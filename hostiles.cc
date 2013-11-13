@@ -1,6 +1,6 @@
 #include "hostiles.hh"
 
-class Map;
+//class Map;
 
 void Hostile::destroy(Map* m)
 {
