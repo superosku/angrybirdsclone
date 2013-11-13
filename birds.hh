@@ -152,7 +152,8 @@ class BombBird : public Bird
       
       m->addObject(tmp);
     }
-    
+  
+  m->killCurrentBird(this);
   m->removeObject(this);
   delete this;
   
