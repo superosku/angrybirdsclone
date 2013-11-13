@@ -68,23 +68,23 @@ class Map : public b2ContactListener {
       //Advance Box2D simulation by one step
       m_world->Step(1.0/60.0, 6, 2);
 
+      enemiesLeft=0;
       //Removing of objects which have no energy left
       for(auto i=objects.begin();i!=objects.end();)
       {
+        if((*i)->type == MoveableObject::Type::BasicEnemy)
+          ++enemiesLeft;
         bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
         if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
          killCurrentBird(*i);
          delete *i;
          delete bodyDataA;
          i = objects.erase(i);
+         continue;
         }
         else if(bodyDataA && !bodyDataA->hasEnergy)
-        {
          --bodyDataA->object->timer;
-         ++i;
-        }
-        else
-         ++i;
+        ++i;
       }
     }
     void PreSolve(b2Contact* contact, const b2Manifold*)
@@ -172,6 +172,9 @@ class Map : public b2ContactListener {
     size_t getBirdsLeft() {
       return birds.size();
     }
+    size_t getEnemyCount() {
+      return enemiesLeft;
+    }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
     Bird* getCurrentBird() {return(current_b);}
@@ -253,6 +256,7 @@ class Map : public b2ContactListener {
     Bird* current_b = nullptr;
     float totalScore=0;
     float catapult_x, catapult_y;
+    size_t enemiesLeft=0;
     std::map<size_t,std::vector<size_t>> valid = {{100,{0,5}},
                                                   {101,{0,5}},
                                                   {200,{0,1,2,3,4,5,6}},

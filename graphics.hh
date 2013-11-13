@@ -184,7 +184,7 @@ class Graphics {
         }
         //Draw score, display and advance the simulation one step ahead
         std::ostringstream ss;
-        ss << "Points: " << m.getScore() << std::endl << "Birds left: " << m.getBirdsLeft() ;
+        ss << "Points: " << m.getScore() << std::endl << "Birds left: " << m.getBirdsLeft() << std::endl << "Enemies left: " << m.getEnemyCount();
         window.draw(sf::Text(ss.str(), font));
         window.display();
         m.Step();
