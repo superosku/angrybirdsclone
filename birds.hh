@@ -67,7 +67,7 @@ class BasicBird : public Bird
   // virtual ~BasicBird() {}
   
   // Function to perform special action of bird. Returns boolean value to tell if action was performed correctly.
-  virtual bool action(Map&)
+  virtual bool action()
   {
     /* DEMO:
      * For use in birds that have special action to check if action is allowed; if bird has actions left.
@@ -87,9 +87,9 @@ class BouncyBird : public Bird
   public:
   BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a){}
   
-  virtual bool action(Map& m)
+  virtual bool action()
   {
-    if (!Bird::action(m))
+    if (!Bird::action())
       return(false);
     
     std::cout << "action in BouncyBird-class" << std::endl;
@@ -99,5 +99,24 @@ class BouncyBird : public Bird
     return(true);
   }
 };
+
+class TangentBird : public Bird
+{
+  public:
+  TangentBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, d, a){}
+  
+  virtual bool action()
+  {
+    if (!Bird::action())
+      return(false);
+      
+    std::cout << "action in TangentBird-class" << std::endl;
+    
+    setImpulse(15*cos(getAngle()),15*sin(getAngle()));
+    
+    return(true);
+  }
+};
+
 
 #endif

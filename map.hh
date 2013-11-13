@@ -212,6 +212,9 @@ class Map : public b2ContactListener {
             case (101):
               birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
               break;
+            case (102):
+              birds.push_back(new TangentBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
+              break;
             case (200):
               objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
               break;
@@ -259,6 +262,7 @@ class Map : public b2ContactListener {
     size_t enemiesLeft=0;
     std::map<size_t,std::vector<size_t>> valid = {{100,{0,5}},
                                                   {101,{0,5}},
+                                                  {102,{0,5}},
                                                   {200,{0,1,2,3,4,5,6}},
                                                   {300,{0,1,2,5,6}}};
 };
