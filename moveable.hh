@@ -26,7 +26,7 @@ class MoveableObject
       BombBird = 103,
       BasicEnemy = 300,
       BasicObstacle = 200,
-      //BlastBullet = 800,
+      BlastBullet = 800,
       Else = 900
     };
     typedef float mass_t;
