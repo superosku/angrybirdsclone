@@ -2,6 +2,7 @@
 #define BIRDS
 
 #include "moveable.hh"
+#include "map.hh"
 
 class Bird : public MoveableObject
 {
@@ -35,7 +36,7 @@ class Bird : public MoveableObject
   }
   
   // Function to check if bird has actions left, returns boolean value.
-  virtual bool action()
+  virtual bool action(Map&)
   {
     std::cout << "action in Bird-class" << std::endl;
     if (actions > 0)
@@ -66,7 +67,7 @@ class BasicBird : public Bird
   // virtual ~BasicBird() {}
   
   // Function to perform special action of bird. Returns boolean value to tell if action was performed correctly.
-  virtual bool action()
+  virtual bool action(Map&)
   {
     /* DEMO:
      * For use in birds that have special action to check if action is allowed; if bird has actions left.
@@ -86,9 +87,9 @@ class BouncyBird : public Bird
   public:
   BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a){}
   
-  virtual bool action()
+  virtual bool action(Map& m)
   {
-    if (!Bird::action())
+    if (!Bird::action(m))
       return(false);
     
     std::cout << "action in BouncyBird-class" << std::endl;
