@@ -10,6 +10,7 @@ class MoveableObject;
 
 struct bodyData {
   float energy;
+  float fullEnergy;
   bool hasEnergy;
   MoveableObject* object;
 };
@@ -38,6 +39,7 @@ class MoveableObject
 
       bodyData* data = new bodyData;
       data->energy = energy;
+      data->fullEnergy = energy;
       data->hasEnergy = energy?1:0;
       data->object = this;
       body->SetUserData(data);
@@ -80,6 +82,10 @@ class MoveableObject
     }
     b2Body* getBody(){
       return body;
+    }
+    float getEnergy(){
+      bodyData* data =static_cast<bodyData*>(body->GetUserData());
+      return (data->hasEnergy && data->fullEnergy != 0) ? data->energy/data->fullEnergy : 1;
     }
 
     //Public variable to store path to the image of an object
