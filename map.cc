@@ -149,6 +149,7 @@ void Map::removeObject(MoveableObject* o)
 {
   auto erase_iter = std::remove(objects.begin(),objects.end(),o);
   objects.erase(erase_iter);
+  delete o;
 }
 
 void Map::loadMap(std::string filepath)
