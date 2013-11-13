@@ -5,8 +5,8 @@
 #include "moveable.hh"
 #include "map.hh"
 
-#define BREAKDOWN_N_X 2
-#define BREAKDOWN_N_Y 2
+#define BREAKDOWN_N_X 3
+#define BREAKDOWN_N_Y 4
 
 class Hostile : public MoveableObject
 {
@@ -135,7 +135,7 @@ class BlastBullet : public Hostile
 class Particle : public Hostile
 {
   public:
-  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, float a = 0, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,a) 
+  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

@@ -56,6 +56,7 @@ void Map::Step()
       ++enemiesLeft;
     bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
     if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
+      //(*i)->getBody()->SetActive(false);
       (*i)->destroy(this);
       killCurrentBird(*i);
       delete *i;
@@ -149,7 +150,7 @@ void Map::removeObject(MoveableObject* o)
 {
   auto erase_iter = std::remove(objects.begin(),objects.end(),o);
   objects.erase(erase_iter);
-  delete o;
+  //delete o;
 }
 
 void Map::loadMap(std::string filepath)
