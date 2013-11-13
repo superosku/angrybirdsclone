@@ -161,7 +161,7 @@ class Graphics {
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
-            circle.setTexture(&fox);
+            circle.setTexture(&kemma);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
