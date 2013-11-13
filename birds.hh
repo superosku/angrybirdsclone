@@ -5,7 +5,7 @@
 #include "moveable.hh"
 #include "hostiles.hh" // BlastBullet
 
-#define N_BULLETS 16
+#define N_BULLETS 100
 #define PI 3.14159265359
 
 //class BlastBullet;

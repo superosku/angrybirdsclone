@@ -4,7 +4,7 @@
 
 void Hostile::destroy(Map* m)
 {
-  b2World* world = body->GetWorld();
+  /*b2World* world = body->GetWorld();
   float x = getX();
   float y = getY();
   float w = getW() / BREAKDOWN_N_X;
@@ -16,11 +16,11 @@ void Hostile::destroy(Map* m)
   {
     Particle* tmp = new Particle(world,x,y,w,h,getType());
     
-    tmp->setImpulse(0.2*v.x,(v.y < 0 ? 0 : (v.y *0.2)));
-    tmp->setImpulse(0,0.5);
+    //tmp->setImpulse(0.2*v.x,(v.y < 0 ? 0 : (v.y *0.2)));
+    //tmp->setImpulse(0,0.5);
     
     m->addObject(tmp);
-  }
+  }*/
   
   /*for (ssize_t i = -BREAKDOWN_N_X; i < BREAKDOWN_N_X; i++)
   {
