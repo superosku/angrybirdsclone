@@ -22,7 +22,7 @@ void Hostile::destroy(Map* m)
       float p_y = y + sin(a)*(j*h/(BREAKDOWN_N_Y*2)-h/(BREAKDOWN_N_Y*4));
       if (p_x == x) p_x += i*w/(BREAKDOWN_N_X*2)-w/(BREAKDOWN_N_X*4);
       if (p_y == y) p_y += j*h/(BREAKDOWN_N_Y*2)-h/(BREAKDOWN_N_Y*4);
-      if (p_x <= 0) p_x *= -1;
+      if (p_y <= 0) p_y *= -1;
       float p_w = w/(BREAKDOWN_N_X*2);
       float p_h = h/(BREAKDOWN_N_Y*2);
       
