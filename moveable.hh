@@ -31,13 +31,14 @@ class MoveableObject
     };
     typedef float mass_t;
     
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f): timer(300), w(w), h(h)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0): timer(300), w(w), h(h)
     {
       this->type = type;
       b2BodyDef bodyDef;
       bodyDef.type = b2_dynamicBody;
       bodyDef.bullet= true;
       bodyDef.position.Set(x, y);
+      bodyDef.angle = angle;
       body = world->CreateBody(&bodyDef);
 
       bodyData* data = new bodyData;
@@ -59,8 +60,8 @@ class MoveableObject
     MoveableObject(const MoveableObject&) = delete;
 
     void setImpulse(float x, float y) {
-      //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
+      //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
     }
     MoveableObject::Type getType() {
       return type;

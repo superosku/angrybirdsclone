@@ -8,7 +8,7 @@
 #define N_BULLETS 32
 #define PI 3.14159265359
 
-class Map;
+//class BlastBullet;
 
 class Bird : public MoveableObject
 {

@@ -9,8 +9,9 @@
 #include <string>
 #include "map.hh"
 #include "moveable.hh"
-#include "birds.hh"
 #include "hostiles.hh"
+#include "birds.hh"
+
 
 class Graphics {
   private:
