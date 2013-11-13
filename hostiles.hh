@@ -5,8 +5,7 @@
 #include "moveable.hh"
 #include "map.hh"
 
-#define BREAKDOWN_N_X 3
-#define BREAKDOWN_N_Y 2
+#define BREAKDOWN_R 1.5
 
 class Hostile : public MoveableObject
 {
