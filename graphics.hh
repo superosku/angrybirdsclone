@@ -157,6 +157,16 @@ class Graphics {
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
+          if (type == MoveableObject::Type::BlastBullet_t) { // Kuutio / Neliö
+            sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+            rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            rect.setFillColor(sf::Color(30, 30, 30));
+            rect.setOutlineColor(sf::Color(15, 15, 15));
+            rect.setOutlineThickness(2);
+            rect.setPosition(x,y);
+            rect.setRotation(i->getAngle() * -57.295);
+            window.draw(rect);
+          }
           if (type == MoveableObject::BasicBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));

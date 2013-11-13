@@ -15,9 +15,9 @@ void Hostile::destroy(Map* m)
   for (size_t i = 0; i < BREAKDOWN_R*w*h; ++i)
   {
     if(type != MoveableObject::Type::Else){
-      Particle* tmp = new Particle(world,x,y,0.4,0.2,getType());
+      Particle* tmp = new Particle(world,x,y,0.2,0.1,getType());
       
-      tmp->setImpulse(0.2*v.x,0.5);
+      tmp->setImpulse(0.02*v.x,0.5);
       //tmp->setImpulse(0,0.5);
       
       m->addObject(tmp);

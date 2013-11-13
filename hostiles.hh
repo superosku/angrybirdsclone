@@ -5,7 +5,7 @@
 #include "moveable.hh"
 #include "map.hh"
 
-#define BREAKDOWN_R 1.5
+#define BREAKDOWN_R 2.5
 
 class Hostile : public MoveableObject
 {
@@ -115,7 +115,7 @@ class BasicObstacle : public Hostile
 class BlastBullet : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0) 
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

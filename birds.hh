@@ -2,8 +2,8 @@
 #define BIRDS
 
 //#include "map.hh"
-#include "moveable.hh"
 #include "hostiles.hh" // BlastBullet
+#include "moveable.hh"
 
 #define N_BULLETS 16
 #define PI 3.14159265359
