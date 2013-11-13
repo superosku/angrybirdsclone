@@ -146,7 +146,7 @@ class BombBird : public Bird
   m->removeObject(this);
   //delete this;
   //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
-  timer = 0;
+  //timer = 0;
   
   return(true);
   }

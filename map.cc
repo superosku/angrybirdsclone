@@ -101,7 +101,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataA)
     {
-      bodyDataA->object->timer = 300;
+      bodyDataA->object->timer = 120;
     }
 
     totalScore += deltaEnergy;
@@ -117,7 +117,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataB)
     {
-      bodyDataB->object->timer = 300;
+      bodyDataB->object->timer = 120;
     }
     totalScore += deltaEnergy;
   }
@@ -149,6 +149,7 @@ void Map::removeObject(MoveableObject* o)
 {
   auto erase_iter = std::remove(objects.begin(),objects.end(),o);
   objects.erase(erase_iter);
+  delete o;
 }
 
 void Map::loadMap(std::string filepath)
