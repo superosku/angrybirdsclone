@@ -14,12 +14,14 @@ void Hostile::destroy(Map* m)
   
   for (size_t i = 0; i < BREAKDOWN_N_X*BREAKDOWN_N_Y; ++i)
   {
+    if(type != MoveableObject::Type::Else){
     Particle* tmp = new Particle(world,x,y,w,h,getType());
     
     tmp->setImpulse(0.2*v.x,(v.y < 0 ? 0 : (v.y *0.2)));
     tmp->setImpulse(0,0.5);
     
     m->addObject(tmp);
+   }
   }
   
   /*for (ssize_t i = -BREAKDOWN_N_X; i < BREAKDOWN_N_X; i++)
