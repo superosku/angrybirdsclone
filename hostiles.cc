@@ -9,6 +9,7 @@ void Hostile::destroy(Map* m)
   float y = getY();
   float w = getW();
   float h = getH();
+  b2Vec2 v = body->GetLinearVelocity();
   float a = getAngle();
   
   for (ssize_t i = -BREAKDOWN_N_X; i < BREAKDOWN_N_X; i++)
@@ -25,6 +26,10 @@ void Hostile::destroy(Map* m)
       float p_h = h/(BREAKDOWN_N_Y*2);
       
       Particle* tmp = new Particle(world,p_x,p_y,p_w,p_h,a,getType());
+      
+      tmp->setImpulse(0.2*v.x,0.2*v.y);
+      tmp->setImpulse(0,0.2);
+      
       m->addObject(tmp);
     }
   }
