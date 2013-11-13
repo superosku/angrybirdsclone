@@ -1,7 +1,8 @@
 #include <vector>
 #include <iostream>
-#include "map.hh"
 #include "graphics.hh"
+//#include "map.hh"
+
 int main(){
   Graphics g;
   g.run();

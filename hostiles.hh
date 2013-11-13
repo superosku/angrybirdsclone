@@ -76,6 +76,25 @@ class BasicObstacle : public Hostile
   // virtual ~BasicObstacle();
 };
 
+class BlastBullet : public Hostile
+{
+  public:
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y) 
+  {
+    b2PolygonShape shape;
+    shape.SetAsBox(w, h);
+    //this->w = w;
+    //this->h = h;
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+
+    body->CreateFixture(&fixtureDef);
+  }
+};
+
 
 class BasicEnemy : public Hostile
 {

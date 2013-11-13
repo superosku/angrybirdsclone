@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Box2D/Box2D.h"
+//#include "map.hh"
 
 class Map;
 class MoveableObject;
@@ -45,13 +46,16 @@ class MoveableObject
     {
      body->GetWorld()->DestroyBody(body);
     }
+    
+    virtual bool action(Map*){return(true);}
+    
     //Ro3
     MoveableObject& operator=(const MoveableObject&) = delete;
     MoveableObject(const MoveableObject&) = delete;
 
     void setImpulse(float x, float y) {
-      //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
+      //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
     }
     MoveableObject::Type getType() {
       return type;

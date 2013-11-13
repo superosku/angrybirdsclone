@@ -4,8 +4,8 @@ SFML=/home/jaine/Downloads/SFML-2.1
 CC=g++
 CFLAGS=-c -g -std=c++0x -Wall -Wextra -pedantic -I $(SFML)/include
 LDFLAGS=-lBox2D -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -L $(SFML)/lib -Wl,-rpath=$(SFML)/lib -Wl,-rpath-link=$(SFML)/lib
-SOURCES=main.cc
-OBJECTS=main.o
+SOURCES=main.cc map.cc CSVparser.cc
+OBJECTS=main.o map.o CSVparser.o
 EXECUTABLE=main
 
 all: $(SOURCES) $(EXECUTABLE)

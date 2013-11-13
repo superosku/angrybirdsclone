@@ -1,10 +1,9 @@
-#ifndef CSVparser
-#define CSVparser
-
 #include <string>
 #include <vector>
 
-std::vector<std::string> toSTRVEC(std::string in);/*
+#include "CSVparser.hh"
+
+std::vector<std::string> toSTRVEC(std::string in)
 {
   std::vector<std::string> out;
   size_t i = 0,j = 0;
@@ -20,9 +19,9 @@ std::vector<std::string> toSTRVEC(std::string in);/*
   }
   out.push_back(in.substr(i,(j-i)));
   return(out);
-}*/
+}
 
-std::string toCSVSTR(std::vector<std::string> in);/*
+std::string toCSVSTR(std::vector<std::string> in)
 {
   std::string out;
   
@@ -34,6 +33,5 @@ std::string toCSVSTR(std::vector<std::string> in);/*
   out.pop_back();
   
   return (out);
-}*/
+}
 
-#endif

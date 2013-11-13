@@ -1,8 +1,14 @@
 #ifndef BIRDS
 #define BIRDS
 
+//#include "map.hh"
 #include "moveable.hh"
-#include "map.hh"
+#include "hostiles.hh" // BlastBullet
+
+#define N_BULLETS 32
+#define PI 3.14159265359
+
+class Map;
 
 class Bird : public MoveableObject
 {
@@ -36,7 +42,7 @@ class Bird : public MoveableObject
   }
   
   // Function to check if bird has actions left, returns boolean value.
-  virtual bool action()
+  virtual bool action(Map*)
   {
     std::cout << "action in Bird-class" << std::endl;
     if (actions > 0)
@@ -67,7 +73,7 @@ class BasicBird : public Bird
   // virtual ~BasicBird() {}
   
   // Function to perform special action of bird. Returns boolean value to tell if action was performed correctly.
-  virtual bool action()
+  virtual bool action(Map*)
   {
     /* DEMO:
      * For use in birds that have special action to check if action is allowed; if bird has actions left.
@@ -87,9 +93,9 @@ class BouncyBird : public Bird
   public:
   BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a){}
   
-  virtual bool action()
+  virtual bool action(Map* m)
   {
-    if (!Bird::action())
+    if (!Bird::action(m))
       return(false);
     
     std::cout << "action in BouncyBird-class" << std::endl;
@@ -105,9 +111,9 @@ class TangentBird : public Bird
   public:
   TangentBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, d, a){}
   
-  virtual bool action()
+  virtual bool action(Map* m)
   {
-    if (!Bird::action())
+    if (!Bird::action(m))
       return(false);
       
     std::cout << "action in TangentBird-class" << std::endl;
@@ -120,5 +126,38 @@ class TangentBird : public Bird
   }
 };
 
+class BombBird : public Bird
+{
+  public:
+  BombBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, d, a){}
+  
+  virtual bool action(Map* m)
+  {
+    if (!Bird::action(m))
+      return(false);
+    
+    std::cout << "action in Bird-class" << std::endl;
+    
+    b2World* world = body->GetWorld();
+    
+    float x = getX();
+    float y = getY();
+    
+    for (size_t i = 0; i < N_BULLETS; ++i)
+    {
+      float a = 2*PI/N_BULLETS;
+      
+      BlastBullet* tmp = new BlastBullet(world,x,y);
+      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      
+      m->addObject(tmp);
+    }
+    
+  m->removeObject(this);
+  delete this;
+  
+  return(true);
+  }
+};
 
 #endif
