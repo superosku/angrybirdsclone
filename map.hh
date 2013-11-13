@@ -9,156 +9,27 @@
 #include <map>
 
 #include <Box2D/Box2D.h>
-//#include "moveable.hh"
-//#include "birds.hh"
-//#include "hostiles.hh"
 #include "CSVparser.hh"
 
 class MoveableObject;
 
-/*class Bird;
-class Hostile;
-class BasicBird;
-class BasicEnemy;
-class BasicObstacle;
-class BouncyBird;
-class TangentBird;
-class BombBird;*/
-
 class Map : public b2ContactListener {
   public:
     Map();
-    /*{
-      //Set cannon coordinates
-      catapult_x = -9;
-      catapult_y = 6;
-
-      //Creating a world with gravity
-      m_world = new b2World(b2Vec2(0.0f, -10.0f));
-
-      //Create collision callback -> Box2D calls this instance of Map-class when contact happens
-      m_world->SetContactListener(this);
-
-      //Adding a default line to the world at 0-level so blocks dont fall freely
-      b2BodyDef line_def;
-      line_def.position.Set(0.0f, 0.0f);
-      b2Body* line_body = m_world->CreateBody(&line_def);
-      b2EdgeShape line_shape;
-      line_shape.Set( b2Vec2(-50,0), b2Vec2(50,0) );
-      line_body->CreateFixture(&line_shape, 0.0f);
-
-      //Add some test structures
-      loadMap("basic_map.csv");
-    }*/
-    ~Map();/*
-    {
-      for(auto object: objects){
-        delete static_cast<bodyData*>(object->body->GetUserData());
-        delete object;
-      }
-      delete m_world; //This deletes all box2d stuff, movable object doesnt need to do anything about that
-    }*/
+    ~Map();
     //Ro3
     Map& operator=(const Map&) = delete;
     Map(const Map&) = delete;
 
-    void Step();/*
-    {
-      //Advance Box2D simulation by one step
-      m_world->Step(1.0/60.0, 6, 2);
+    void Step();
 
-      enemiesLeft=0;
-      //Removing of objects which have no energy left
-      for(auto i=objects.begin();i!=objects.end();)
-      {
-        if((*i)->type == MoveableObject::Type::BasicEnemy)
-          ++enemiesLeft;
-        bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
-        if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
-         killCurrentBird(*i);
-         delete *i;
-         delete bodyDataA;
-         i = objects.erase(i);
-         continue;
-        }
-        else if(bodyDataA && !bodyDataA->hasEnergy)
-         --bodyDataA->object->timer;
-        ++i;
-      }
-    }*/
-    
-    void PreSolve(b2Contact* contact, const b2Manifold*);/*
-    {
-      bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
-      bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
-      if(bodyDataA)
-       bodyDataA->object->velocity = contact->GetFixtureA()->GetBody()->GetLinearVelocity();
-      if(bodyDataB)
-       bodyDataB->object->velocity = contact->GetFixtureB()->GetBody()->GetLinearVelocity();
-    }*/
+    void PreSolve(b2Contact* contact, const b2Manifold*);
 
     //Calculate score and new energies after the impact
-    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);/*{
-     if(impulse->normalImpulses[0] > 1)
-     {
-      float maxImpulse = 0.0f;
-      for (int i = 0; i < contact->GetManifold()->pointCount; ++i)
-      {
-        maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
-      }
-      //If FixtureA has energy, calculate lost energy according to impulse strength and add that to totalscore
-      bodyData* bodyDataA =static_cast<bodyData*>(contact->GetFixtureA()->GetBody()->GetUserData());
-      bodyData* bodyDataB =static_cast<bodyData*>(contact->GetFixtureB()->GetBody()->GetUserData());
-      float deltaEnergy=0;
-      if(bodyDataA && bodyDataA->hasEnergy)
-      {
-        deltaEnergy = maxImpulse * 0.1;
-        bodyDataA->energy =  bodyDataA->energy > deltaEnergy? bodyDataA->energy - deltaEnergy: 0 ;
-        if(bodyDataB && !bodyDataA->energy)
-          contact->GetFixtureB()->GetBody()->SetLinearVelocity(bodyDataB->object->velocity);
-      }
-      else if (bodyDataA)
-      {
-       bodyDataA->object->timer = 300;
-      }
-
-      totalScore += deltaEnergy;
-
-      deltaEnergy=0;
-      //If FixtureB has energy, calculate lost energy according to impulse strength and add that to totalscore
-      if(bodyDataB && bodyDataB->hasEnergy)
-      {
-        deltaEnergy = maxImpulse * 0.1;
-        bodyDataB->energy =  bodyDataB->energy > deltaEnergy? bodyDataB->energy - deltaEnergy: 0 ;
-        if(bodyDataA && !bodyDataB->energy)
-          contact->GetFixtureA()->GetBody()->SetLinearVelocity(bodyDataA->object->velocity);
-      }
-      else if (bodyDataB)
-      {
-       bodyDataB->object->timer = 300;
-      }
-      totalScore += deltaEnergy;
-     }
-    }*/
+    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
     //This can be called to shoot the bird
-    void ShootBird(float x, float y);/* {
-      //BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
-      if (birds.empty())
-      {
-        std::cout << "No birds left..." << std::endl;
-        return;
-      }
-      else
-      {
-        current_b = birds.back();
-        current_b->getBody()->SetActive(true);
-        current_b->setImpulse(x, y);
-        std::cout << "Shot Bird!" << std::endl;
-        objects.push_back(current_b);
-        birds.pop_back();
-      }
-    }*/
+    void ShootBird(float x, float y);
 
     float getCatapultX() {
       return catapult_x;
@@ -176,20 +47,15 @@ class Map : public b2ContactListener {
       return enemiesLeft;
     }
 
-    void addObject(MoveableObject* o);/*
-    {
-      objects.push_back(o);
-    }*/
+    void addObject(MoveableObject* o);
     void removeObject(MoveableObject* o);
 
     std::vector<MoveableObject*> getObjects() {return objects;}
-    
-    //b2World
-    
+
     MoveableObject* getCurrentBird() {return(current_b);}
-    
+
     void killCurrentBird() {current_b = nullptr;std::cout << "killed current bird" << std::endl;}
-    
+
     void killCurrentBird(MoveableObject* a)
     {
       if (a == current_b) {
@@ -198,46 +64,9 @@ class Map : public b2ContactListener {
       }
     }
   private:
-    //Should the dimensions of the world be saved? To ease changing the coordinate systems.
+    void loadMap(std::string filepath);
     //List of MoveableObjects currently present in the map
-    void loadMap(std::string filepath);/*
-    {
-      std::string tmpStr;
-      std::vector<std::string> tmpVec;
-      std::ifstream input(filepath);
-      // First line is for map parameters
-      std::getline(input,tmpStr);
-      // Object_id,x,y,w,h,d,energy,image_path
-      while (std::getline(input,tmpStr))
-      {
-        tmpVec = toSTRVEC(tmpStr);
-        if (validSTRVEC(tmpVec))
-        {
-          switch(std::atoi(tmpVec[0].c_str()))
-          {
-            case (100):
-              birds.push_back(new BasicBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
-              break;
-            case (101):
-              birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
-              break;
-            case (102):
-              birds.push_back(new TangentBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
-              break;
-            case (103):
-              birds.push_back(new BombBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
-              break;
-            case (200):
-              objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
-              break;
-            case (300):
-              objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
-              break;
-          }
-        }
-      }
-    }*/
-    
+
     // TODO better validation...
     bool validSTRVEC(std::vector<std::string> vec)
     {
@@ -249,7 +78,7 @@ class Map : public b2ContactListener {
           return(false);
         }
         size_t t_id = std::atoi(vec[0].c_str());
-        
+
         for (auto i : valid[t_id])
         {
           std::atoi(vec[i].c_str());
@@ -263,7 +92,7 @@ class Map : public b2ContactListener {
       }
       return (true);
     }
-    
+
     std::vector<MoveableObject*> birds;
     std::vector<MoveableObject*> objects;
     b2World* m_world;
