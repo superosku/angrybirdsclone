@@ -128,7 +128,6 @@ class BlastBullet : public Hostile
 
     body->CreateFixture(&fixtureDef);
   }
-  
   virtual void destroy(Map*){}
 };
 
@@ -147,7 +146,7 @@ class Particle : public Hostile
 
     body->CreateFixture(&fixtureDef);
   }
-  
+
   virtual void destroy(Map*){}
 };
 
@@ -167,7 +166,6 @@ class BasicEnemy : public Hostile
     body->CreateFixture(&fixtureDef);
   }
   virtual ~BasicEnemy() {}
-  
   virtual void destroy(Map*){}
 };
 
