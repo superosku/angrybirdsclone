@@ -13,15 +13,12 @@ class Map;
 class Bird : public MoveableObject
 {
   size_t actions;
-  protected:
-  float radius;
   
   public:
-  Bird(/*TODO: Parametres of MoveableObject()*/b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t actions = 0) : MoveableObject(world, x, y, MoveableObject::Type::BasicBird, 0), actions(actions)
+  Bird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t actions = 0) : MoveableObject(world, x, y, 0.5f, 0.5f, MoveableObject::Type::BasicBird, 0), actions(actions)
   {
     b2CircleShape shape;
     shape.m_radius = 0.5f;
-    radius = 0.5f;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -33,14 +30,6 @@ class Bird : public MoveableObject
     body->SetActive(false);
   }
   virtual ~Bird() {}
-  
-  float getH() {
-    return radius;
-  }
-  float getW() {
-    return radius;
-  }
-  
   // Function to check if bird has actions left, returns boolean value.
   virtual bool action(Map*)
   {

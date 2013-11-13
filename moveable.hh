@@ -20,15 +20,18 @@ class MoveableObject
 {
   public:
     enum Type {
-      Else,
-      BasicBird,
-      BasicEnemy,
-      BasicObstacle,
-      BouncyBird
+      BasicBird = 100,
+      BouncyBird = 101,
+      TangentBird = 102,
+      BombBird = 103,
+      BasicEnemy = 300,
+      BasicObstacle = 200,
+      //BlastBullet = 800,
+      Else = 900
     };
     typedef float mass_t;
     
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f): timer(300)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f): timer(300), w(w), h(h)
     {
       this->type = type;
       b2BodyDef bodyDef;
@@ -72,10 +75,10 @@ class MoveableObject
       return body->GetAngle();
     }
     virtual float getH() {
-      return 1.0f;
+      return h;
     }
     virtual float getW() {
-      return 1.0f;
+      return w;
     }
     mass_t getMass() {
       return body->GetMass();
@@ -90,12 +93,14 @@ class MoveableObject
 
     //Public variable to store path to the image of an object
     const std::string imagePath;
+  friend class Map;
   protected:
     b2Body* body;
     b2Vec2 velocity;
     MoveableObject::Type type;
     size_t timer;
-  friend class Map;
+    float w, h;
+
 };
 
 #endif

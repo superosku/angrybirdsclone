@@ -7,16 +7,9 @@
 class Hostile : public MoveableObject
 {
   // Energy of the hostile is saved to box2d userdata, something from 100 to 1000
-
   public:
-  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, type, energy)
-  {
-/*    bodyData* data = new bodyData;
-    data->energy = energy;
-    data->object = this;
-    body->SetUserData(data);*/
+  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else) : MoveableObject(world, x, y, w, h, type, energy) {}
 
-  }
   virtual ~Hostile() {}
   /*Hostile& operator=(const Hostile&) = delete;
   Hostile(const Hostile&) = delete;*/
@@ -47,17 +40,13 @@ class Hostile : public MoveableObject
 
 class BasicObstacle : public Hostile
 {
-  private:
-    float w, h;
   // No private stuff yet :(
 
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f, float e = 10) : Hostile(world, x, y, e, MoveableObject::Type::BasicObstacle)  
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f, float e = 10) : Hostile(world, x, y, w, h, e, MoveableObject::Type::BasicObstacle)  
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
-    this->w = w;
-    this->h = h;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -66,12 +55,6 @@ class BasicObstacle : public Hostile
 
     body->CreateFixture(&fixtureDef);
   }
-  float getH() {
-    return h;
-  }
-  float getW() {
-    return w;
-  }
 
   // virtual ~BasicObstacle();
 };
@@ -79,12 +62,10 @@ class BasicObstacle : public Hostile
 class BlastBullet : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y) 
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
-    //this->w = w;
-    //this->h = h;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -98,16 +79,12 @@ class BlastBullet : public Hostile
 
 class BasicEnemy : public Hostile
 {
-  protected:
-  float radius;
-  
   public:
-  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f,float e = 1) : Hostile(world, x, y, e, MoveableObject::Type::BasicEnemy)
+  BasicEnemy(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f,float e = 1) : Hostile(world, x, y, 0.5f, 0.5f, e, MoveableObject::Type::BasicEnemy)
   {
     //TODO: Initialization (might be empty).
     b2CircleShape shape;
     shape.m_radius = 0.5f;
-    radius = 0.5f;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -118,13 +95,6 @@ class BasicEnemy : public Hostile
   }
   virtual ~BasicEnemy() {}
   
-  float getH() {
-    return radius;
-  }
-  float getW() {
-    return radius;
-  }
-
   
 };
 
