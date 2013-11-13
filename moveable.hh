@@ -21,7 +21,8 @@ class MoveableObject
       Else,
       BasicBird,
       BasicEnemy,
-      BasicObstacle
+      BasicObstacle,
+      BouncyBird
     };
     typedef float mass_t;
     

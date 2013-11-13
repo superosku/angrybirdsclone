@@ -169,6 +169,9 @@ class Map : public b2ContactListener {
     size_t getScore() {
       return totalScore;
     }
+    size_t getBirdsLeft() {
+      return birds.size();
+    }
 
     std::vector<MoveableObject*> getObjects() {return objects;}
     Bird* getCurrentBird() {return(current_b);}
