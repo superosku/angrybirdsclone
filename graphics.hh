@@ -20,6 +20,7 @@ class Graphics {
     sf::Font font;
     sf::Texture fox;
     sf::Texture sheep;
+    sf::Texture kemma;
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
@@ -44,8 +45,12 @@ class Graphics {
       if(!sheep.loadFromFile("lammas.png")){
         //Throw error
       }
+      if(!kemma.loadFromFile("kemma.png")){
+          //Throw error
+      }
       fox.setSmooth(true);
       sheep.setSmooth(true);
+      kemma.setSmooth(true);
       //settings.aliasingLevel = 8;
       c = 30;
       cam_x = 5;
@@ -108,7 +113,7 @@ class Graphics {
         catapult_bg.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
 
         sf::CircleShape catapult(convertDistance(0.5));
-        catapult.setTexture(&fox);
+        catapult.setTexture(&kemma);
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
         if (shoot_aiming) 
           catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
