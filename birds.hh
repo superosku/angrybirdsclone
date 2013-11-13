@@ -136,7 +136,7 @@ class BombBird : public Bird
     if (!Bird::action(m))
       return(false);
     
-    std::cout << "action in Bird-class" << std::endl;
+    std::cout << "action in BombBird-class" << std::endl;
     
     b2World* world = body->GetWorld();
     
@@ -155,7 +155,9 @@ class BombBird : public Bird
   
   m->killCurrentBird(this);
   m->removeObject(this);
-  delete this;
+  //delete this;
+  //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
+  timer = 0;
   
   return(true);
   }
