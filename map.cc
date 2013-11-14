@@ -7,11 +7,12 @@
 //#include <random>
 #include <Box2D/Box2D.h>
 
-#include "map.hh"
 #include "moveable.hh"
 #include "hostiles.hh"
 #include "birds.hh"
 #include "CSVparser.hh"
+
+#include "map.hh"
 
 Map::Map()
 {
@@ -132,9 +133,9 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
   }
 }
 
-Bird::Type Map::getType() {
+MoveableObject::Type Map::getType() {
   if (birds.empty())
-    return Bird::Type::None;
+    return Bird::Type::Else;
   return birds.back()->getType();
 }
 

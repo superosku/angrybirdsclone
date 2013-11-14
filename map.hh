@@ -10,6 +10,7 @@
 
 #include <Box2D/Box2D.h>
 #include "CSVparser.hh"
+#include "moveable.hh"
 
 class MoveableObject;
 
@@ -64,7 +65,7 @@ class Map : public b2ContactListener {
       }
     }
     
-    Bird::Type getType();
+    MoveableObject::Type getType();
 
   private:
     void loadMap(std::string filepath);
