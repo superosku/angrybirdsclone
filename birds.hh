@@ -110,7 +110,7 @@ class TangentBird : public Bird
     b2Vec2 v = body->GetLinearVelocity();
     //float a = atan(v.y/v.x);
     //setImpulse(50*cos(a),50*sin(a));
-    setImpulse(15*v.x,15*v.y);
+    setImpulse(2*v.x,2*v.y);
     
     return(true);
   }
