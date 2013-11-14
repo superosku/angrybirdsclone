@@ -61,7 +61,7 @@ void Map::Step()
     if((*i)->type == MoveableObject::Type::BasicEnemy)
       ++enemiesLeft;
     bodyData* bodyDataA =static_cast<bodyData*>((*i)->body->GetUserData());
-    if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  bodyDataA->object->timer == 0 )){
+    if(bodyDataA && ( (bodyDataA->hasEnergy && bodyDataA->energy <= 0 ) ||  (*i)->timer == 0 )){
       //(*i)->getBody()->SetActive(false);
       (*i)->destroy(this);
       killCurrentBird(*i);
