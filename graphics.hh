@@ -24,6 +24,7 @@ class Graphics {
     sf::Texture prodeko;
     sf::Texture pjk;
     sf::Texture tik;
+    sf::Texture tile1;
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
@@ -57,11 +58,15 @@ class Graphics {
       if(!tik.loadFromFile("tik.png")){
           //Throw error
       }
+      if(!tile1.loadFromFile("tiili1.png")){
+          //Throw error
+      }
       kemma.setSmooth(true);
       kone.setSmooth(true);
       prodeko.setSmooth(true);
       pjk.setSmooth(true);
       tik.setSmooth(true);
+      tile1.setSmooth(true);
       //settings.aliasingLevel = 8;
       c = 30;
       cam_x = 5;
@@ -160,9 +165,10 @@ class Graphics {
           if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
             sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
             rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            rect.setFillColor(sf::Color(255, 128, 64));
-            rect.setOutlineColor(sf::Color(128, 64, 32));
-            rect.setOutlineThickness(2);
+            //rect.setFillColor(sf::Color(255, 128, 64));
+            //rect.setOutlineColor(sf::Color(128, 64, 32));
+            //rect.setOutlineThickness(2);
+            rect.setTexture(&tile1);
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
