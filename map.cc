@@ -71,7 +71,7 @@ void Map::Step()
       continue;
     }
     else if(bodyDataA && !bodyDataA->hasEnergy)
-      --bodyDataA->object->timer;
+      --(*i)->timer;
     ++i;
   }
   for (auto i : objectsQueue)
