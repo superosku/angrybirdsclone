@@ -1,7 +1,7 @@
 #ifndef MOVEABLE
 #define MOVEABLE
 
-#define BREAKDOWN_R 2.5
+#define BREAKDOWN_R 3
 #define N_BULLETS 16
 #define PI 3.14159265359
 
@@ -30,6 +30,7 @@ class MoveableObject
       BombBird = 103,
       BasicEnemy = 300,
       BasicObstacle = 200,
+      TNT = 201,
       BlastBullet_t = 800,
       Else = 900
     };
@@ -66,6 +67,7 @@ class MoveableObject
     void setImpulse(float x, float y) {
       //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
       body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      //body->SetLinearVelocity(b2Vec2(x,y));
     }
     MoveableObject::Type getType() {
       return type;
