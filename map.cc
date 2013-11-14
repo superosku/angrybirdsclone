@@ -191,6 +191,9 @@ void Map::loadMap(std::string filepath)
         case (MoveableObject::Type::BasicObstacle):
           objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
           break;
+        case (MoveableObject::Type::TNT):
+          objects.push_back(new TNT(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str())/*, std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str()))*/));
+          break;
         case (MoveableObject::Type::BasicEnemy):
           objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
           break;

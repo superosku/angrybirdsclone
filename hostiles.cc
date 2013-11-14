@@ -57,3 +57,28 @@ void Hostile::destroy(Map* m)
     }
   }*/
 }
+
+void TNT::destroy(Map* m)
+  {
+    b2World* world = body->GetWorld();
+    
+    float x = getX();
+    float y = getY();
+    
+    std::cout << "Blast at " << x << ", " << y << "." << std::endl;
+    
+    body->SetActive(false);
+    
+    for (size_t i = 0; i < N_BULLETS; ++i)
+    {
+      float a = 2*PI/N_BULLETS;
+      
+      BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
+      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      
+      m->addObject(tmp);
+    }
+    m->killCurrentBird(this);
+    m->removeObject(this);
+    timer = 0;
+  }

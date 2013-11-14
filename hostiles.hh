@@ -112,6 +112,48 @@ class BasicObstacle : public Hostile
   // virtual ~BasicObstacle();
 };
 
+class TNT : public Hostile
+{
+  public:
+  TNT(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.5f, float h = 0.5f, float d = 10.0f, float e = 1) : Hostile(world, x, y, w, h, e, MoveableObject::Type::BasicObstacle)
+  {
+    b2PolygonShape shape;
+    shape.SetAsBox(w, h);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density= d;
+    fixtureDef.friction = 1.5f;
+
+    body->CreateFixture(&fixtureDef);
+  }
+  
+  void destroy(Map* m);/*
+  {
+    b2World* world = body->GetWorld();
+    
+    float x = getX();
+    float y = getY();
+    
+    std::cout << "Blast at " << x << ", " << y << "." << std::endl;
+    
+    body->SetActive(false);
+    
+    for (size_t i = 0; i < N_BULLETS; ++i)
+    {
+      float a = 2*PI/N_BULLETS;
+      
+      BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
+      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      
+      m->addObject(tmp);
+    }
+    m->killCurrentBird(this);
+    m->removeObject(this);
+    timer = 0;
+  }*/
+};
+
 class BlastBullet : public Hostile
 {
   public:
@@ -122,7 +164,7 @@ class BlastBullet : public Hostile
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density = 15.0f;
+    fixtureDef.density = 5.0f;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);

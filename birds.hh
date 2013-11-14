@@ -141,7 +141,7 @@ class BombBird : public Bird
       float a = 2*PI/N_BULLETS;
       
       BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
-      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      tmp->setImpulse(30*cos(a*i),30*sin(a*i));
       
       m->addObject(tmp);
     }
