@@ -67,8 +67,8 @@ class Graphics {
       pjk.setSmooth(true);
       tik.setSmooth(true);
       tile1.setSmooth(true);
-      //settings.aliasingLevel = 8;
-      c = 30;
+      //settings.antialiasingLevel = 8;
+      c = 35;
       cam_x = 5;
       cam_y = 5;
       shoot_aiming = 0;
