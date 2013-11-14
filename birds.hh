@@ -108,8 +108,9 @@ class TangentBird : public Bird
     std::cout << "action in TangentBird-class" << std::endl;
     
     b2Vec2 v = body->GetLinearVelocity();
-    float a = atan(v.y/v.x);
-    setImpulse(15*cos(a),15*sin(a));
+    //float a = atan(v.y/v.x);
+    //setImpulse(50*cos(a),50*sin(a));
+    setImpulse(15*v.x,15*v.y);
     
     return(true);
   }
