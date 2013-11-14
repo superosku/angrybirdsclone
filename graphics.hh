@@ -129,8 +129,19 @@ class Graphics {
         catapult_bg.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
 
         sf::CircleShape catapult(convertDistance(0.5));
-        //TODO set texture according to current bird
-        catapult.setTexture(&kemma);
+        //set texture according to upcoming bird
+        MoveableObject::Type currentType = m.getNextBirdType();
+        if(currentType == MoveableObject::Type::BasicBird)
+          catapult.setTexture(&kemma);
+        if(currentType == MoveableObject::Type::BombBird)
+          catapult.setTexture(&tik);
+        if(currentType == MoveableObject::Type::BouncyBird)
+          catapult.setTexture(&prodeko);
+        if(currentType == MoveableObject::Type::TangentBird)
+          catapult.setTexture(&pjk);
+        if(currentType == MoveableObject::Type::Else)
+          catapult.setFillColor(sf::Color(100,100,200));
+
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
         if (shoot_aiming) 
           catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
@@ -184,7 +195,7 @@ class Graphics {
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
-          if (type == MoveableObject::Type::BombBird) { // Pallo
+          if (type == MoveableObject::Type::BasicBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
@@ -192,12 +203,30 @@ class Graphics {
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
-          }
-          if (type == MoveableObject::BasicBird) { // Pallo
+          } 
+          if (type == MoveableObject::Type::BouncyBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
-            circle.setTexture(&kemma);
+            circle.setTexture(&prodeko);
+            circle.setPosition(x,y);
+            circle.setRotation(i->getAngle() * -57.295);
+            window.draw(circle);
+          }
+          if (type == MoveableObject::Type::TangentBird) { // Pallo
+            sf::CircleShape circle(convertDistance(i->getW()));
+            circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            //circle.setFillColor(sf::Color(200, 100, 100));
+            circle.setTexture(&pjk);
+            circle.setPosition(x,y);
+            circle.setRotation(i->getAngle() * -57.295);
+            window.draw(circle);
+          }
+          if (type == MoveableObject::Type::BombBird) { // Pallo
+            sf::CircleShape circle(convertDistance(i->getW()));
+            circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            //circle.setFillColor(sf::Color(200, 100, 100));
+            circle.setTexture(&tik);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
