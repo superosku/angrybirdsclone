@@ -167,20 +167,6 @@ class Graphics {
         window.draw(catapult_bg);
         window.draw(catapult);
         
-        // Drawing current bird.
-        /*if (m.getCurrentBird() != nullptr) {
-          Bird* i = m.getCurrentBird();
-          size_t x = convertX(i->getX());
-          size_t y = convertY(i->getY());
-          sf::CircleShape circle(convertDistance(i->getW()));
-          circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-          //circle.setFillColor(sf::Color(200, 100, 100));
-          circle.setTexture(&fox);
-          circle.setPosition(x,y);
-          circle.setRotation(i->getAngle() * -57.295);
-          window.draw(circle);
-        }*/
-        
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
         for(auto& i: objects)
@@ -188,14 +174,9 @@ class Graphics {
           size_t x = convertX(i->getX());
           size_t y = convertY(i->getY());
           MoveableObject::Type type = i->getType();
-          //getType
-          //getImagepath
           if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
             sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
             rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //rect.setFillColor(sf::Color(255, 128, 64));
-            //rect.setOutlineColor(sf::Color(128, 64, 32));
-            //rect.setOutlineThickness(2);
             if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)
               rect.setTexture(&tile1);
             if(i->getEnergy() > 0.5 && i->getEnergy() <=0.75)
