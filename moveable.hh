@@ -65,7 +65,8 @@ class MoveableObject
 
     void setImpulse(float x, float y) {
       //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter(),true);
-      body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      //body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
+      body->SetLinearVelocity(b2Vec2(x,y));
     }
     MoveableObject::Type getType() {
       return type;
