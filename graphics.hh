@@ -40,6 +40,9 @@ class Graphics {
     size_t shoot_aiming;
 
   public:
+    ~Graphics() {
+      delete m;
+    }
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
       m = new Map();
       window.setFramerateLimit(60);
