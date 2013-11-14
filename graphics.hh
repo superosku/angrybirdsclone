@@ -25,6 +25,10 @@ class Graphics {
     sf::Texture pjk;
     sf::Texture tik;
     sf::Texture tile1;
+    sf::Texture tile2;
+    sf::Texture tile3;
+    sf::Texture tile4;
+
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
@@ -61,12 +65,25 @@ class Graphics {
       if(!tile1.loadFromFile("tiili1.png")){
           //Throw error
       }
+      if(!tile2.loadFromFile("tiili2.png")){
+          //Throw error
+      }
+      if(!tile3.loadFromFile("tiili3.png")){
+          //Throw error
+      }
+      if(!tile4.loadFromFile("tiili4.png")){
+          //Throw error
+      }
+      
       kemma.setSmooth(true);
       kone.setSmooth(true);
       prodeko.setSmooth(true);
       pjk.setSmooth(true);
       tik.setSmooth(true);
       tile1.setSmooth(true);
+      tile2.setSmooth(true);
+      tile3.setSmooth(true);
+      tile4.setSmooth(true);
       //settings.antialiasingLevel = 8;
       c = 35;
       cam_x = 5;
@@ -166,7 +183,6 @@ class Graphics {
         
         // Drawing all movable objects
         std::vector<MoveableObject*> objects = m.getObjects();
-        //std::cout << "jou" << std::endl;
         for(auto& i: objects)
         {
           size_t x = convertX(i->getX());
@@ -180,7 +196,14 @@ class Graphics {
             //rect.setFillColor(sf::Color(255, 128, 64));
             //rect.setOutlineColor(sf::Color(128, 64, 32));
             //rect.setOutlineThickness(2);
-            rect.setTexture(&tile1);
+            if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)
+              rect.setTexture(&tile1);
+            if(i->getEnergy() > 0.5 && i->getEnergy() <=0.75)
+              rect.setTexture(&tile2);
+            if(i->getEnergy() > 0.25 && i->getEnergy() <= 0.5)
+              rect.setTexture(&tile3);
+            if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
+              rect.setTexture(&tile4);
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
@@ -198,7 +221,6 @@ class Graphics {
           if (type == MoveableObject::Type::BasicBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&kemma);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
@@ -207,7 +229,6 @@ class Graphics {
           if (type == MoveableObject::Type::BouncyBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&prodeko);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
@@ -216,7 +237,6 @@ class Graphics {
           if (type == MoveableObject::Type::TangentBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&pjk);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
@@ -225,7 +245,6 @@ class Graphics {
           if (type == MoveableObject::Type::BombBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&tik);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
@@ -234,7 +253,6 @@ class Graphics {
           if (type == MoveableObject::BasicEnemy) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            //circle.setFillColor(sf::Color(200, 100, 100));
             circle.setTexture(&kone);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
