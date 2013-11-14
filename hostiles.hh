@@ -5,13 +5,13 @@
 #include "moveable.hh"
 #include "map.hh"
 
-#define BREAKDOWN_R 2.5
+//#define BREAKDOWN_R 2.5
 
 class Hostile : public MoveableObject
 {
   // Energy of the hostile is saved to box2d userdata, something from 100 to 1000
   public:
-  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else, float a = 0) : MoveableObject(world, x, y, w, h, type, energy, a) {}
+  Hostile(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, size_t energy = 10, MoveableObject::Type type = MoveableObject::Type::Else, float a = 0, float t = 300) : MoveableObject(world, x, y, w, h, type, energy, a, t) {}
 
   virtual ~Hostile() {}
   /*Hostile& operator=(const Hostile&) = delete;
@@ -115,7 +115,7 @@ class BasicObstacle : public Hostile
 class BlastBullet : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t) 
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,180+((int)(120*x) % 120)) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -126,6 +126,7 @@ class BlastBullet : public Hostile
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
+    //body->SetGravityScale(0.0f);
   }
   virtual void destroy(Map*){}
 };
@@ -133,7 +134,7 @@ class BlastBullet : public Hostile
 class Particle : public Hostile
 {
   public:
-  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t) 
+  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,0,180+((int)(120*x) % 120)) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

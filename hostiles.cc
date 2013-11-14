@@ -15,10 +15,11 @@ void Hostile::destroy(Map* m)
   for (size_t i = 0; i < BREAKDOWN_R*w*h; ++i)
   {
     if(type != MoveableObject::Type::Else){
-      Particle* tmp = new Particle(world,x,y,0.2,0.1,getType());
+      float a = 2*PI/(BREAKDOWN_R*w*h);
+      
+      Particle* tmp = new Particle(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)),0.2,0.1,getType());
       
       tmp->setImpulse(0.02*v.x,0.5);
-      //tmp->setImpulse(0,0.5);
       
       m->addObject(tmp);
     }
@@ -26,6 +27,15 @@ void Hostile::destroy(Map* m)
   
   /*for (ssize_t i = -BREAKDOWN_N_X; i < BREAKDOWN_N_X; i++)
   {
+  for (size_t i = 0; i < N_BULLETS; ++i)
+    {
+      float a = 2*PI/N_BULLETS;
+      
+      BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),y+0.2*sin(a*i));
+      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      
+      m->addObject(tmp);
+    }
     for (ssize_t j = -BREAKDOWN_N_Y; j < BREAKDOWN_N_Y; j++)
     {
       if ((i == 0) || (j == 0)) continue;

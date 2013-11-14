@@ -4,6 +4,7 @@
 #include <fstream>
 #include <algorithm> 
 #include <map>
+//#include <random>
 #include <Box2D/Box2D.h>
 
 #include "map.hh"
@@ -68,6 +69,9 @@ void Map::Step()
       --bodyDataA->object->timer;
     ++i;
   }
+  for (auto i : objectsQueue)
+    objects.push_back(i);
+  objectsQueue.clear();
 }
 
 void Map::PreSolve(b2Contact* contact, const b2Manifold*)
@@ -102,7 +106,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataA)
     {
-      bodyDataA->object->timer = 120;
+      bodyDataA->object->timer = 300 + (int)(bodyDataA->object->getX() * 120);
     }
 
     totalScore += deltaEnergy;
@@ -118,7 +122,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataB)
     {
-      bodyDataB->object->timer = 120;
+      bodyDataB->object->timer = 300 + (int)(bodyDataB->object->getY() * 3);
     }
     totalScore += deltaEnergy;
   }
@@ -143,7 +147,7 @@ void Map::ShootBird(float x, float y)
 
 void Map::addObject(MoveableObject* o)
 {
-  objects.push_back(o);
+  objectsQueue.push_back(o);
 }
 
 void Map::removeObject(MoveableObject* o)

@@ -5,8 +5,8 @@
 #include "hostiles.hh" // BlastBullet
 #include "moveable.hh"
 
-#define N_BULLETS 16
-#define PI 3.14159265359
+//#define N_BULLETS 16
+//#define PI 3.14159265359
 
 //class BlastBullet;
 
@@ -132,21 +132,24 @@ class BombBird : public Bird
     float x = getX();
     float y = getY();
     
+    std::cout << "Blast at " << x << ", " << y << "." << std::endl;
+    
+    body->SetActive(false);
+    
     for (size_t i = 0; i < N_BULLETS; ++i)
     {
       float a = 2*PI/N_BULLETS;
       
-      BlastBullet* tmp = new BlastBullet(world,x,y);
+      BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
       tmp->setImpulse(50*cos(a*i),50*sin(a*i));
       
       m->addObject(tmp);
     }
-  body->SetActive(false);
-  m->killCurrentBird(this);
-  m->removeObject(this);
-  //delete this;
-  //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
-  timer = 0;
+    m->killCurrentBird(this);
+    m->removeObject(this);
+    //delete this;
+    //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
+    timer = 0;
   
   return(true);
   }

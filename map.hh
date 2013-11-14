@@ -95,6 +95,7 @@ class Map : public b2ContactListener {
 
     std::vector<MoveableObject*> birds;
     std::vector<MoveableObject*> objects;
+    std::vector<MoveableObject*> objectsQueue;
     b2World* m_world;
     //b2Body* m_groundBody;
     MoveableObject* current_b = nullptr;
