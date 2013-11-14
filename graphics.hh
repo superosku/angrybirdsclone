@@ -19,9 +19,11 @@ class Graphics {
     //sf::Texture bgt;
     //sf::Sprite bg;
     sf::Font font;
-    sf::Texture fox;
-    sf::Texture sheep;
     sf::Texture kemma;
+    sf::Texture kone;
+    sf::Texture prodeko;
+    sf::Texture pjk;
+    sf::Texture tik;
     sf::ContextSettings settings;
     Map m;
     // the constant used to change coordinates
@@ -40,18 +42,26 @@ class Graphics {
       if (!font.loadFromFile("QuinzeNarrow.ttf")) {
         //Throw error or something
       }
-      if(!fox.loadFromFile("kettu.png")){
-        //Throw error
-      }
-      if(!sheep.loadFromFile("lammas.png")){
-        //Throw error
-      }
       if(!kemma.loadFromFile("kemma.png")){
+        //Throw error
+      }
+      if(!kone.loadFromFile("kone.png")){
+        //Throw error
+      }
+      if(!prodeko.loadFromFile("prodeko.png")){
           //Throw error
       }
-      fox.setSmooth(true);
-      sheep.setSmooth(true);
+      if(!pjk.loadFromFile("puu.png")){
+          //Throw error
+      }
+      if(!tik.loadFromFile("tik.png")){
+          //Throw error
+      }
       kemma.setSmooth(true);
+      kone.setSmooth(true);
+      prodeko.setSmooth(true);
+      pjk.setSmooth(true);
+      tik.setSmooth(true);
       //settings.aliasingLevel = 8;
       c = 30;
       cam_x = 5;
@@ -180,7 +190,7 @@ class Graphics {
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
             //circle.setFillColor(sf::Color(200, 100, 100));
-            circle.setTexture(&sheep);
+            circle.setTexture(&kone);
             circle.setPosition(x,y);
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
