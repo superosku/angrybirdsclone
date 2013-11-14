@@ -65,7 +65,7 @@ class Map : public b2ContactListener {
       }
     }
     
-    MoveableObject::Type getType();
+    MoveableObject::Type getNextBirdType();
 
   private:
     void loadMap(std::string filepath);
