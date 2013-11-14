@@ -122,7 +122,7 @@ class BlastBullet : public Hostile
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density = 1.0f;
+    fixtureDef.density = 15.0f;
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);

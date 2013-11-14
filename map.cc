@@ -26,12 +26,16 @@ Map::Map()
   m_world->SetContactListener(this);
 
   //Adding a default line to the world at 0-level so blocks dont fall freely
-  b2BodyDef line_def;
-  line_def.position.Set(0.0f, 0.0f);
-  b2Body* line_body = m_world->CreateBody(&line_def);
-  b2EdgeShape line_shape;
-  line_shape.Set( b2Vec2(-50,0), b2Vec2(50,0) );
-  line_body->CreateFixture(&line_shape, 0.0f);
+  b2BodyDef myBodyDef;
+  myBodyDef.position.Set(0.0f, -2.0f);
+  myBodyDef.type = b2_staticBody;
+  b2Body* myBody = m_world->CreateBody(&myBodyDef);
+
+  b2PolygonShape shape;
+  shape.SetAsBox(100, 2);
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &shape;
+  myBody->CreateFixture(&fixtureDef);
 
   loadMap("basic_map.csv");
 }
