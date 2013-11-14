@@ -63,6 +63,9 @@ class Map : public b2ContactListener {
         std::cout << "killed current bird" << std::endl;
       }
     }
+    
+    Bird::Type getType();
+
   private:
     void loadMap(std::string filepath);
     //List of MoveableObjects currently present in the map

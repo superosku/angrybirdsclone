@@ -132,6 +132,12 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
   }
 }
 
+Bird::Type Map::getType() {
+  if (birds.empty())
+    return Bird::Type::None;
+  return birds.back()->getType();
+}
+
 void Map::ShootBird(float x, float y)
 {
   //BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
