@@ -157,7 +157,7 @@ class TNT : public Hostile
 class BlastBullet : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,180+((int)(120*x) % 120)) 
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,180+std::rand()%20*15) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -176,7 +176,7 @@ class BlastBullet : public Hostile
 class Particle : public Hostile
 {
   public:
-  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,0,180+((int)(120*x) % 120)) 
+  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,0,180+std::rand()%20*15) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

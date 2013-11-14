@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm> 
 #include <map>
-//#include <random>
+#include <random>
 #include <Box2D/Box2D.h>
 
 #include "moveable.hh"
@@ -111,7 +111,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataA)
     {
-      bodyDataA->object->timer = 300 + (int)(bodyDataA->object->getX() * 120);
+      bodyDataA->object->timer = 200 + std::rand()%10*30;
     }
 
     totalScore += deltaEnergy;
@@ -127,7 +127,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
     }
     else if (bodyDataB)
     {
-      bodyDataB->object->timer = 300 + (int)(bodyDataB->object->getY() * 3);
+      bodyDataB->object->timer = 200 + std::rand()%10*30;
     }
     totalScore += deltaEnergy;
   }
