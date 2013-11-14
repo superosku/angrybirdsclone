@@ -30,7 +30,7 @@ class Graphics {
     sf::Texture tile4;
 
     sf::ContextSettings settings;
-    Map m;
+    Map* m;
     // the constant used to change coordinates
     int c;
     // Things for camera movenment. In box2d meters
@@ -40,7 +40,11 @@ class Graphics {
     size_t shoot_aiming;
 
   public:
+    ~Graphics() {
+      delete m;
+    }
     Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
+      m = new Map();
       window.setFramerateLimit(60);
       //bgt.loadFromFile("kentta.png");
       //bg.setTexture(bgt);
@@ -111,24 +115,30 @@ class Graphics {
           }
           if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             // Check if we are pressing near catapult
-            if (event.mouseButton.x < convertX(m.getCatapultX()+0.5) and event.mouseButton.x > convertX(m.getCatapultX()-0.5) and
-                event.mouseButton.y > convertY(m.getCatapultY()+0.5) and event.mouseButton.y < convertY(m.getCatapultY()-0.5))
+            if (event.mouseButton.x < convertX(m->getCatapultX()+0.5) and event.mouseButton.x > convertX(m->getCatapultX()-0.5) and
+                event.mouseButton.y > convertY(m->getCatapultY()+0.5) and event.mouseButton.y < convertY(m->getCatapultY()-0.5))
               shoot_aiming = 1;
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
-            if ((!shoot_aiming) && (m.getCurrentBird() != nullptr)) {
+            if ((!shoot_aiming) && (m->getCurrentBird() != nullptr)) {
                 std::cout << "action event" << std::endl;
-                m.getCurrentBird()->action(&m);
+                m->getCurrentBird()->action(m);
             }
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
             if (shoot_aiming) {
               //std::cout << "Shot Bird" << std::endl;
-              m.ShootBird(
-                   (convertX(m.getCatapultX()) - event.mouseButton.x)/10.0,
-                  -(convertY(m.getCatapultY()) - event.mouseButton.y)/10.0);
+              m->ShootBird(
+                   (convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
+                  -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);
               shoot_aiming = 0;
               }
+          }
+          if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::R) {
+              delete m;
+              m = new Map();
+            }
           }
         }
         window.clear(sf::Color(160,160,255));
@@ -143,11 +153,11 @@ class Graphics {
         sf::CircleShape catapult_bg(convertDistance(0.5));
         catapult_bg.setFillColor(sf::Color(100,100,200));
         catapult_bg.setOrigin(convertDistance(0.5), convertDistance(0.5));
-        catapult_bg.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
+        catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
 
         sf::CircleShape catapult(convertDistance(0.5));
         //set texture according to upcoming bird
-        MoveableObject::Type currentType = m.getNextBirdType();
+        MoveableObject::Type currentType = m->getNextBirdType();
         if(currentType == MoveableObject::Type::BasicBird)
           catapult.setTexture(&kemma);
         if(currentType == MoveableObject::Type::BombBird)
@@ -163,12 +173,12 @@ class Graphics {
         if (shoot_aiming) 
           catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
         else
-          catapult.setPosition(convertX(m.getCatapultX()), convertY(m.getCatapultY()));
+          catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
         window.draw(catapult_bg);
         window.draw(catapult);
         
         // Drawing all movable objects
-        std::vector<MoveableObject*> objects = m.getObjects();
+        std::vector<MoveableObject*> objects = m->getObjects();
         for(auto& i: objects)
         {
           size_t x = convertX(i->getX());
@@ -256,10 +266,10 @@ class Graphics {
         }
         //Draw score, display and advance the simulation one step ahead
         std::ostringstream ss;
-        ss << "Points: " << m.getScore() << std::endl << "Birds left: " << m.getBirdsLeft() << std::endl << "Enemies left: " << m.getEnemyCount();
+        ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
         window.draw(sf::Text(ss.str(), font));
         window.display();
-        m.Step();
+        m->Step();
       }
     }
 };
