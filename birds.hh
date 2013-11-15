@@ -110,7 +110,7 @@ class TangentBird : public Bird
     b2Vec2 v = body->GetLinearVelocity();
     //float a = atan(v.y/v.x);
     //setImpulse(50*cos(a),50*sin(a));
-    setImpulse(2*v.x,2*v.y);
+    setImpulse(1.2*v.x,1.2*v.y);
     
     return(true);
   }
@@ -142,7 +142,7 @@ class BombBird : public Bird
       float a = 2*PI/N_BULLETS;
       
       BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
-      tmp->setImpulse(30*cos(a*i),30*sin(a*i));
+      tmp->setImpulse(20*cos(a*i),20*sin(a*i));
       
       m->addObject(tmp);
     }

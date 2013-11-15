@@ -19,7 +19,7 @@ void Hostile::destroy(Map* m)
       
       Particle* tmp = new Particle(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)),0.2,0.1,getType());
       
-      tmp->setImpulse(0.02*v.x,0.5);
+      tmp->setImpulse(0.075*v.x,0.25);
       
       m->addObject(tmp);
     }
@@ -74,7 +74,7 @@ void TNT::destroy(Map* m)
       float a = 2*PI/N_BULLETS;
       
       BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
-      tmp->setImpulse(50*cos(a*i),50*sin(a*i));
+      tmp->setImpulse(25*cos(a*i),25*sin(a*i));
       
       m->addObject(tmp);
     }
