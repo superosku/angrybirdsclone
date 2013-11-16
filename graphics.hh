@@ -28,6 +28,7 @@ class Graphics {
     sf::Texture tile2;
     sf::Texture tile3;
     sf::Texture tile4;
+    sf::Texture tnt;
 
     sf::ContextSettings settings;
     Map* m;
@@ -78,6 +79,10 @@ class Graphics {
       if(!tile4.loadFromFile("tiili4.png", sf::IntRect(0, 0, 400, 400))){
           //Throw error
       }
+      if(!tnt.loadFromFile("tnt.png")){
+          //Throw error
+      }
+
       
       kemma.setSmooth(true);
       kone.setSmooth(true);
@@ -88,6 +93,7 @@ class Graphics {
       tile2.setSmooth(true);
       tile3.setSmooth(true);
       tile4.setSmooth(true);
+      tnt.setSmooth(true);
       //settings.antialiasingLevel = 8;
       c = 35;
       cam_x = 5;
@@ -195,6 +201,14 @@ class Graphics {
               rect.setTexture(&tile3);
             if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
               rect.setTexture(&tile4);
+            rect.setPosition(x,y);
+            rect.setRotation(i->getAngle() * -57.295);
+            window.draw(rect);
+          }
+          if (type == MoveableObject::Type::TNT) { // TNT
+            sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+            rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            rect.setTexture(&tnt);
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
