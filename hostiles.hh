@@ -115,7 +115,7 @@ class BasicObstacle : public Hostile
 class TNT : public Hostile
 {
   public:
-  TNT(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.5f, float h = 0.5f, float d = 10.0f, float e = 1) : Hostile(world, x, y, w, h, e, MoveableObject::Type::BasicObstacle)
+  TNT(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.5f, float h = 0.5f, float d = 10.0f, float e = 1) : Hostile(world, x, y, w, h, e, MoveableObject::Type::TNT)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
