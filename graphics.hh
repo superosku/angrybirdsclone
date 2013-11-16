@@ -66,16 +66,16 @@ class Graphics {
       if(!tik.loadFromFile("tik.png")){
           //Throw error
       }
-      if(!tile1.loadFromFile("tiili1.png")){
+      if(!tile1.loadFromFile("tiili1.png", sf::IntRect(0, 0, 400, 400))){
           //Throw error
       }
-      if(!tile2.loadFromFile("tiili2.png")){
+      if(!tile2.loadFromFile("tiili2.png", sf::IntRect(0, 0, 400, 400))){
           //Throw error
       }
-      if(!tile3.loadFromFile("tiili3.png")){
+      if(!tile3.loadFromFile("tiili3.png", sf::IntRect(0, 0, 400, 400))){
           //Throw error
       }
-      if(!tile4.loadFromFile("tiili4.png")){
+      if(!tile4.loadFromFile("tiili4.png", sf::IntRect(0, 0, 400, 400))){
           //Throw error
       }
       
