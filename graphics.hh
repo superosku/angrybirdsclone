@@ -35,6 +35,8 @@ class Graphics {
     Map* m;
     // the constant used to change coordinates
     int c;
+
+    size_t s;
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;
@@ -102,6 +104,7 @@ class Graphics {
       window.setView(view);
 
       c = 30;
+      s = 25;
       cam_x = 5;
       cam_y = 9.4;
       shoot_aiming = 0;
@@ -131,10 +134,16 @@ class Graphics {
               window.setView(sf::View(visibleArea));
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-              view.move(25,0);
+              view.move(s,0);
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-              view.move(-25,0);
+              view.move(-s,0);
+          }
+          if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+              view.zoom(1.1f);
+          }
+          if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+              view.zoom(0.9f);
           }
           if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             // Check if we are pressing near catapult
