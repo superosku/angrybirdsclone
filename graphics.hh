@@ -96,7 +96,7 @@ class Graphics {
       if(!bgt.loadFromFile("bg.png")){
           //Throw error
       }
-      if(!ratas.loadFromFile("ratas.png")){
+      if(!ratas.loadFromFile("hammasratas.png")){
           //Throw error
       }
       
@@ -241,7 +241,7 @@ class Graphics {
         // Drawing the ground
         sf::RectangleShape ground(sf::Vector2f(2560, 720 - convertY(0)));
         ground.setPosition(0, convertY(0));
-        ground.setFillColor(sf::Color(42,100,48));
+        ground.setFillColor(sf::Color(29,76,34));
         window.draw(ground);
 
         // Drawing the catapult
