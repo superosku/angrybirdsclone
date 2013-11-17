@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include <string>
+#include <cmath>
 #include "map.hh"
 #include "moveable.hh"
 #include "hostiles.hh"
@@ -35,11 +36,18 @@ class Graphics {
     Map* m;
     // the constant used to change coordinates
     int c;
-
+    // the constant used to move the screen
     size_t s;
+    // the constants to correct catapult coordinates when screen moves
+    int gx, gy;
+    // the constants to correct view and catapult when zooming
+    float zx; 
+    int i/*, j*/;
+    float temp;
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;
+    int catapult_x, catapult_y;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
 
@@ -103,10 +111,18 @@ class Graphics {
       bg.setTexture(bgt);
       window.setView(view);
 
-      c = 30;
+      c = 32;
       s = 25;
+      gx = 0;
+      gy = 0;
+      zx = 30.4761904762;
+      i=0;
+      //j=0;
+      temp = 0.0;
       cam_x = 5;
-      cam_y = 9.4;
+      cam_y = 10;
+      catapult_x = 190;
+      catapult_y = 480;
       shoot_aiming = 0;
     }
     int convertX(float x) {
@@ -138,26 +154,55 @@ class Graphics {
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
               view.move(s,0);
+              gx-=s;
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
               view.move(-s,0);
+              gx+=s;
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
               view.move(0,s);
+              gy-=s;
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
               view.move(0,-s);
+              gy+=s;
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
-              view.zoom(1.1f);
+              view.zoom(1.05f);
+              i++;
+              temp = zx*std::pow(1.05, i);
+              view.move(temp, 0);
+              // TODO fix the catapult coordinates when zooming
+              /*j--;
+              std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
+              catapult_x=catapult_x*std::pow(0.952308952381, (j/2));
+              catapult_y=catapult_y*std::pow(0.952308952381, (j/2));
+              std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
+              */
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Period)){
-              view.zoom(0.90909090909090f);
+              view.zoom(0.952308952381);
+              temp = -zx*std::pow(1.05, i);
+              i--;
+              view.move(temp, 0);
+              // TODO fix the catapult coordinates when zooming
+              /*j++;
+              std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
+              catapult_x=catapult_x*std::pow(1.05, (j/2));
+              catapult_y=catapult_y*std::pow(1.05, (j/2));
+              std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
+              */
           }
           if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             // Check if we are pressing near catapult
-            if (event.mouseButton.x < convertX(m->getCatapultX()+0.5) and event.mouseButton.x > convertX(m->getCatapultX()-0.5) and
+            /*if (event.mouseButton.x < convertX(m->getCatapultX()+0.5) and event.mouseButton.x > convertX(m->getCatapultX()-0.5) and
                 event.mouseButton.y > convertY(m->getCatapultY()+0.5) and event.mouseButton.y < convertY(m->getCatapultY()-0.5))
+            */
+              std::cout << "catapult_x: " << catapult_x+gx << ", catapult_y: " << catapult_y+gy << ", mouse x: " 
+                  << event.mouseButton.x << ", mouse y: " << event.mouseButton.y << std::endl;
+              if (event.mouseButton.x < (catapult_x+gx+15) && event.mouseButton.x > (catapult_x+gx-15) &&
+                event.mouseButton.y < (catapult_y+gy+15) && event.mouseButton.y > (catapult_y+gy-15))
               shoot_aiming = 1;
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
@@ -170,8 +215,10 @@ class Graphics {
             if (shoot_aiming) {
               //std::cout << "Shot Bird" << std::endl;
               m->ShootBird(
-                   (convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
-                  -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);
+                   /*(convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
+                  -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);*/
+                  (catapult_x+gx - event.mouseButton.x)/10.0, -(catapult_y+gy - event.mouseButton.y)/10.0);
+
               shoot_aiming = 0;
               } 
           }
@@ -196,7 +243,8 @@ class Graphics {
         sf::CircleShape catapult_bg(convertDistance(0.5));
         catapult_bg.setFillColor(sf::Color(47,60,74));
         catapult_bg.setOrigin(convertDistance(0.5), convertDistance(0.5));
-        catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
+        //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
+        catapult_bg.setPosition(catapult_x, catapult_y);
 
         sf::CircleShape catapult(convertDistance(0.5));
         //set texture according to upcoming bird
@@ -214,9 +262,10 @@ class Graphics {
 
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
         if (shoot_aiming) 
-          catapult.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+          catapult.setPosition(sf::Mouse::getPosition(window).x-gx, sf::Mouse::getPosition(window).y-gy);
         else
-          catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
+          //catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
+          catapult.setPosition(catapult_x, catapult_y);
         window.draw(catapult_bg);
         window.draw(catapult);
         
