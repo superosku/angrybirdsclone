@@ -133,6 +133,9 @@ class Graphics {
               sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
               window.setView(sf::View(visibleArea));
           }
+          if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+              window.close();
+          }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
               view.move(s,0);
           }
@@ -140,10 +143,16 @@ class Graphics {
               view.move(-s,0);
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-              view.zoom(1.1f);
+              view.move(0,s);
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-              view.zoom(0.9f);
+              view.move(0,-s);
+          }
+          if(sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
+              view.zoom(1.1f);
+          }
+          if(sf::Keyboard::isKeyPressed(sf::Keyboard::Period)){
+              view.zoom(0.90909090909090f);
           }
           if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             // Check if we are pressing near catapult
