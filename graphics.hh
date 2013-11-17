@@ -31,6 +31,7 @@ class Graphics {
     sf::Texture tile3;
     sf::Texture tile4;
     sf::Texture tnt;
+    sf::Texture ratas;
 
     sf::ContextSettings settings;
     Map* m;
@@ -95,6 +96,9 @@ class Graphics {
       if(!bgt.loadFromFile("bg.png")){
           //Throw error
       }
+      if(!ratas.loadFromFile("ratas.png")){
+          //Throw error
+      }
       
       kemma.setSmooth(true);
       kone.setSmooth(true);
@@ -107,6 +111,7 @@ class Graphics {
       tile4.setSmooth(true);
       tnt.setSmooth(true);
       bgt.setSmooth(true);
+      ratas.setSmooth(true);
       //settings.antialiasingLevel = 8;
       bg.setTexture(bgt);
       window.setView(view);
