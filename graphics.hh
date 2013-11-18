@@ -126,8 +126,8 @@ class Graphics {
       temp = 0.0;
       cam_x = 5;
       cam_y = 5;
-      catapult_x = 190;
-      catapult_y = 480;
+      catapult_x = convertX(-20);
+      catapult_y = convertY(6);
       shoot_aiming = 0;
     }
     int convertX(float x) {
@@ -246,7 +246,7 @@ class Graphics {
 
         // Drawing the catapult
         sf::CircleShape catapult_bg(convertDistance(0.5));
-        catapult_bg.setFillColor(sf::Color(47,60,74));
+        catapult_bg.setFillColor(sf::Color(80,225,249));
         catapult_bg.setOrigin(convertDistance(0.5), convertDistance(0.5));
         //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
         catapult_bg.setPosition(catapult_x, catapult_y);
@@ -263,7 +263,7 @@ class Graphics {
         if(currentType == MoveableObject::Type::TangentBird)
           catapult.setTexture(&pjk);
         if(currentType == MoveableObject::Type::Else)
-          catapult.setFillColor(sf::Color(100,100,200));
+          catapult.setFillColor(sf::Color(0,0,0));
 
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
         if (shoot_aiming) 
