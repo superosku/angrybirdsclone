@@ -125,7 +125,7 @@ class Graphics {
       //j=0;
       temp = 0.0;
       cam_x = 5;
-      cam_y = 10;
+      cam_y = 5;
       catapult_x = 190;
       catapult_y = 480;
       shoot_aiming = 0;
