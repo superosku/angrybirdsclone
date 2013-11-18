@@ -314,6 +314,14 @@ class Graphics {
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
+          if (type == MoveableObject::Type::Gear_t) { // hammasratas
+            sf::CircleShape circle(convertDistance(i->getW()));
+            circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+            circle.setTexture(&ratas);
+            circle.setPosition(x,y);
+            circle.setRotation(i->getAngle() * -57.295);
+            window.draw(circle);
+          } 
           if (type == MoveableObject::Type::BasicBird) { // Pallo
             sf::CircleShape circle(convertDistance(i->getW()));
             circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));

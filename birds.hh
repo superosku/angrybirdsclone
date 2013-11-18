@@ -161,7 +161,7 @@ class Gear : public Bird
 {
   public:
 
-  Gear(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 0) : Bird(world, x, y, 0.05f, d, a, MoveableObject::Type::Gear_t){}
+  Gear(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 0) : Bird(world, x, y, 0.25f, d, a, MoveableObject::Type::Gear_t){}
 
   virtual void destroy(Map*){}
 };
