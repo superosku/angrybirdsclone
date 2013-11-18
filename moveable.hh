@@ -32,6 +32,7 @@ class MoveableObject
       BasicObstacle = 200,
       TNT = 201,
       BlastBullet_t = 800,
+      Gear_t = 801,
       Else = 900
     };
     typedef float mass_t;

@@ -15,7 +15,7 @@ class Bird : public MoveableObject
   size_t actions;
   
   public:
-  Bird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t actions = 0, MoveableObject::Type t = MoveableObject::Type::BasicBird) : MoveableObject(world, x, y, 0.5f, 0.5f, t, 0), actions(actions)
+  Bird(b2World* world, float x = 0.0f, float y = 0.0f, float r = 0.5f, float d = 1.0f, size_t actions = 0, MoveableObject::Type t = MoveableObject::Type::BasicBird) : MoveableObject(world, x, y, r, r, t, 0), actions(actions)
   {
     b2CircleShape shape;
     shape.m_radius = 0.5f;
@@ -41,6 +41,7 @@ class Bird : public MoveableObject
     }
     return (false);
   }
+  virtual void destroy(Map* m);
 };
 
 // Basic & boring bird for testing purposes.
@@ -49,7 +50,7 @@ class BasicBird : public Bird
   // No private stuff yet :(
   
   public:
-  BasicBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y, d)
+  BasicBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y, 0.5f, d)
   {
     //TODO: Initialization (might be empty).
   }
@@ -80,7 +81,7 @@ class BasicBird : public Bird
 class BouncyBird : public Bird
 {
   public:
-  BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, d, a, MoveableObject::Type::BouncyBird){}
+  BouncyBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 2) : Bird(world , x, y, 0.5f, d, a, MoveableObject::Type::BouncyBird){}
   
   virtual bool action(Map* m)
   {
@@ -98,7 +99,7 @@ class BouncyBird : public Bird
 class TangentBird : public Bird
 {
   public:
-  TangentBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, d, a, MoveableObject::Type::TangentBird){}
+  TangentBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, 0.5f, d, a, MoveableObject::Type::TangentBird){}
   
   virtual bool action(Map* m)
   {
@@ -119,7 +120,7 @@ class TangentBird : public Bird
 class BombBird : public Bird
 {
   public:
-  BombBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, d, a, MoveableObject::Type::BombBird){}
+  BombBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, 0.5f, d, a, MoveableObject::Type::BombBird){}
   
   virtual bool action(Map* m)
   {
@@ -154,6 +155,15 @@ class BombBird : public Bird
   
   return(true);
   }
+};
+
+class Gear : public Bird
+{
+  public:
+
+  Gear(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 0) : Bird(world, x, y, 0.05f, d, a, MoveableObject::Type::Gear_t){}
+
+  virtual void destroy(Map*){}
 };
 
 #endif
