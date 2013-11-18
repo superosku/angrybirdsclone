@@ -18,7 +18,7 @@ class Bird : public MoveableObject
   Bird(b2World* world, float x = 0.0f, float y = 0.0f, float r = 0.5f, float d = 1.0f, size_t actions = 0, MoveableObject::Type t = MoveableObject::Type::BasicBird) : MoveableObject(world, x, y, r, r, t, 0), actions(actions)
   {
     b2CircleShape shape;
-    shape.m_radius = 0.5f;
+    shape.m_radius = r;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -27,7 +27,8 @@ class Bird : public MoveableObject
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
-    body->SetActive(false);
+    if(type != MoveableObject::Type::Gear_t)
+      body->SetActive(false);
   }
   virtual ~Bird() {}
   // Function to check if bird has actions left, returns boolean value.

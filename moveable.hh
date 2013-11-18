@@ -37,7 +37,7 @@ class MoveableObject
     };
     typedef float mass_t;
     
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0, float t = 300): timer(t), w(w), h(h)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0, float t = 180+std::rand()%20*15): timer(t), w(w), h(h)
     {
       this->type = type;
       b2BodyDef bodyDef;
