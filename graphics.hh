@@ -362,12 +362,15 @@ class Graphics {
             window.draw(circle);
           }
           if (type == MoveableObject::Ground) { // Maa
+            sf::ConvexShape convex;
+            convex.setPointCount(i->getPointList().size());
+            size_t counter = 0;
             for (auto &point : i->getPointList()) {
-              sf::CircleShape circle(4);
-              circle.setPosition(convertX(point.first), convertY(point.second));
-              
-              window.draw(circle);
+              convex.setPoint(counter, sf::Vector2f(convertX(point.first), convertY(point.second)));
+              counter ++;
             }
+            convex.setFillColor(sf::Color(128, 64, 36));
+            window.draw(convex);
           }
 
           //Draw energy of an object (for debugging purposes)

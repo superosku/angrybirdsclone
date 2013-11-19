@@ -48,7 +48,7 @@ class Hostile : public MoveableObject
 class Ground : public MoveableObject
 {
   public:
-    Ground(b2World* world, /*float x = 0.0f, float y = 0.0f, */std::list<std::pair<float, float>>& pointlist) : MoveableObject(world, 0.0, 0.0, 1.0, 1.0, MoveableObject::Ground, 0, 0, 300, false) {
+    Ground(b2World* world, /*float x = 0.0f, float y = 0.0f, */std::list<std::pair<float, float>>& pointlist) : MoveableObject(world, 0.0, 0.0, 1.0, 1.0, MoveableObject::Ground, 0, 0, 0, false) {
       point_list = pointlist; // This is in MoveableObject. Set it so drawing can use pointlist
 
       b2Vec2 *vertices = new b2Vec2[point_list.size()];
