@@ -5,6 +5,7 @@
 #define N_BULLETS 16
 #define PI 3.14159265359
 
+#include <list>
 #include <string>
 #include "Box2D/Box2D.h"
 //#include "map.hh"
@@ -28,20 +29,28 @@ class MoveableObject
       BouncyBird = 101,
       TangentBird = 102,
       BombBird = 103,
-      BasicEnemy = 300,
+      
       BasicObstacle = 200,
       TNT = 201,
+
+      BasicEnemy = 300,
+
+      Ground = 400,
+
       BlastBullet_t = 800,
       Gear_t = 801,
       Else = 900
     };
     typedef float mass_t;
     
-    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0, float t = 180+std::rand()%20*15): timer(t), w(w), h(h)
+    MoveableObject(b2World* world, float x = 0.0f, int y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0, float t = 180+std::rand()%20*15, bool dynamic = true): timer(t), w(w), h(h)
     {
       this->type = type;
       b2BodyDef bodyDef;
-      bodyDef.type = b2_dynamicBody;
+      if (dynamic)
+        bodyDef.type = b2_dynamicBody;
+      else
+        bodyDef.type = b2_staticBody;
       bodyDef.bullet= true;
       bodyDef.position.Set(x, y);
       bodyDef.angle = angle;
@@ -57,6 +66,9 @@ class MoveableObject
     virtual ~MoveableObject()
     {
      body->GetWorld()->DestroyBody(body);
+    }
+    virtual const std::list<std::pair<float, float>> getPointList() {
+      return point_list;
     }
     
     virtual bool action(Map*){return(true);}
@@ -104,6 +116,7 @@ class MoveableObject
     const std::string imagePath;
   friend class Map;
   protected:
+    std::list<std::pair<float, float>> point_list; // Used in ground object only :/
     b2Body* body;
     b2Vec2 velocity;
     MoveableObject::Type type;

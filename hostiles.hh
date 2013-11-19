@@ -1,6 +1,8 @@
 #ifndef HOSTILES
 #define HOSTILES
 
+#include <list>
+//#include <pair>
 #include <Box2D/Box2D.h>
 #include "moveable.hh"
 #include "map.hh"
@@ -41,6 +43,34 @@ class Hostile : public MoveableObject
   }
   
   virtual void destroy(Map*);
+};
+
+class Ground : public MoveableObject
+{
+  public:
+    Ground(b2World* world, /*float x = 0.0f, float y = 0.0f, */std::list<std::pair<float, float>>& pointlist) : MoveableObject(world, 0.0, 0.0, 1.0, 1.0, MoveableObject::Ground, 0, 0, 300, false) {
+      point_list = pointlist; // This is in MoveableObject. Set it so drawing can use pointlist
+
+      b2Vec2 *vertices = new b2Vec2[point_list.size()];
+      size_t counter = 0;
+      for (auto &point : point_list) {
+        vertices[counter].Set(point.first, point.second);
+        counter ++;
+      }
+      
+      b2PolygonShape shape;
+      shape.Set(vertices, point_list.size());
+
+      b2FixtureDef fixtureDef;
+      fixtureDef.shape = &shape;
+      fixtureDef.density = 1.0f;
+      fixtureDef.friction = 0.3f;
+
+      body->CreateFixture(&fixtureDef);
+
+      delete [] vertices;
+    }
+  private:
 };
 
 class BasicObstacle : public Hostile

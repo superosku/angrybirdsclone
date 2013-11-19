@@ -361,6 +361,14 @@ class Graphics {
             circle.setRotation(i->getAngle() * -57.295);
             window.draw(circle);
           }
+          if (type == MoveableObject::Ground) { // Maa
+            for (auto &point : i->getPointList()) {
+              sf::CircleShape circle(4);
+              circle.setPosition(convertX(point.first), convertY(point.second));
+              
+              window.draw(circle);
+            }
+          }
 
           //Draw energy of an object (for debugging purposes)
           bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());

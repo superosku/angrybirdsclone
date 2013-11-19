@@ -5,6 +5,8 @@
 #include <algorithm> 
 #include <map>
 #include <random>
+#include <list>
+//#include <pair>
 #include <Box2D/Box2D.h>
 
 #include "moveable.hh"
@@ -203,6 +205,17 @@ void Map::loadMap(std::string filepath)
           break;
         case (MoveableObject::Type::BasicEnemy):
           objects.push_back(new BasicEnemy(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
+          break;
+        case (MoveableObject::Type::Ground):
+          std::list<std::pair<float, float>> temp_list;
+          for (size_t i = 4; i < tmpVec.size(); i += 2) {
+            std::pair<float, float> temp_pair;
+            temp_pair.second = std::atof(tmpVec[i].c_str());
+            temp_pair.first = std::atof(tmpVec[i-1].c_str());
+            std::cout << "Adding: " << temp_pair.first << " " << temp_pair.second << std::endl;
+            temp_list.push_back(temp_pair);
+          }
+          objects.push_back(new Ground(m_world, temp_list /*std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), */));
           break;
       }
     }
