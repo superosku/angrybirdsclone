@@ -156,6 +156,10 @@ class BombBird : public Bird
   
   return(true);
   }
+  void destroy(Map* m){
+   actions=1;
+   action();
+  }
 };
 
 class Gear : public Bird
