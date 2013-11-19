@@ -48,7 +48,7 @@ class Graphics {
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;
-    int catapult_x, catapult_y;
+    int catapult_x, catapult_y,window_w,window_h;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
 
@@ -56,7 +56,7 @@ class Graphics {
     ~Graphics() {
       delete m;
     }
-    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/) {
+    Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/),window_w(1280),window_h(720) {
       m = new Map();
       window.setFramerateLimit(60);
       view.reset(sf::FloatRect(0, 0, 1280, 720));
@@ -158,8 +158,10 @@ class Graphics {
           }
           if(event.type == sf::Event::Resized)
           {
-              sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-              window.setView(sf::View(visibleArea));
+              //sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+              //window.setView(sf::View(visibleArea));
+              window_w=event.size.width;
+              window_h=event.size.height;
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
               window.close();
@@ -217,8 +219,8 @@ class Graphics {
             */
               std::cout << "catapult_x: " << catapult_x+gx << ", catapult_y: " << catapult_y+gy << ", mouse x: " 
                   << event.mouseButton.x << ", mouse y: " << event.mouseButton.y << std::endl;
-              if (event.mouseButton.x < (catapult_x+gx+15) && event.mouseButton.x > (catapult_x+gx-15) &&
-                event.mouseButton.y < (catapult_y+gy+15) && event.mouseButton.y > (catapult_y+gy-15))
+              if (event.mouseButton.x < (catapult_x+gx+15)*window_w/1280 && event.mouseButton.x > (catapult_x+gx-15)*window_w/1280 &&
+                event.mouseButton.y < (catapult_y+gy+15)*window_h/720 && event.mouseButton.y > (catapult_y+gy-15)*window_h/720)
               shoot_aiming = 1;
           }
           if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
@@ -233,7 +235,7 @@ class Graphics {
               m->ShootBird(
                    /*(convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
                   -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);*/
-                  (catapult_x+gx - event.mouseButton.x)/10.0, -(catapult_y+gy - event.mouseButton.y)/10.0);
+                  ((catapult_x+gx)*window_w/1280 - event.mouseButton.x)/10.0, -((catapult_y+gy)*window_h/720 - event.mouseButton.y)/10.0);
 
               shoot_aiming = 0;
               } 
