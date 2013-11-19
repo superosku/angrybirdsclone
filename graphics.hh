@@ -318,7 +318,7 @@ class Graphics {
             //rect.setOutlineColor(sf::Color(15, 15, 15));
             //rect.setOutlineThickness(2);
             rect.setPosition(x,y);
-            rect.setRotation(i->getAngle() * -57.295);
+            //rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);
           }
           if (type == MoveableObject::Type::Gear_t) { // hammasratas
