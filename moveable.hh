@@ -16,6 +16,7 @@ struct bodyData {
   float energy;
   float fullEnergy;
   bool hasEnergy;
+  bool timerEnabled;
   MoveableObject* object;
 };
 
@@ -51,6 +52,7 @@ class MoveableObject
       data->energy = energy;
       data->fullEnergy = energy;
       data->hasEnergy = energy?1:0;
+      data->timerEnabled = t?1:0;
       data->object = this;
       body->SetUserData(data);
     }
