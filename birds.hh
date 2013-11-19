@@ -150,7 +150,7 @@ class BombBird : public Bird
       m->addObject(tmp);
     }
     m->killCurrentBird(this);
-    m->removeObject(this);
+    //m->removeObject(this);
     //delete this;
     //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
     timer = 0;
