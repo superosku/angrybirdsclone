@@ -12,7 +12,8 @@
 
 class Bird : public MoveableObject
 {
-  size_t actions;
+  protected:
+    size_t actions;
   
   public:
   Bird(b2World* world, float x = 0.0f, float y = 0.0f, float r = 0.5f, float d = 1.0f, size_t actions = 0, MoveableObject::Type t = MoveableObject::Type::BasicBird) : MoveableObject(world, x, y, r, r, t, 0), actions(actions)
@@ -158,7 +159,7 @@ class BombBird : public Bird
   }
   void destroy(Map* m){
    actions=1;
-   action();
+   action(m);
   }
 };
 
