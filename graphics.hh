@@ -173,10 +173,10 @@ class Graphics {
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
               view.move(0,-s);
               gy+=s;
+          }
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) || sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
               delete m;
               m = new Map();
-            }
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
               view.zoom(1.05f);
