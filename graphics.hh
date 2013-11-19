@@ -31,6 +31,7 @@ class Graphics {
     sf::Texture tile4;
     sf::Texture tnt;
     sf::Texture ratas;
+    sf::Texture smoke;
 
     sf::ContextSettings settings;
     Map* m;
@@ -98,7 +99,11 @@ class Graphics {
       if(!ratas.loadFromFile("hammasratas.png")){
           //Throw error
       }
+      if(!smoke.loadFromFile("smoke.png")) {
+          //THROW ERROR!?!?!?!?!
+      }
       
+
       kemma.setSmooth(true);
       kone.setSmooth(true);
       prodeko.setSmooth(true);
@@ -111,6 +116,7 @@ class Graphics {
       tnt.setSmooth(true);
       bgt.setSmooth(true);
       ratas.setSmooth(true);
+      smoke.setSmooth(true);
       //settings.antialiasingLevel = 8;
       bg.setTexture(bgt);
       window.setView(view);
@@ -304,11 +310,13 @@ class Graphics {
             window.draw(rect);
           }
           if (type == MoveableObject::Type::BlastBullet_t) { // Kuutio / Neliö
-            sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
-            rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-            rect.setFillColor(sf::Color(30, 30, 30));
-            rect.setOutlineColor(sf::Color(15, 15, 15));
-            rect.setOutlineThickness(2);
+            sf::RectangleShape rect(sf::Vector2f(convertDistance(2), convertDistance(2)));
+            //sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+            rect.setOrigin(convertDistance(1), convertDistance(1));
+            rect.setTexture(&smoke);
+            //rect.setFillColor(sf::Color(30, 30, 30));
+            //rect.setOutlineColor(sf::Color(15, 15, 15));
+            //rect.setOutlineThickness(2);
             rect.setPosition(x,y);
             rect.setRotation(i->getAngle() * -57.295);
             window.draw(rect);

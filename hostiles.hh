@@ -127,6 +127,7 @@ class BlastBullet : public Hostile
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
+    body->SetGravityScale(-0.1);
     //body->SetGravityScale(0.0f);
   }
   virtual void destroy(Map*){}
