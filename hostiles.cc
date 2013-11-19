@@ -43,6 +43,6 @@ void TNT::destroy(Map* m)
       m->addObject(tmp);
     }
     m->killCurrentBird(this);
-    m->removeObject(this);
+    //m->removeObject(this);
     timer = 0;
 }
