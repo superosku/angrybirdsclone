@@ -398,6 +398,7 @@ class Graphics {
             window.draw(t);
           }
         }
+        window.setView(window.getDefaultView());
         //Draw score, display and advance the simulation one step ahead
         std::ostringstream ss;
         ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
