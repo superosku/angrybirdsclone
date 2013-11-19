@@ -13,7 +13,6 @@
 #include "hostiles.hh"
 #include "birds.hh"
 
-
 class Graphics {
   private:
     sf::RenderWindow window;
@@ -120,6 +119,8 @@ class Graphics {
       s = 25;
       gx = 0;
       gy = 0;
+      // meaning of life
+      // okay, not really, the constant used for zoom corrections
       zx = 30.4761904762;
       i=0;
       //j=0;
@@ -172,6 +173,10 @@ class Graphics {
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
               view.move(0,-s);
               gy+=s;
+          if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) || sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
+              delete m;
+              m = new Map();
+            }
           }
           if(sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
               view.zoom(1.05f);
@@ -227,13 +232,7 @@ class Graphics {
               shoot_aiming = 0;
               } 
           }
-          if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::R) {
-              delete m;
-              m = new Map();
-            }
-          }
-        }
+       }
         window.clear(/*sf::Color(160,160,255)*/);
 
         window.setView(view);
