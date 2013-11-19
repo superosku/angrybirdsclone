@@ -158,8 +158,8 @@ class Graphics {
           }
           if(event.type == sf::Event::Resized)
           {
-              //sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-              //window.setView(sf::View(visibleArea));
+              sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+              window.setView(sf::View(visibleArea));
               window_w=event.size.width;
               window_h=event.size.height;
           }
