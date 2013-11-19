@@ -128,6 +128,7 @@ class BlastBullet : public Hostile
 
     body->CreateFixture(&fixtureDef);
     body->SetGravityScale(-0.1);
+    body->SetLinearDamping(0.9);
     //body->SetGravityScale(0.0f);
   }
   virtual void destroy(Map*){}
