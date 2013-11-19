@@ -274,7 +274,7 @@ class Graphics {
 
         catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
         if (shoot_aiming) 
-          catapult.setPosition(sf::Mouse::getPosition(window).x-gx, sf::Mouse::getPosition(window).y-gy);
+          catapult.setPosition((sf::Mouse::getPosition(window).x+gx)*1280/window_w, (sf::Mouse::getPosition(window).y+gy)*720/window_h);
         else
           //catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
           catapult.setPosition(catapult_x, catapult_y);
