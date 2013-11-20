@@ -59,7 +59,7 @@ Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::D
   if(!smoke.loadFromFile("smoke.png")) {
       //THROW ERROR!?!?!?!?!
   }
-  
+
 
   kemma.setSmooth(true);
   kone.setSmooth(true);
@@ -101,98 +101,98 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   size_t y = convertY(i->getY());
   MoveableObject::Type type = i->getType();
   if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
-    sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
-    rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
     if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)
-      rect.setTexture(&tile1);
+      shape.setTexture(&tile1);
     if(i->getEnergy() > 0.5 && i->getEnergy() <=0.75)
-      rect.setTexture(&tile2);
+      shape.setTexture(&tile2);
     if(i->getEnergy() > 0.25 && i->getEnergy() <= 0.5)
-      rect.setTexture(&tile3);
+      shape.setTexture(&tile3);
     if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
-      rect.setTexture(&tile4);
-    rect.setPosition(x,y);
-    rect.setRotation(i->getAngle() * -57.295);
-    window.draw(rect);
+      shape.setTexture(&tile4);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::Type::TNT) { // TNT
-    sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
-    rect.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    rect.setTexture(&tnt);
-    rect.setPosition(x,y);
-    rect.setRotation(i->getAngle() * -57.295);
-    window.draw(rect);
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&tnt);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::Type::BlastBullet_t) { // Kuutio / Neliö
-    sf::RectangleShape rect(sf::Vector2f(convertDistance(2), convertDistance(2)));
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(2), convertDistance(2)));
     //sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
-    rect.setOrigin(convertDistance(1), convertDistance(1));
-    rect.setTexture(&smoke);
+    shape.setOrigin(convertDistance(1), convertDistance(1));
+    shape.setTexture(&smoke);
     //rect.setFillColor(sf::Color(30, 30, 30));
     //rect.setOutlineColor(sf::Color(15, 15, 15));
     //rect.setOutlineThickness(2);
-    rect.setPosition(x,y);
+    shape.setPosition(x,y);
     //rect.setRotation(i->getAngle() * -57.295);
-    window.draw(rect);
+    window.draw(shape);
   }
   if (type == MoveableObject::Type::Gear_t) { // hammasratas
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&ratas);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
-  } 
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&ratas);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
   if (type == MoveableObject::Type::BasicBird) { // Pallo
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&kemma);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
-  } 
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&kemma);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
   if (type == MoveableObject::Type::BouncyBird) { // Pallo
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&prodeko);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&prodeko);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::Type::TangentBird) { // Pallo
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&pjk);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&pjk);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::Type::BombBird) { // Pallo
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&tik);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&tik);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::BasicEnemy) { // Pallo
-    sf::CircleShape circle(convertDistance(i->getW()));
-    circle.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    circle.setTexture(&kone);
-    circle.setPosition(x,y);
-    circle.setRotation(i->getAngle() * -57.295);
-    window.draw(circle);
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    shape.setTexture(&kone);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
   }
   if (type == MoveableObject::Ground) { // Maa
-    sf::ConvexShape convex;
-    convex.setPointCount(i->getPointList().size());
+    sf::ConvexShape shape;
+    shape.setPointCount(i->getPointList().size());
     size_t counter = 0;
     for (auto &point : i->getPointList()) {
-      convex.setPoint(counter, sf::Vector2f(convertX(point.first), convertY(point.second)));
+      shape.setPoint(counter, sf::Vector2f(convertX(point.first), convertY(point.second)));
       counter ++;
     }
-    convex.setFillColor(sf::Color(128, 64, 36));
-    window.draw(convex);
+    shape.setFillColor(sf::Color(128, 64, 36));
+    window.draw(shape);
   }
 
   //Draw energy of an object (for debugging purposes)
@@ -233,30 +233,41 @@ void Graphics::pollEvents() {
         window_w=event.size.width;
         window_h=event.size.height;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        view.move(s,0);
-        gx-=s;
+    sf::Vector2f translation = view.getCenter() + view.getSize() / 2.0f;
+    if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+        if(translation.x + s < bg.getGlobalBounds().width){
+          view.move(s,0);
+          gx-=s;
+        }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        view.move(-s,0);
-        gx+=s;
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
+        if(translation.x - s > 0 ){
+          view.move(-s,0);
+          gx+=s;
+        }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        view.move(0,s);
-        gy-=s;
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
+        if(i<0 && translation.y + s < 720 ){
+          view.move(0,s);
+          gy-=s;
+        }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-        view.move(0,-s);
-        gy+=s;
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
+        if(i<0 && translation.y - s > 0 ){
+          view.move(0,-s);
+          gy+=s;
+        }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) || sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
+    if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
+        window.setView(window.getDefaultView());
         delete m;
         m = new Map();
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma){
+        if(i<0){
         view.zoom(1.05f);
         i++;
         temp = zx*std::pow(1.05, i);
@@ -268,8 +279,9 @@ void Graphics::pollEvents() {
         catapult_y=catapult_y*std::pow(0.952308952381, (j/2));
         std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
         */
+        }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Period)){
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period){
         view.zoom(0.952308952381);
         temp = -zx*std::pow(1.05, i);
         i--;
@@ -287,7 +299,7 @@ void Graphics::pollEvents() {
       /*if (event.mouseButton.x < convertX(m->getCatapultX()+0.5) and event.mouseButton.x > convertX(m->getCatapultX()-0.5) and
           event.mouseButton.y > convertY(m->getCatapultY()+0.5) and event.mouseButton.y < convertY(m->getCatapultY()-0.5))
       */
-        std::cout << "catapult_x: " << catapult_x+gx << ", catapult_y: " << catapult_y+gy << ", mouse x: " 
+        std::cout << "catapult_x: " << catapult_x+gx << ", catapult_y: " << catapult_y+gy << ", mouse x: "
             << event.mouseButton.x << ", mouse y: " << event.mouseButton.y << std::endl;
         if (event.mouseButton.x < (catapult_x+gx+15)*window_w/1280 && event.mouseButton.x > (catapult_x+gx-15)*window_w/1280 &&
           event.mouseButton.y < (catapult_y+gy+15)*window_h/720 && event.mouseButton.y > (catapult_y+gy-15)*window_h/720)
@@ -308,7 +320,7 @@ void Graphics::pollEvents() {
             ((catapult_x+gx)*window_w/1280 - event.mouseButton.x)/10.0, -((catapult_y+gy)*window_h/720 - event.mouseButton.y)/10.0);
 
         shoot_aiming = 0;
-      } 
+      }
     }
   }
 }
@@ -345,7 +357,7 @@ void Graphics::drawUnmoveable() {
     catapult.setFillColor(sf::Color(0,0,0));
 
   catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
-  if (shoot_aiming) 
+  if (shoot_aiming)
     catapult.setPosition((sf::Mouse::getPosition(window).x)*1280/window_w-gx, (sf::Mouse::getPosition(window).y)*720/window_h-gy);
     //catapult.setPosition((sf::Mouse::getPosition(window).x)*1280/window_w, (sf::Mouse::getPosition(window).y)*720/window_h);
   else
@@ -354,3 +366,4 @@ void Graphics::drawUnmoveable() {
   window.draw(catapult_bg);
   window.draw(catapult);
 }
+
