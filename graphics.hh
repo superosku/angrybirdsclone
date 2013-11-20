@@ -68,6 +68,7 @@ class Graphics {
         window.clear(/*sf::Color(160,160,255)*/);
         window.setView(view);
         drawUnmoveable(); 
+        drawMoveableObjects() ;
         
         window.setView(window.getDefaultView());
         //Draw score, display and advance the simulation one step ahead
@@ -75,7 +76,6 @@ class Graphics {
         ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
         window.draw(sf::Text(ss.str(), font));
         
-        drawMoveableObjects() ;
         
         window.display(); // Display windows
         m->Step(); // Advance simulation
