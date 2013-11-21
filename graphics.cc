@@ -236,6 +236,7 @@ void Graphics::pollEvents() {
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
     }
+/*
     sf::Vector2f translation = view.getCenter() + view.getSize() / 2.0f;
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
         if(translation.x + s < bg.getGlobalBounds().width){
@@ -257,6 +258,33 @@ void Graphics::pollEvents() {
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
         if(i<0 && translation.y - s > 0 ){
+          view.move(0,-s);
+          gy+=s;
+        }
+    }*/
+    sf::Vector2f center = view.getCenter() - view.getSize() / 2.0f;
+    sf::Vector2f corner = view.getCenter() + view.getSize() / 2.0f;
+    std::cout << center.x << " " << center.y << " " << corner.x << " " << corner.y << std::endl;
+    if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+        if(corner.x + s < bg.getGlobalBounds().width){
+          view.move(s,0);
+          gx-=s;
+        }
+    }
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
+        if(center.x - s >= 0 ){
+          view.move(-s,0);
+          gx+=s;
+        }
+    }
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
+        if(i<0 && corner.y + s <= 720 ){
+          view.move(0,s);
+          gy-=s;
+        }
+    }
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
+        if(i<0 && center.y - s >= 0 ){
           view.move(0,-s);
           gy+=s;
         }
