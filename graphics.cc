@@ -20,43 +20,43 @@ Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::D
   if(!font.loadFromFile("QuinzeNarrow.ttf")) {
     //Throw error or something
   }
-  if(!kemma.loadFromFile("kemma.png")){
+  if(!kemma.loadFromFile("images/kemma.png")){
     //Throw error
   }
-  if(!kone.loadFromFile("kone.png")){
+  if(!kone.loadFromFile("images/kone.png")){
     //Throw error
   }
-  if(!prodeko.loadFromFile("prodeko.png")){
+  if(!prodeko.loadFromFile("images/prodeko.png")){
       //Throw error
   }
-  if(!pjk.loadFromFile("puu.png")){
+  if(!pjk.loadFromFile("images/puu.png")){
       //Throw error
   }
-  if(!tik.loadFromFile("tik.png")){
+  if(!tik.loadFromFile("images/tik.png")){
       //Throw error
   }
-  if(!tile1.loadFromFile("tiili1.png", sf::IntRect(0, 0, 400, 400))){
+  if(!tile1.loadFromFile("images/tiili1.png", sf::IntRect(0, 0, 400, 400))){
       //Throw error
   }
-  if(!tile2.loadFromFile("tiili2.png", sf::IntRect(0, 0, 400, 400))){
+  if(!tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400))){
       //Throw error
   }
-  if(!tile3.loadFromFile("tiili3.png", sf::IntRect(0, 0, 400, 400))){
+  if(!tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400))){
       //Throw error
   }
-  if(!tile4.loadFromFile("tiili4.png", sf::IntRect(0, 0, 400, 400))){
+  if(!tile4.loadFromFile("images/tiili4.png", sf::IntRect(0, 0, 400, 400))){
       //Throw error
   }
-  if(!tnt.loadFromFile("tnt.png")){
+  if(!tnt.loadFromFile("images/tnt.png")){
       //Throw error
   }
-  if(!bgt.loadFromFile("bg.png")){
+  if(!bgt.loadFromFile("images/bg.png")){
       //Throw error
   }
-  if(!ratas.loadFromFile("hammasratas.png")){
+  if(!ratas.loadFromFile("images/hammasratas.png")){
       //Throw error
   }
-  if(!smoke.loadFromFile("smoke.png")) {
+  if(!smoke.loadFromFile("images/smoke.png")) {
       //THROW ERROR!?!?!?!?!
   }
 

@@ -40,7 +40,7 @@ Map::Map()
   fixtureDef.shape = &shape;
   myBody->CreateFixture(&fixtureDef);
 
-  loadMap("basic_map.csv");
+  loadMap("maps/basic_map.csv");
 }
 
 Map::~Map()
