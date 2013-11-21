@@ -172,4 +172,21 @@ class Gear : public Bird
   virtual void destroy(Map*){}
 };
 
+
+class GravityBird : public Bird
+{
+  public:
+  GravityBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, 0.5f, d, a, MoveableObject::Type::GravityBird){}
+
+  virtual bool action(Map* m)
+  {
+    if (!Bird::action(m))
+      return(false);
+    for(auto i: m->getObjects())
+     i->getBody()->SetGravityScale(-i->getBody()->GetGravityScale());
+    std::cout << "action in GravityBird-class" << std::endl;
+    return(true);
+  }
+};
+
 #endif

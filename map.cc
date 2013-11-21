@@ -191,6 +191,9 @@ void Map::loadMap(std::string filepath)
         case (MoveableObject::Type::BouncyBird):
           birds.push_back(new BouncyBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
           break;
+        case (MoveableObject::Type::GravityBird):
+          birds.push_back(new GravityBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
+          break;
         case (MoveableObject::Type::TangentBird):
           birds.push_back(new TangentBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
           break;

@@ -30,6 +30,7 @@ class MoveableObject
       BouncyBird = 101,
       TangentBird = 102,
       BombBird = 103,
+      GravityBird = 104,
       
       BasicObstacle = 200,
       TNT = 201,
