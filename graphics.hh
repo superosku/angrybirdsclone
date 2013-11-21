@@ -39,9 +39,7 @@ class Graphics {
     // the constant used to change coordinates
     int c;
     // the constant used to move the screen
-    size_t s;
-    // the constants to correct catapult coordinates when screen moves
-    int gx, gy;
+    int s;
     // the constants to correct view and catapult when zooming
     float zx; 
     int i/*, j*/;

@@ -80,8 +80,6 @@ Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::D
 
   c = 32;
   s = 25;
-  gx = 0;
-  gy = 0;
   // meaning of life
   // okay, not really, the constant used for zoom corrections
   zx = 30.4761904762;
@@ -259,25 +257,21 @@ void Graphics::pollEvents() {
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
         if(corner.x + s < bg.getGlobalBounds().width){
           view.move(s,0);
-          gx-=s;
         }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
         if(center.x - s >= 0 ){
           view.move(-s,0);
-          gx+=s;
         }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
         if(i<0 && corner.y + s <= 720 ){
           view.move(0,s);
-          gy-=s;
         }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
         if(i<0 && center.y - s >= 0 ){
           view.move(0,-s);
-          gy+=s;
         }
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
@@ -314,14 +308,9 @@ void Graphics::pollEvents() {
         */
     }
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-      // Check if we are pressing near catapult
-      /*if (event.mouseButton.x < convertX(m->getCatapultX()+0.5) and event.mouseButton.x > convertX(m->getCatapultX()-0.5) and
-          event.mouseButton.y > convertY(m->getCatapultY()+0.5) and event.mouseButton.y < convertY(m->getCatapultY()-0.5))
-      */
-        std::cout << "catapult_x: " << catapult_x+gx << ", catapult_y: " << catapult_y+gy << ", mouse x: "
-            << event.mouseButton.x << ", mouse y: " << event.mouseButton.y << std::endl;
-        if (event.mouseButton.x < (catapult_x+gx+15)*window_w/1280 && event.mouseButton.x > (catapult_x+gx-15)*window_w/1280 &&
-          event.mouseButton.y < (catapult_y+gy+15)*window_h/720 && event.mouseButton.y > (catapult_y+gy-15)*window_h/720)
+        sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
+        std::cout << "catapult_x: " << catapult_x << ", catapult_y: "<< catapult_y << ", mouse x: " << mouse.x << ", mouse y: " << mouse.y << std::endl;
+        if (mouse.x < catapult_x+15 && mouse.x > catapult_x-15 && mouse.y < catapult_y+15 && mouse.y > catapult_y-15)
         shoot_aiming = 1;
     }
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
@@ -332,11 +321,12 @@ void Graphics::pollEvents() {
     }
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
       if (shoot_aiming) {
+        sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
         //std::cout << "Shot Bird" << std::endl;
         m->ShootBird(
              /*(convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
             -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);*/
-            ((catapult_x+gx)*window_w/1280 - event.mouseButton.x)/10.0*1280/window_w, -((catapult_y+gy)*window_h/720 - event.mouseButton.y)/10.0*720/window_h);
+            (catapult_x - mouse.x)/10.0, -(catapult_y - mouse.y)/10.0);
 
         shoot_aiming = 0;
       }
@@ -376,9 +366,11 @@ void Graphics::drawUnmoveable() {
     catapult.setFillColor(sf::Color(0,0,0));
 
   catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
-  if (shoot_aiming)
-    catapult.setPosition((sf::Mouse::getPosition(window).x)*1280/window_w-gx, (sf::Mouse::getPosition(window).y)*720/window_h-gy);
+  if (shoot_aiming){
+    sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window),view);
+    catapult.setPosition(mouse.x, mouse.y);
     //catapult.setPosition((sf::Mouse::getPosition(window).x)*1280/window_w, (sf::Mouse::getPosition(window).y)*720/window_h);
+  }
   else
     //catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
     catapult.setPosition(catapult_x, catapult_y);
