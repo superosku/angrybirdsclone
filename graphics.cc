@@ -124,15 +124,31 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     window.draw(shape);
   }
   if (type == MoveableObject::Type::BlastBullet_t) { // Kuutio / Neliö
+    //sf::RectangleShape shape(sf::Vector2f(convertDistance(2), convertDistance(2)));
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+
+    //shape.setOrigin(convertDistance(1), convertDistance(1));
+    //shape.setTexture(&smoke);
+    shape.setFillColor(sf::Color(30, 30, 30));
+    shape.setOutlineColor(sf::Color(15, 15, 15));
+    shape.setOutlineThickness(2);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
+  if (type == MoveableObject::Type::Smoke_t) { // Kuutio / Neliö
     sf::RectangleShape shape(sf::Vector2f(convertDistance(2), convertDistance(2)));
-    //sf::RectangleShape rect(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    //sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    //shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+
     shape.setOrigin(convertDistance(1), convertDistance(1));
     shape.setTexture(&smoke);
-    //rect.setFillColor(sf::Color(30, 30, 30));
-    //rect.setOutlineColor(sf::Color(15, 15, 15));
-    //rect.setOutlineThickness(2);
+    //shape.setFillColor(sf::Color(30, 30, 30));
+    //shape.setOutlineColor(sf::Color(15, 15, 15));
+    //shape.setOutlineThickness(2);
     shape.setPosition(x,y);
-    //rect.setRotation(i->getAngle() * -57.295);
+    //shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
   if (type == MoveableObject::Type::Gear_t) { // hammasratas
@@ -264,7 +280,7 @@ void Graphics::pollEvents() {
     }*/
     sf::Vector2f center = view.getCenter() - view.getSize() / 2.0f;
     sf::Vector2f corner = view.getCenter() + view.getSize() / 2.0f;
-    std::cout << center.x << " " << center.y << " " << corner.x << " " << corner.y << std::endl;
+    //std::cout << center.x << " " << center.y << " " << corner.x << " " << corner.y << std::endl;
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
         if(corner.x + s < bg.getGlobalBounds().width){
           view.move(s,0);

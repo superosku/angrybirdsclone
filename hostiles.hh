@@ -113,10 +113,10 @@ class TNT : public Hostile
   void destroy(Map* m);
 };
 
-class BlastBullet : public Hostile
+class Smoke : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,180+std::rand()%20*15) 
+  Smoke(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::Smoke_t,0,60+std::rand()%20*15) 
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -133,6 +133,34 @@ class BlastBullet : public Hostile
   }
   virtual void destroy(Map*){}
 };
+
+
+class BlastBullet : public Hostile
+{
+  public:
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,120+std::rand()%20*15) 
+  {
+    b2PolygonShape shape;
+    shape.SetAsBox(w, h);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 3.0f;
+    fixtureDef.friction = 0.3f;
+
+    body->CreateFixture(&fixtureDef);
+    //body->SetGravityScale(-0.1);
+    //body->SetLinearDamping(0.9);
+    //body->SetGravityScale(0.0f);
+  }
+  virtual void destroy(Map* m){
+    Smoke* tmp = new Smoke(this->body->GetWorld(),this->getX(),this->getY());
+    //tmp->setImpulse(25*cos(a*i),25*sin(a*i));
+    m->addObject(tmp);
+  }
+};
+
+
 
 class Particle : public Hostile
 {

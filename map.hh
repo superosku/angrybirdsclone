@@ -14,7 +14,7 @@
 
 class MoveableObject;
 
-class Map : public b2ContactListener {
+class Map : public b2ContactListener,b2ContactFilter {
   public:
     Map();
     ~Map();
@@ -28,6 +28,14 @@ class Map : public b2ContactListener {
 
     //Calculate score and new energies after the impact
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+
+    bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB){
+      bodyData* bodyDataA =static_cast<bodyData*>(fixtureA->GetBody()->GetUserData());
+      bodyData* bodyDataB =static_cast<bodyData*>(fixtureB->GetBody()->GetUserData());
+      if((bodyDataA && bodyDataA->object->type == MoveableObject::Type::Smoke_t ) ||(bodyDataB && bodyDataB->object->type == MoveableObject::Type::Smoke_t ))
+        return 0;
+      return 1;
+    }
 
     //This can be called to shoot the bird
     void ShootBird(float x, float y);

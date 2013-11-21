@@ -27,7 +27,7 @@ Map::Map()
 
   //Create collision callback -> Box2D calls this instance of Map-class when contact happens
   m_world->SetContactListener(this);
-
+  m_world->SetContactFilter(this);
   //Adding a default line to the world at 0-level so blocks dont fall freely
   b2BodyDef myBodyDef;
   myBodyDef.position.Set(0.0f, -2.0f);

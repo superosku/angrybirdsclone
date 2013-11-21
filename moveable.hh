@@ -40,7 +40,8 @@ class MoveableObject
 
       BlastBullet_t = 800,
       Gear_t = 801,
-      Else = 900
+      Else = 900,
+      Smoke_t = 901
     };
     typedef float mass_t;
     
