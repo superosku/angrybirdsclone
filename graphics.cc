@@ -190,7 +190,7 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     std::cout << x << " " << y << std::endl;
     window.draw(shape);
   }
-  if (type == MoveableObject::BasicEnemy) { // Pallo
+   if (type == MoveableObject::BasicEnemy) { // Pallo
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
     shape.setTexture(&kone);
@@ -243,8 +243,8 @@ void Graphics::pollEvents() {
     }
     if(event.type == sf::Event::Resized)
     {
-        defaultView = sf::View(sf::FloatRect(0,0,event.size.width, event.size.height));
         view.setSize(event.size.width, event.size.height);
+        defaultView=view;
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
@@ -263,7 +263,7 @@ void Graphics::pollEvents() {
           view.move(0,-s);
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
-        view = window.getDefaultView();
+        view = defaultView;
         delete m;
         m = new Map(currentMapPath);
     }

@@ -83,7 +83,10 @@ class Graphics {
         window.setView(defaultView);
         std::ostringstream ss;
         ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
-        window.draw(sf::Text(ss.str(),font));
+        sf::Text t(ss.str(),font);
+        t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
+        window.draw(t);
+
         window.display(); // Display windows
         m->Step(); // Advance simulation
       }
