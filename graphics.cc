@@ -361,7 +361,7 @@ void Graphics::pollEvents() {
         m->ShootBird(
              /*(convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
             -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);*/
-            ((catapult_x+gx)*window_w/1280 - event.mouseButton.x)/10.0, -((catapult_y+gy)*window_h/720 - event.mouseButton.y)/10.0);
+            ((catapult_x+gx)*window_w/1280 - event.mouseButton.x)/10.0*1280/window_w, -((catapult_y+gy)*window_h/720 - event.mouseButton.y)/10.0*720/window_h);
 
         shoot_aiming = 0;
       }
