@@ -52,6 +52,7 @@ class Graphics {
     int catapult_x, catapult_y,window_w,window_h;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
+    std::string currentMapPath = "maps/basic_map.csv";
 
   public:
     ~Graphics() {

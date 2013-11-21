@@ -16,7 +16,7 @@
 
 #include "map.hh"
 
-Map::Map()
+Map::Map(std::string path)
 {
   //Set cannon coordinates
   catapult_x = -20;
@@ -40,7 +40,7 @@ Map::Map()
   fixtureDef.shape = &shape;
   myBody->CreateFixture(&fixtureDef);
 
-  loadMap("maps/basic_map.csv");
+  loadMap(path);
 }
 
 Map::~Map()

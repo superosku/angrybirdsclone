@@ -14,7 +14,7 @@
 
 
 Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/),window_w(1280),window_h(720) {
-  m = new Map();
+  m = new Map(currentMapPath);
   window.setFramerateLimit(60);
   view.reset(sf::FloatRect(0, 0, 1280, 720));
   if(!font.loadFromFile("QuinzeNarrow.ttf")) {
@@ -252,32 +252,7 @@ void Graphics::pollEvents() {
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
     }
-/*
-    sf::Vector2f translation = view.getCenter() + view.getSize() / 2.0f;
-    if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
-        if(translation.x + s < bg.getGlobalBounds().width){
-          view.move(s,0);
-          gx-=s;
-        }
-    }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
-        if(translation.x - s > 0 ){
-          view.move(-s,0);
-          gx+=s;
-        }
-    }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
-        if(i<0 && translation.y + s < 720 ){
-          view.move(0,s);
-          gy-=s;
-        }
-    }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
-        if(i<0 && translation.y - s > 0 ){
-          view.move(0,-s);
-          gy+=s;
-        }
-    }*/
+
     sf::Vector2f center = view.getCenter() - view.getSize() / 2.0f;
     sf::Vector2f corner = view.getCenter() + view.getSize() / 2.0f;
     //std::cout << center.x << " " << center.y << " " << corner.x << " " << corner.y << std::endl;
@@ -308,7 +283,7 @@ void Graphics::pollEvents() {
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
         window.setView(window.getDefaultView());
         delete m;
-        m = new Map();
+        m = new Map(currentMapPath);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma){
         if(i<0){

@@ -16,7 +16,7 @@ class MoveableObject;
 
 class Map : public b2ContactListener,b2ContactFilter {
   public:
-    Map();
+    Map(std::string path = "maps/basic_map.csv");
     ~Map();
     //Ro3
     Map& operator=(const Map&) = delete;
