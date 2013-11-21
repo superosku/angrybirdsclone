@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <string>
 #include <cmath>
+#include <dirent.h>
 #include "map.hh"
 #include "moveable.hh"
 #include "hostiles.hh"
@@ -63,6 +64,10 @@ class Graphics {
     void drawUnmoveable();
 
     void run() {
+      //Test for directory listing
+        //std::vector<std::string> list = readDir(".");
+        //for(auto i: list)
+        //  std::cout << i << std::endl;
       while (window.isOpen()) {
         pollEvents();
         window.clear(/*sf::Color(160,160,255)*/);
@@ -92,6 +97,7 @@ class Graphics {
     float convertDistanceReverse(int d) {
       return d / c;
     }
+    std::vector<std::string> readDir(std::string dir);
 };
 
 #endif

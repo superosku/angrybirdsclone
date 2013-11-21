@@ -411,3 +411,20 @@ void Graphics::drawUnmoveable() {
   window.draw(catapult);
 }
 
+
+std::vector<std::string> Graphics::readDir(std::string dirToRead){
+  DIR *d;
+  struct dirent *dir;
+  std::vector<std::string> dirlist;
+  d = opendir(dirToRead.c_str());
+  if(d){
+    while ((dir = readdir(d)) != NULL)
+    {
+      dirlist.push_back(dir->d_name);
+    }
+    for(size_t i=0;i<dirlist.size();i++)
+          std::cout<<dirlist[i]<<std::endl;
+    closedir(d);
+  }
+  return dirlist;
+}
