@@ -187,7 +187,6 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setTexture(&tik);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
-    std::cout << x << " " << y << std::endl;
     window.draw(shape);
   }
    if (type == MoveableObject::BasicEnemy) { // Pallo
