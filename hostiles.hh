@@ -75,10 +75,8 @@ class Ground : public MoveableObject
 
 class BasicObstacle : public Hostile
 {
-  // No private stuff yet :(
-
   public:
-  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f, float e = 10) : Hostile(world, x, y, w, h, e, MoveableObject::Type::BasicObstacle)  
+  BasicObstacle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f, float d = 1.0f, float e = 10,  MoveableObject::Type t = MoveableObject::Type::Brick) : Hostile(world, x, y, w, h, e, t)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -91,7 +89,6 @@ class BasicObstacle : public Hostile
     body->CreateFixture(&fixtureDef);
   }
 
-  // virtual ~BasicObstacle();
 };
 
 class TNT : public Hostile

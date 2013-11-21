@@ -98,7 +98,7 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   int x = convertX(i->getX());
   int y = convertY(i->getY());
   MoveableObject::Type type = i->getType();
-  if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
+  if (type == MoveableObject::Type::Brick) { // Kuutio / Neliö
     sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
     if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)

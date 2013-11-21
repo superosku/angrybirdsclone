@@ -32,8 +32,10 @@ class MoveableObject
       BombBird = 103,
       GravityBird = 104,
       
-      BasicObstacle = 200,
+      Brick = 200,
       TNT = 201,
+      Glass = 202,
+      Wood = 203,
 
       BasicEnemy = 300,
 

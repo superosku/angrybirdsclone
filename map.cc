@@ -200,8 +200,14 @@ void Map::loadMap(std::string filepath)
         case (MoveableObject::Type::BombBird):
           birds.push_back(new BombBird(m_world, catapult_x, catapult_y, std::atof(tmpVec[5].c_str())));
           break;
-        case (MoveableObject::Type::BasicObstacle):
+        case (MoveableObject::Type::Brick):
           objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str())));
+          break;
+        case (MoveableObject::Type::Glass):
+          objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str()),MoveableObject::Type::Glass));
+          break;
+        case (MoveableObject::Type::Wood):
+          objects.push_back(new BasicObstacle(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str()), std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str()),MoveableObject::Type::Wood));
           break;
         case (MoveableObject::Type::TNT):
           objects.push_back(new TNT(m_world, std::atof(tmpVec[1].c_str()), std::atof(tmpVec[2].c_str())/*, std::atof(tmpVec[3].c_str()), std::atof(tmpVec[4].c_str()),std::atof(tmpVec[5].c_str()),std::atof(tmpVec[6].c_str()))*/));
