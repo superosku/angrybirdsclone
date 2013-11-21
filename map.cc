@@ -35,7 +35,7 @@ Map::Map(std::string path)
   b2Body* myBody = m_world->CreateBody(&myBodyDef);
 
   b2PolygonShape shape;
-  shape.SetAsBox(100, 2);
+  shape.SetAsBox(500, 2);
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &shape;
   myBody->CreateFixture(&fixtureDef);

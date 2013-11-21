@@ -1,6 +1,10 @@
 #ifndef G_H
 #define G_H
 
+#define WINDOW_W 1280
+#define WINDOW_H 720
+
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
@@ -35,6 +39,7 @@ class Graphics {
     sf::Texture smoke;
 
     sf::ContextSettings settings;
+    sf::View defaultView = window.getDefaultView();
     Map* m;
     // the constant used to change coordinates
     int c;
@@ -47,7 +52,7 @@ class Graphics {
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;
-    int catapult_x, catapult_y,window_w,window_h;
+    int catapult_x, catapult_y;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
     std::string currentMapPath = "maps/basic_map.csv";
@@ -75,26 +80,26 @@ class Graphics {
         drawMoveableObjects() ;
         
         //Draw score, display and advance the simulation one step ahead
-        window.setView(window.getDefaultView());
+        window.setView(defaultView);
         std::ostringstream ss;
         ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
-        window.draw(sf::Text(ss.str(), font));
+        window.draw(sf::Text(ss.str(),font));
         window.display(); // Display windows
         m->Step(); // Advance simulation
       }
     }
 
     int convertX(float x) {
-      return x * c + 1280/2 + cam_x * c;
+      return x * c + WINDOW_W/2.0 + cam_x * c;
     }
     int convertY(float y) {
-      return -y * c + 720/2 + cam_y * c;
+      return -y * c + WINDOW_H/2.0 + cam_y * c;
     }
     int convertDistance(float d) {
       return c * d;
     }
     float convertDistanceReverse(int d) {
-      return d / c;
+      return d / c +0.1;
     }
     std::vector<std::string> readDir(std::string dir);
 };

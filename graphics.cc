@@ -13,10 +13,10 @@
 #include "graphics.hh"
 
 
-Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::Default/*, settings*/),window_w(1280),window_h(720) {
+Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf::Style::Default/*, settings*/) {
   m = new Map(currentMapPath);
   window.setFramerateLimit(60);
-  view.reset(sf::FloatRect(0, 0, 1280, 720));
+  view.reset(sf::FloatRect(0, 0, WINDOW_W, WINDOW_H));
   if(!font.loadFromFile("QuinzeNarrow.ttf")) {
     //Throw error or something
   }
@@ -95,8 +95,8 @@ Graphics::Graphics() : window(sf::VideoMode(1280, 720), "Game jou", sf::Style::D
 
 
 void Graphics::drawMoveableObject(MoveableObject *i) {
-  size_t x = convertX(i->getX());
-  size_t y = convertY(i->getY());
+  int x = convertX(i->getX());
+  int y = convertY(i->getY());
   MoveableObject::Type type = i->getType();
   if (type == MoveableObject::Type::BasicObstacle) { // Kuutio / Neliö
     sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
@@ -187,6 +187,7 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setTexture(&tik);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
+    std::cout << x << " " << y << std::endl;
     window.draw(shape);
   }
   if (type == MoveableObject::BasicEnemy) { // Pallo
@@ -242,49 +243,37 @@ void Graphics::pollEvents() {
     }
     if(event.type == sf::Event::Resized)
     {
-        sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-        window.setView(sf::View(visibleArea));
-        window_w=event.size.width;
-        window_h=event.size.height;
+        defaultView = sf::View(sf::FloatRect(0,0,event.size.width, event.size.height));
+        view.setSize(event.size.width, event.size.height);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
     }
 
-    sf::Vector2f center = view.getCenter() - view.getSize() / 2.0f;
-    sf::Vector2f corner = view.getCenter() + view.getSize() / 2.0f;
-    //std::cout << center.x << " " << center.y << " " << corner.x << " " << corner.y << std::endl;
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
-        if(corner.x + s < bg.getGlobalBounds().width){
           view.move(s,0);
-        }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
-        if(center.x - s >= 0 ){
           view.move(-s,0);
-        }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
-        if(i<0 && corner.y + s <= 720 ){
           view.move(0,s);
-        }
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
-        if(i<0 && center.y - s >= 0 ){
           view.move(0,-s);
-        }
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
-        window.setView(window.getDefaultView());
+        view = window.getDefaultView();
         delete m;
         m = new Map(currentMapPath);
     }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma){
-        if(i<0){
+    /*if(event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)
+        view.setCenter(window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x,event.mouseWheel.y),view));*/
+    if( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0)){
         view.zoom(1.05f);
-        i++;
-        temp = zx*std::pow(1.05, i);
-        view.move(temp, 0);
+        //i++;
+        //temp = zx*std::pow(1.05, i);
+        //view.move(temp, 0);
         // TODO fix the catapult coordinates when zooming
         /*j--;
         std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
@@ -292,13 +281,13 @@ void Graphics::pollEvents() {
         catapult_y=catapult_y*std::pow(0.952308952381, (j/2));
         std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
         */
-        }
     }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period){
+    
+    if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)){
         view.zoom(0.952308952381);
-        temp = -zx*std::pow(1.05, i);
-        i--;
-        view.move(temp, 0);
+        //temp = -zx*std::pow(1.05, i);
+        //i--;
+        //view.move(temp, 0);
         // TODO fix the catapult coordinates when zooming
         /*j++;
         std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
@@ -311,7 +300,7 @@ void Graphics::pollEvents() {
         sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
         std::cout << "catapult_x: " << catapult_x << ", catapult_y: "<< catapult_y << ", mouse x: " << mouse.x << ", mouse y: " << mouse.y << std::endl;
         if (mouse.x < catapult_x+15 && mouse.x > catapult_x-15 && mouse.y < catapult_y+15 && mouse.y > catapult_y-15)
-        shoot_aiming = 1;
+         shoot_aiming = 1;
     }
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
       if ((!shoot_aiming) && (m->getCurrentBird() != nullptr)) {
@@ -323,11 +312,7 @@ void Graphics::pollEvents() {
       if (shoot_aiming) {
         sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
         //std::cout << "Shot Bird" << std::endl;
-        m->ShootBird(
-             /*(convertX(m->getCatapultX()) - event.mouseButton.x)/10.0,
-            -(convertY(m->getCatapultY()) - event.mouseButton.y)/10.0);*/
-            (catapult_x - mouse.x)/10.0, -(catapult_y - mouse.y)/10.0);
-
+        m->ShootBird((catapult_x - mouse.x)/10.0, -(catapult_y - mouse.y)/10.0);
         shoot_aiming = 0;
       }
     }
@@ -336,13 +321,27 @@ void Graphics::pollEvents() {
 
 
 void Graphics::drawUnmoveable() {
-  // Drawing the background
-  window.draw(bg);
-  // Drawing the ground
-  sf::RectangleShape ground(sf::Vector2f(2560, 720 - convertY(0)));
-  ground.setPosition(0, convertY(0));
+  // Drawing the air and ground
+  sf::Vector2f center = view.getCenter();
+  sf::Vector2f size = view.getSize();
+  sf::Vector2f leftEdge = center-size/2.0f;
+  sf::Vector2f rightEdge = center+size/2.0f;
+
+  sf::RectangleShape ground3(size);
+  ground3.setPosition(leftEdge);
+  ground3.setFillColor(sf::Color(113,218,226));
+  window.draw(ground3);
+  sf::RectangleShape ground2(sf::Vector2f(size.x, rightEdge.y));
+  ground2.setPosition(leftEdge.x,430);
+  ground2.setFillColor(sf::Color(0,104,55));
+  window.draw(ground2);
+  sf::RectangleShape ground(sf::Vector2f(size.x, rightEdge.y));
+  ground.setPosition(leftEdge.x, 520);
   ground.setFillColor(sf::Color(29,76,34));
   window.draw(ground);
+
+  // Drawing the background
+  window.draw(bg);
 
   // Drawing the catapult
   sf::CircleShape catapult_bg(convertDistance(0.5));
@@ -369,7 +368,6 @@ void Graphics::drawUnmoveable() {
   if (shoot_aiming){
     sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window),view);
     catapult.setPosition(mouse.x, mouse.y);
-    //catapult.setPosition((sf::Mouse::getPosition(window).x)*1280/window_w, (sf::Mouse::getPosition(window).y)*720/window_h);
   }
   else
     //catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
