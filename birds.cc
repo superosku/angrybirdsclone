@@ -1,5 +1,4 @@
 #include "birds.hh"
-#define GEAR_COUNT 5
 
 void Bird::destroy(Map* m){
     b2World* world = body->GetWorld();

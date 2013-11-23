@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 #include "map.hh"
 #include "moveable.hh"
@@ -309,9 +310,9 @@ void Graphics::pollEvents() {
     }
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
       if (shoot_aiming) {
-        sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
+        sf::Vector2f location = catapult.getPosition();
         //std::cout << "Shot Bird" << std::endl;
-        m->ShootBird((catapult_x - mouse.x)/10.0, -(catapult_y - mouse.y)/10.0);
+        m->ShootBird((catapult_x - location.x)/10.0, -(catapult_y - location.y)/10.0);
         shoot_aiming = 0;
       }
     }
@@ -349,7 +350,7 @@ void Graphics::drawUnmoveable() {
   //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
   catapult_bg.setPosition(catapult_x, catapult_y);
 
-  sf::CircleShape catapult(convertDistance(0.5));
+  catapult.setRadius(convertDistance(0.5));
   //set texture according to upcoming bird
   MoveableObject::Type currentType = m->getNextBirdType();
   if(currentType == MoveableObject::Type::BasicBird)
@@ -366,10 +367,14 @@ void Graphics::drawUnmoveable() {
   catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
   if (shoot_aiming){
     sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window),view);
-    catapult.setPosition(mouse.x, mouse.y);
+    sf::Vector2f location = sf::Vector2f(catapult_x,catapult_y);
+    float d = std::sqrt(std::pow(mouse.x -location.x,2)+std::pow(mouse.y -location.y,2));
+    if(d > MAX_FORCE)
+     catapult.setPosition(location.x + MAX_FORCE*(mouse.x -location.x)/d, location.y+ MAX_FORCE*(mouse.y -location.y)/d);
+    else
+     catapult.setPosition(mouse.x,mouse.y);
   }
   else
-    //catapult.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
     catapult.setPosition(catapult_x, catapult_y);
   window.draw(catapult_bg);
   window.draw(catapult);

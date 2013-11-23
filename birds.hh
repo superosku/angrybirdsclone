@@ -1,14 +1,8 @@
 #ifndef BIRDS
 #define BIRDS
 
-//#include "map.hh"
 #include "hostiles.hh" // BlastBullet
 #include "moveable.hh"
-
-//#define N_BULLETS 16
-//#define PI 3.14159265359
-
-//class BlastBullet;
 
 class Bird : public MoveableObject
 {

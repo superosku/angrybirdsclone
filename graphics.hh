@@ -4,6 +4,7 @@
 #define WINDOW_W 1280
 #define WINDOW_H 720
 
+#define MAX_FORCE 200
 
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -37,6 +38,8 @@ class Graphics {
     sf::Texture tnt;
     sf::Texture ratas;
     sf::Texture smoke;
+
+    sf::CircleShape catapult;
 
     sf::ContextSettings settings;
     sf::View defaultView = window.getDefaultView();

@@ -1,15 +1,15 @@
 #ifndef MOVEABLE
 #define MOVEABLE
 
-#define BREAKDOWN_R 3
-#define N_BULLETS 16
-#define PI 3.14159265359
-
 #include <list>
 #include <string>
 #include "Box2D/Box2D.h"
 //#include "map.hh"
 
+#define BREAKDOWN_R 3
+#define PI 3.14159265359
+#define N_BULLETS 16
+#define GEAR_COUNT 5
 class Map;
 class MoveableObject;
 
