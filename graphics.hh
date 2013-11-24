@@ -23,7 +23,10 @@ class Graphics {
   private:
     sf::RenderWindow window;
     sf::View view;
-    sf::Texture bgt;
+    sf::Texture amfi1;
+    sf::Texture amfi2;
+    sf::Texture amfi3;
+    sf::Texture amfi4;
     sf::Sprite bg;
     sf::Font font;
     sf::Texture kemma;

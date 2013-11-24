@@ -59,7 +59,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   wood3.loadFromFile("images/wood3.png", sf::IntRect(0, 0, 400, 400));
   wood4.loadFromFile("images/wood4.png", sf::IntRect(0, 0, 400, 400));
   tnt.loadFromFile("images/tnt.png");
-  bgt.loadFromFile("images/bg.png");
+  amfi1.loadFromFile("images/amfi1.png");
+  amfi2.loadFromFile("images/amfi2.png");
+  amfi3.loadFromFile("images/amfi3.png");
+  amfi4.loadFromFile("images/amfi4.png");
   ratas.loadFromFile("images/hammasratas.png");
   ratas50.loadFromFile("images/hammasratas50.png");
   ratas100.loadFromFile("images/hammasratas100.png");
@@ -105,14 +108,16 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   wood3.setSmooth(true);
   wood4.setSmooth(true);
   tnt.setSmooth(true);
-  bgt.setSmooth(true);
+  amfi1.setSmooth(true);
+  amfi2.setSmooth(true);
+  amfi3.setSmooth(true);
+  amfi4.setSmooth(true);
   ratas.setSmooth(true);
   ratas50.setSmooth(true);
   ratas100.setSmooth(true);
   ratas250.setSmooth(true);
   smoke.setSmooth(true);
   //settings.antialiasingLevel = 8;
-  bg.setTexture(bgt);
   window.setView(view);
 
   c = 32;
@@ -404,7 +409,15 @@ void Graphics::drawUnmoveable() {
   ground.setPosition(leftEdge.x, 520);
   ground.setFillColor(sf::Color(29,76,34));
   window.draw(ground);
-
+  if(z>35) 
+      bg.setTexture(amfi4, 1);
+  else if(z>15 && z<=35) 
+      bg.setTexture(amfi3, 1);
+  else if(z>5 && z<=15) 
+      bg.setTexture(amfi2, 1);
+  else if(z<=5)
+      bg.setTexture(amfi1, 1);
+    
   // Drawing the background
   window.draw(bg);
 
