@@ -87,6 +87,9 @@ class Graphics {
     float zx; 
     int z;
     float temp;
+    int zoomDelta = 0;
+    int xDelta = 0;
+    int yDelta = 0;
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen
     float cam_x, cam_y;

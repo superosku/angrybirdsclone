@@ -343,29 +343,33 @@ void Graphics::pollEvents() {
         window.close();
     }
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+        xDelta +=s;
         //this is to refine the movement when the zoom is big
-        if(z>20)
+        /*if(z>20)
             view.move(ss,0);
         else
-            view.move(s,0);
+            view.move(s,0);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
-        if(z>20)
+        xDelta -= s;
+        /*if(z>20)
             view.move(-ss,0);
         else
-            view.move(-s,0);
+            view.move(-s,0);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
-        if(z>20)
+        yDelta += s;
+        /*if(z>20)
             view.move(0,ss);
         else
-            view.move(0,s);
+            view.move(0,s);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
-        if(z>20)
+        yDelta -=s;
+        /*if(z>20)
             view.move(0,-ss);
         else
-            view.move(0,-s);
+            view.move(0,-s);*/
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
         view = defaultView;
@@ -373,11 +377,13 @@ void Graphics::pollEvents() {
         m = new Map(currentMapPath);
     }
     if( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0)){
-        view.zoom(1.05f);
+        zoomDelta +=s;
+        //view.zoom(1.05f);
         z--;
     }
     if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)){
-        view.zoom(0.952308952381);
+        zoomDelta -=s;
+        //view.zoom(0.952308952381);
         z++;
     }
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
@@ -401,6 +407,25 @@ void Graphics::pollEvents() {
       }
     }
   }
+  if(xDelta > 0 || yDelta > 0)
+   view.move(xDelta > 0 ? 5*xDelta/10: 0,yDelta > 0 ? 5*yDelta/10:0);
+  else if(xDelta < 0 || yDelta < 0)
+   view.move(xDelta < 0 ? 5*xDelta/10: 0,yDelta < 0 ? 5*yDelta/10:0);
+  if(zoomDelta != 0)
+    view.zoom( zoomDelta > 0 ? 1.002f : 0.998f  );
+  if (xDelta >0)
+   --xDelta;
+  if (xDelta <0)
+   ++xDelta;
+  if (yDelta >0)
+   --yDelta;
+  if (yDelta <0)
+   ++yDelta;
+  if(zoomDelta > 0)
+   --zoomDelta;
+  if(zoomDelta < 0)
+   ++zoomDelta;
+
 }
 
 
