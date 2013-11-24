@@ -21,13 +21,35 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   //if an error occurs withing loadFromFile, SFML tell about it in the console
   font.loadFromFile("QuinzeNarrow.ttf");
   kemma.loadFromFile("images/kemma.png");
+  kemma100.loadFromFile("images/kemma100.png");
+  kemma250.loadFromFile("images/kemma250.png");
+  kemma500.loadFromFile("images/kemma500.png");
+  kemma900.loadFromFile("images/kemma900.png");
   kone.loadFromFile("images/kone.png");
   kone100.loadFromFile("images/kone100.png");
   kone900.loadFromFile("images/kone900.png");
   kone250.loadFromFile("images/kone250.png");
   kone500.loadFromFile("images/kone500.png");
+  pjk.loadFromFile("images/puu.png");
+  pjk100.loadFromFile("images/puu100.png");
+  pjk250.loadFromFile("images/puu250.png");
+  pjk500.loadFromFile("images/puu500.png");
+  pjk900.loadFromFile("images/puu900.png");
   prodeko.loadFromFile("images/prodeko.png");
+  prodeko100.loadFromFile("images/prodeko100.png");
+  prodeko250.loadFromFile("images/prodeko250.png");
+  prodeko500.loadFromFile("images/prodeko500.png");
+  prodeko900.loadFromFile("images/prodeko900.png");
+  taffa.loadFromFile("images/taffa.png");
+  taffa100.loadFromFile("images/taffa100.png");
+  taffa250.loadFromFile("images/taffa250.png");
+  taffa500.loadFromFile("images/taffa500.png");
+  taffa900.loadFromFile("images/taffa900.png");
   tik.loadFromFile("images/tik.png");
+  tik100.loadFromFile("images/tik100.png");
+  tik250.loadFromFile("images/tik250.png");
+  tik500.loadFromFile("images/tik500.png");
+  tik900.loadFromFile("images/tik900.png");
   tile1.loadFromFile("images/tiili1.png", sf::IntRect(0, 0, 400, 400));
   tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400));
   tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400));
@@ -38,14 +60,35 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   smoke.loadFromFile("images/smoke.png");
 
   kemma.setSmooth(true);
+  kemma100.setSmooth(true);
+  kemma250.setSmooth(true);
+  kemma500.setSmooth(true);
+  kemma900.setSmooth(true);
   kone.setSmooth(true);
   kone100.setSmooth(true);
   kone250.setSmooth(true);
   kone500.setSmooth(true);
   kone900.setSmooth(true);
   prodeko.setSmooth(true);
+  prodeko100.setSmooth(true);
+  prodeko250.setSmooth(true);
+  prodeko500.setSmooth(true);
+  prodeko900.setSmooth(true);
   pjk.setSmooth(true);
+  pjk100.setSmooth(true);
+  pjk250.setSmooth(true);
+  pjk500.setSmooth(true);
+  pjk900.setSmooth(true);
+  taffa.setSmooth(true);
+  taffa100.setSmooth(true);
+  taffa250.setSmooth(true);
+  taffa500.setSmooth(true);
+  taffa900.setSmooth(true);
   tik.setSmooth(true);
+  tik100.setSmooth(true);
+  tik250.setSmooth(true);
+  tik500.setSmooth(true);
+  tik900.setSmooth(true);
   tile1.setSmooth(true);
   tile2.setSmooth(true);
   tile3.setSmooth(true);
@@ -102,12 +145,8 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     window.draw(shape);
   }
   if (type == MoveableObject::Type::BlastBullet_t) { // Kuutio / Neliö
-    //sf::RectangleShape shape(sf::Vector2f(convertDistance(2), convertDistance(2)));
     sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-
-    //shape.setOrigin(convertDistance(1), convertDistance(1));
-    //shape.setTexture(&smoke);
     shape.setFillColor(sf::Color(30, 30, 30));
     shape.setOutlineColor(sf::Color(15, 15, 15));
     shape.setOutlineThickness(2);
@@ -115,18 +154,11 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::Type::Smoke_t) { // Kuutio / Neliö
+  if (type == MoveableObject::Type::Smoke_t) { // savu
     sf::RectangleShape shape(sf::Vector2f(convertDistance(2), convertDistance(2)));
-    //sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
-    //shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-
     shape.setOrigin(convertDistance(1), convertDistance(1));
     shape.setTexture(&smoke);
-    //shape.setFillColor(sf::Color(30, 30, 30));
-    //shape.setOutlineColor(sf::Color(15, 15, 15));
-    //shape.setOutlineThickness(2);
     shape.setPosition(x,y);
-    //shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
   if (type == MoveableObject::Type::Gear_t) { // hammasratas
@@ -137,39 +169,75 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::Type::BasicBird) { // Pallo
+  if (type == MoveableObject::Type::BasicBird) { // Pallo, taffa
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&kemma);
+    if(z>45)
+        shape.setTexture(&taffa900);
+    else if(z>30 && z<=45) 
+        shape.setTexture(&taffa500);
+    else if(z>15 && z<=30) 
+        shape.setTexture(&taffa250);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&taffa100);
+    else if(z<=5)
+        shape.setTexture(&taffa);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::Type::BouncyBird) { // Pallo
+  if (type == MoveableObject::Type::BouncyBird) { // Pallo, prodeko
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&prodeko);
+    if(z>45)
+        shape.setTexture(&prodeko900);
+    else if(z>30 && z<=45) 
+        shape.setTexture(&prodeko500);
+    else if(z>15 && z<=30) 
+        shape.setTexture(&prodeko250);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&prodeko100);
+    else if(z<=5)
+        shape.setTexture(&prodeko);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::Type::TangentBird) { // Pallo
+  if (type == MoveableObject::Type::TangentBird) { // Pallo, pjk
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&pjk);
+    if(z>45)
+        shape.setTexture(&pjk900);
+    else if(z>30 && z<=45) 
+        shape.setTexture(&pjk500);
+    else if(z>15 && z<=30) 
+        shape.setTexture(&pjk250);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&pjk100);
+    else if(z<=5)
+        shape.setTexture(&pjk);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::Type::BombBird) { // Pallo
+  if (type == MoveableObject::Type::BombBird) { // Pallo, tik
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&tik);
+    if(z>45)
+        shape.setTexture(&tik900);
+    else if(z>30 && z<=45) 
+        shape.setTexture(&tik500);
+    else if(z>15 && z<=30) 
+        shape.setTexture(&tik250);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&tik100);
+    else if(z<=5)
+        shape.setTexture(&tik);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-  if (type == MoveableObject::BasicEnemy) { // Pallo
+  if (type == MoveableObject::BasicEnemy) { // Pallo, kik
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
     if(z>45)
@@ -254,34 +322,13 @@ void Graphics::pollEvents() {
         delete m;
         m = new Map(currentMapPath);
     }
-    /*if(event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)
-        view.setCenter(window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x,event.mouseWheel.y),view));*/
     if( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0)){
         view.zoom(1.05f);
         z--;
-        //temp = zx*std::pow(1.05, i);
-        //view.move(temp, 0);
-        // TODO fix the catapult coordinates when zooming
-        /*j--;
-        std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
-        catapult_x=catapult_x*std::pow(0.952308952381, (j/2));
-        catapult_y=catapult_y*std::pow(0.952308952381, (j/2));
-        std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
-        */
     }
-    
     if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)){
         view.zoom(0.952308952381);
-        //temp = -zx*std::pow(1.05, i);
         z++;
-        //view.move(temp, 0);
-        // TODO fix the catapult coordinates when zooming
-        /*j++;
-        std::cout << "original catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
-        catapult_x=catapult_x*std::pow(1.05, (j/2));
-        catapult_y=catapult_y*std::pow(1.05, (j/2));
-        std::cout << "changed catapult x: " << catapult_x << ", catapult y: " << catapult_y << std::endl;
-        */
     }
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
@@ -337,18 +384,60 @@ void Graphics::drawUnmoveable() {
   //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
   catapult_bg.setPosition(catapult_x, catapult_y);
 
+  //this breaks the shooting
+  sf::CircleShape catapult(convertDistance(0.5));
   catapult.setRadius(convertDistance(0.5));
   //set texture according to upcoming bird
-  MoveableObject::Type currentType = m->getNextBirdType();
-  if(currentType == MoveableObject::Type::BasicBird)
-    catapult.setTexture(&kemma);
-  if(currentType == MoveableObject::Type::BombBird)
-    catapult.setTexture(&tik);
-  if(currentType == MoveableObject::Type::BouncyBird)
-    catapult.setTexture(&prodeko);
-  if(currentType == MoveableObject::Type::TangentBird)
-    catapult.setTexture(&pjk);
-  if(currentType == MoveableObject::Type::Else)
+  MoveableObject::Type nextType = m->getNextBirdType();
+  if(nextType == MoveableObject::Type::BasicBird) {
+    if(z>45)
+        catapult.setTexture(&taffa900);
+    else if(z>30 && z<=45) 
+        catapult.setTexture(&taffa500);
+    else if(z>15 && z<=30) 
+        catapult.setTexture(&taffa250);
+    else if(z>5 && z<=15) 
+        catapult.setTexture(&taffa100);
+    else if(z<=5)
+        catapult.setTexture(&taffa);
+  } 
+  if(nextType == MoveableObject::Type::BombBird) {
+    if(z>45)
+        catapult.setTexture(&tik900);
+    else if(z>30 && z<=45) 
+        catapult.setTexture(&tik500);
+    else if(z>15 && z<=30) 
+        catapult.setTexture(&tik250);
+    else if(z>5 && z<=15) 
+        catapult.setTexture(&tik100);
+    else if(z<=5)
+        catapult.setTexture(&tik);
+  }
+  if(nextType == MoveableObject::Type::BouncyBird) {
+    if(z>45)
+        catapult.setTexture(&prodeko900);
+    else if(z>30 && z<=45) 
+        catapult.setTexture(&prodeko500);
+    else if(z>15 && z<=30) 
+        catapult.setTexture(&prodeko250);
+    else if(z>5 && z<=15)
+        catapult.setTexture(&prodeko100);
+    else if(z<=5)
+        catapult.setTexture(&prodeko);
+  }
+  if(nextType == MoveableObject::Type::TangentBird) {
+    if(z>45)
+        catapult.setTexture(&pjk900);
+    else if(z>30 && z<=45) 
+        catapult.setTexture(&pjk500);
+    else if(z>15 && z<=30) 
+        catapult.setTexture(&pjk250);
+    else if(z>5 && z<=15) 
+        catapult.setTexture(&pjk100);
+    else if(z<=5)
+        catapult.setTexture(&pjk);
+  }
+  if(nextType == MoveableObject::Type::Else)
     catapult.setFillColor(sf::Color(0,0,0));
 
   catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
@@ -366,7 +455,6 @@ void Graphics::drawUnmoveable() {
   window.draw(catapult_bg);
   window.draw(catapult);
 }
-
 
 std::vector<std::string> Graphics::readDir(std::string dirToRead){
   DIR *d;
