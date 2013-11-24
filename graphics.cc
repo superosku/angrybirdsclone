@@ -122,6 +122,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
 
   c = 32;
   s = 25;
+  ss = 10;
   z=0;
   cam_x = 5;
   cam_y = 5;
@@ -342,16 +343,29 @@ void Graphics::pollEvents() {
         window.close();
     }
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
-          view.move(s,0);
+        //this is to refine the movement when the zoom is big
+        if(z>20)
+            view.move(ss,0);
+        else
+            view.move(s,0);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
-          view.move(-s,0);
+        if(z>20)
+            view.move(-ss,0);
+        else
+            view.move(-s,0);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
-          view.move(0,s);
+        if(z>20)
+            view.move(0,ss);
+        else
+            view.move(0,s);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
-          view.move(0,-s);
+        if(z>20)
+            view.move(0,-ss);
+        else
+            view.move(0,-s);
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
         view = defaultView;

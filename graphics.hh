@@ -82,6 +82,7 @@ class Graphics {
     int c;
     // the constant used to move the screen
     int s;
+    int ss;
     // the constants to correct view and catapult when zooming
     float zx; 
     int z;
