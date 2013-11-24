@@ -145,6 +145,21 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
+  if (type == MoveableObject::Type::Wood) { // Kuutio / Neliö
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)
+      shape.setTexture(&wood1);
+    if(i->getEnergy() > 0.5 && i->getEnergy() <=0.75)
+      shape.setTexture(&wood2);
+    if(i->getEnergy() > 0.25 && i->getEnergy() <= 0.5)
+      shape.setTexture(&wood3);
+    if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
+      shape.setTexture(&wood4);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
   if (type == MoveableObject::Type::TNT) { // TNT
     sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
