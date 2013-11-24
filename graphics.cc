@@ -54,9 +54,16 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400));
   tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400));
   tile4.loadFromFile("images/tiili4.png", sf::IntRect(0, 0, 400, 400));
+  wood1.loadFromFile("images/wood1.png", sf::IntRect(0, 0, 400, 400));
+  wood2.loadFromFile("images/wood2.png", sf::IntRect(0, 0, 400, 400));
+  wood3.loadFromFile("images/wood3.png", sf::IntRect(0, 0, 400, 400));
+  wood4.loadFromFile("images/wood4.png", sf::IntRect(0, 0, 400, 400));
   tnt.loadFromFile("images/tnt.png");
   bgt.loadFromFile("images/bg.png");
   ratas.loadFromFile("images/hammasratas.png");
+  ratas50.loadFromFile("images/hammasratas50.png");
+  ratas100.loadFromFile("images/hammasratas100.png");
+  ratas250.loadFromFile("images/hammasratas250.png");
   smoke.loadFromFile("images/smoke.png");
 
   kemma.setSmooth(true);
@@ -93,9 +100,16 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   tile2.setSmooth(true);
   tile3.setSmooth(true);
   tile4.setSmooth(true);
+  wood1.setSmooth(true);
+  wood2.setSmooth(true);
+  wood3.setSmooth(true);
+  wood4.setSmooth(true);
   tnt.setSmooth(true);
   bgt.setSmooth(true);
   ratas.setSmooth(true);
+  ratas50.setSmooth(true);
+  ratas100.setSmooth(true);
+  ratas250.setSmooth(true);
   smoke.setSmooth(true);
   //settings.antialiasingLevel = 8;
   bg.setTexture(bgt);
@@ -103,12 +117,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
 
   c = 32;
   s = 25;
-  // meaning of life
-  // okay, not really, the constant used for zoom corrections
-  zx = 30.4761904762;
   z=0;
-  //j=0;
-  temp = 0.0;
   cam_x = 5;
   cam_y = 5;
   catapult_x = convertX(-20);
@@ -164,7 +173,14 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::Gear_t) { // hammasratas
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&ratas);
+    if(z>35) 
+        shape.setTexture(&ratas250);
+    else if(z>15 && z<=35) 
+        shape.setTexture(&ratas100);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&ratas50);
+    else if(z<=5)
+        shape.setTexture(&ratas);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
@@ -384,56 +400,54 @@ void Graphics::drawUnmoveable() {
   //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
   catapult_bg.setPosition(catapult_x, catapult_y);
 
-  //this breaks the shooting
-  sf::CircleShape catapult(convertDistance(0.5));
   catapult.setRadius(convertDistance(0.5));
   //set texture according to upcoming bird
   MoveableObject::Type nextType = m->getNextBirdType();
   if(nextType == MoveableObject::Type::BasicBird) {
     if(z>45)
-        catapult.setTexture(&taffa900);
+        catapult.setTexture(&taffa900, 1);
     else if(z>30 && z<=45) 
-        catapult.setTexture(&taffa500);
+        catapult.setTexture(&taffa500, 1);
     else if(z>15 && z<=30) 
-        catapult.setTexture(&taffa250);
+        catapult.setTexture(&taffa250, 1);
     else if(z>5 && z<=15) 
-        catapult.setTexture(&taffa100);
+        catapult.setTexture(&taffa100, 1);
     else if(z<=5)
         catapult.setTexture(&taffa);
   } 
   if(nextType == MoveableObject::Type::BombBird) {
     if(z>45)
-        catapult.setTexture(&tik900);
+        catapult.setTexture(&tik900, 1);
     else if(z>30 && z<=45) 
-        catapult.setTexture(&tik500);
+        catapult.setTexture(&tik500, 1);
     else if(z>15 && z<=30) 
-        catapult.setTexture(&tik250);
+        catapult.setTexture(&tik250, 1);
     else if(z>5 && z<=15) 
-        catapult.setTexture(&tik100);
+        catapult.setTexture(&tik100, 1);
     else if(z<=5)
         catapult.setTexture(&tik);
   }
   if(nextType == MoveableObject::Type::BouncyBird) {
     if(z>45)
-        catapult.setTexture(&prodeko900);
+        catapult.setTexture(&prodeko900, 1);
     else if(z>30 && z<=45) 
-        catapult.setTexture(&prodeko500);
+        catapult.setTexture(&prodeko500, 1);
     else if(z>15 && z<=30) 
-        catapult.setTexture(&prodeko250);
+        catapult.setTexture(&prodeko250, 1);
     else if(z>5 && z<=15)
-        catapult.setTexture(&prodeko100);
+        catapult.setTexture(&prodeko100, 1);
     else if(z<=5)
         catapult.setTexture(&prodeko);
   }
   if(nextType == MoveableObject::Type::TangentBird) {
     if(z>45)
-        catapult.setTexture(&pjk900);
+        catapult.setTexture(&pjk900, 1);
     else if(z>30 && z<=45) 
-        catapult.setTexture(&pjk500);
+        catapult.setTexture(&pjk500, 1);
     else if(z>15 && z<=30) 
-        catapult.setTexture(&pjk250);
+        catapult.setTexture(&pjk250, 1);
     else if(z>5 && z<=15) 
-        catapult.setTexture(&pjk100);
+        catapult.setTexture(&pjk100, 1);
     else if(z<=5)
         catapult.setTexture(&pjk);
   }

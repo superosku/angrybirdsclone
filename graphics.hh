@@ -60,8 +60,15 @@ class Graphics {
     sf::Texture tile2;
     sf::Texture tile3;
     sf::Texture tile4;
+    sf::Texture wood1;
+    sf::Texture wood2;
+    sf::Texture wood3;
+    sf::Texture wood4;
     sf::Texture tnt;
     sf::Texture ratas;
+    sf::Texture ratas50;
+    sf::Texture ratas100;
+    sf::Texture ratas250;
     sf::Texture smoke;
 
     sf::CircleShape catapult;
