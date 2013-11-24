@@ -376,12 +376,12 @@ void Graphics::pollEvents() {
         delete m;
         m = new Map(currentMapPath);
     }
-    if( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0)){
+    if( zoomDelta < 50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0))){
         zoomDelta +=s;
         //view.zoom(1.05f);
         z--;
     }
-    if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)){
+    if( zoomDelta > -50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0))){
         zoomDelta -=s;
         //view.zoom(0.952308952381);
         z++;
