@@ -28,6 +28,10 @@ class Graphics {
     sf::Font font;
     sf::Texture kemma;
     sf::Texture kone;
+    sf::Texture kone100;
+    sf::Texture kone250;
+    sf::Texture kone500;
+    sf::Texture kone900;
     sf::Texture prodeko;
     sf::Texture pjk;
     sf::Texture tik;
@@ -50,7 +54,7 @@ class Graphics {
     int s;
     // the constants to correct view and catapult when zooming
     float zx; 
-    int i/*, j*/;
+    int z;
     float temp;
     // Things for camera movenment. In box2d meters
     // 0,0 means center of the screen

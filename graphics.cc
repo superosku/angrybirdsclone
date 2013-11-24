@@ -25,7 +25,19 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
     //Throw error
   }
   if(!kone.loadFromFile("images/kone.png")){
-    //Throw error
+    //Throw error    
+  }
+  if(!kone100.loadFromFile("images/kone100.png")){
+    //Throw error    
+  } 
+  if(!kone900.loadFromFile("images/kone900.png")){
+    //Throw error    
+  }
+  if(!kone250.loadFromFile("images/kone250.png")){
+    //Throw error    
+  } 
+  if(!kone500.loadFromFile("images/kone500.png")){
+    //Throw error    
   }
   if(!prodeko.loadFromFile("images/prodeko.png")){
       //Throw error
@@ -61,9 +73,12 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
       //THROW ERROR!?!?!?!?!
   }
 
-
   kemma.setSmooth(true);
   kone.setSmooth(true);
+  kone100.setSmooth(true);
+  kone250.setSmooth(true);
+  kone500.setSmooth(true);
+  kone900.setSmooth(true);
   prodeko.setSmooth(true);
   pjk.setSmooth(true);
   tik.setSmooth(true);
@@ -84,7 +99,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   // meaning of life
   // okay, not really, the constant used for zoom corrections
   zx = 30.4761904762;
-  i=0;
+  z=0;
   //j=0;
   temp = 0.0;
   cam_x = 5;
@@ -190,10 +205,19 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
-   if (type == MoveableObject::BasicEnemy) { // Pallo
+  if (type == MoveableObject::BasicEnemy) { // Pallo
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    shape.setTexture(&kone);
+    if(z>45)
+        shape.setTexture(&kone900);
+    else if(z>30 && z<=45) 
+        shape.setTexture(&kone500);
+    else if(z>15 && z<=30) 
+        shape.setTexture(&kone250);
+    else if(z>5 && z<=15) 
+        shape.setTexture(&kone100);
+    else if(z<=5)
+        shape.setTexture(&kone);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
@@ -249,7 +273,6 @@ void Graphics::pollEvents() {
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
         window.close();
     }
-
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
           view.move(s,0);
     }
@@ -271,7 +294,7 @@ void Graphics::pollEvents() {
         view.setCenter(window.mapPixelToCoords(sf::Vector2i(event.mouseWheel.x,event.mouseWheel.y),view));*/
     if( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0)){
         view.zoom(1.05f);
-        //i++;
+        z--;
         //temp = zx*std::pow(1.05, i);
         //view.move(temp, 0);
         // TODO fix the catapult coordinates when zooming
@@ -286,7 +309,7 @@ void Graphics::pollEvents() {
     if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0)){
         view.zoom(0.952308952381);
         //temp = -zx*std::pow(1.05, i);
-        //i--;
+        z++;
         //view.move(temp, 0);
         // TODO fix the catapult coordinates when zooming
         /*j++;
