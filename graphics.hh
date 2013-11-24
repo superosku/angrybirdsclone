@@ -27,7 +27,6 @@ class Graphics {
     sf::Texture amfi2;
     sf::Texture amfi3;
     sf::Texture amfi4;
-    sf::Sprite bg;
     sf::Font font;
     sf::Texture kemma;
     sf::Texture kemma100;

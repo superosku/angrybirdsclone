@@ -409,15 +409,17 @@ void Graphics::drawUnmoveable() {
   ground.setPosition(leftEdge.x, 520);
   ground.setFillColor(sf::Color(29,76,34));
   window.draw(ground);
-  if(z>35) 
-      bg.setTexture(amfi4, 1);
-  else if(z>15 && z<=35) 
-      bg.setTexture(amfi3, 1);
-  else if(z>5 && z<=15) 
-      bg.setTexture(amfi2, 1);
-  else if(z<=5)
-      bg.setTexture(amfi1, 1);
-    
+  sf::RectangleShape bg(sf::Vector2f(2560, 720));
+  if(z>15) 
+      bg.setTexture(&amfi4);
+  else if(z>10 && z<=15) 
+      bg.setTexture(&amfi3);
+  else if(z>3 && z<=10) 
+      bg.setTexture(&amfi2);
+  else if(z<=3)
+      bg.setTexture(&amfi1);
+  bg.setPosition(0,0); 
+
   // Drawing the background
   window.draw(bg);
 
