@@ -413,7 +413,7 @@ void Graphics::drawUnmoveable() {
     else if(z>5 && z<=15) 
         catapult.setTexture(&taffa100, 1);
     else if(z<=5)
-        catapult.setTexture(&taffa);
+        catapult.setTexture(&taffa, 1);
   } 
   if(nextType == MoveableObject::Type::BombBird) {
     if(z>45)
@@ -425,7 +425,7 @@ void Graphics::drawUnmoveable() {
     else if(z>5 && z<=15) 
         catapult.setTexture(&tik100, 1);
     else if(z<=5)
-        catapult.setTexture(&tik);
+        catapult.setTexture(&tik, 1);
   }
   if(nextType == MoveableObject::Type::BouncyBird) {
     if(z>45)
@@ -437,7 +437,7 @@ void Graphics::drawUnmoveable() {
     else if(z>5 && z<=15)
         catapult.setTexture(&prodeko100, 1);
     else if(z<=5)
-        catapult.setTexture(&prodeko);
+        catapult.setTexture(&prodeko, 1);
   }
   if(nextType == MoveableObject::Type::TangentBird) {
     if(z>45)
@@ -449,7 +449,7 @@ void Graphics::drawUnmoveable() {
     else if(z>5 && z<=15) 
         catapult.setTexture(&pjk100, 1);
     else if(z<=5)
-        catapult.setTexture(&pjk);
+        catapult.setTexture(&pjk, 1);
   }
   if(nextType == MoveableObject::Type::Else)
     catapult.setFillColor(sf::Color(0,0,0));
