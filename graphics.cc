@@ -18,60 +18,24 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   m = new Map(currentMapPath);
   window.setFramerateLimit(60);
   view.reset(sf::FloatRect(0, 0, WINDOW_W, WINDOW_H));
-  if(!font.loadFromFile("QuinzeNarrow.ttf")) {
-    //Throw error or something
-  }
-  if(!kemma.loadFromFile("images/kemma.png")){
-    //Throw error
-  }
-  if(!kone.loadFromFile("images/kone.png")){
-    //Throw error    
-  }
-  if(!kone100.loadFromFile("images/kone100.png")){
-    //Throw error    
-  } 
-  if(!kone900.loadFromFile("images/kone900.png")){
-    //Throw error    
-  }
-  if(!kone250.loadFromFile("images/kone250.png")){
-    //Throw error    
-  } 
-  if(!kone500.loadFromFile("images/kone500.png")){
-    //Throw error    
-  }
-  if(!prodeko.loadFromFile("images/prodeko.png")){
-      //Throw error
-  }
-  if(!pjk.loadFromFile("images/puu.png")){
-      //Throw error
-  }
-  if(!tik.loadFromFile("images/tik.png")){
-      //Throw error
-  }
-  if(!tile1.loadFromFile("images/tiili1.png", sf::IntRect(0, 0, 400, 400))){
-      //Throw error
-  }
-  if(!tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400))){
-      //Throw error
-  }
-  if(!tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400))){
-      //Throw error
-  }
-  if(!tile4.loadFromFile("images/tiili4.png", sf::IntRect(0, 0, 400, 400))){
-      //Throw error
-  }
-  if(!tnt.loadFromFile("images/tnt.png")){
-      //Throw error
-  }
-  if(!bgt.loadFromFile("images/bg.png")){
-      //Throw error
-  }
-  if(!ratas.loadFromFile("images/hammasratas.png")){
-      //Throw error
-  }
-  if(!smoke.loadFromFile("images/smoke.png")) {
-      //THROW ERROR!?!?!?!?!
-  }
+  //if an error occurs withing loadFromFile, SFML tell about it in the console
+  font.loadFromFile("QuinzeNarrow.ttf")
+  kemma.loadFromFile("images/kemma.png")
+  kone.loadFromFile("images/kone.png")
+  kone100.loadFromFile("images/kone100.png")
+  kone900.loadFromFile("images/kone900.png")
+  kone250.loadFromFile("images/kone250.png")
+  kone500.loadFromFile("images/kone500.png")
+  prodeko.loadFromFile("images/prodeko.png")
+  tik.loadFromFile("images/tik.png")
+  tile1.loadFromFile("images/tiili1.png", sf::IntRect(0, 0, 400, 400))
+  tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400))
+  tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400))
+  tile4.loadFromFile("images/tiili4.png", sf::IntRect(0, 0, 400, 400))
+  tnt.loadFromFile("images/tnt.png")
+  bgt.loadFromFile("images/bg.png")
+  ratas.loadFromFile("images/hammasratas.png")
+  smoke.loadFromFile("images/smoke.png")
 
   kemma.setSmooth(true);
   kone.setSmooth(true);
