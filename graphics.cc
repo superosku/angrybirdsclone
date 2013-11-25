@@ -408,11 +408,11 @@ void Graphics::pollEvents() {
       }
     }
   }
+  int k = 10*(z > 0? z : 1) ;
   if(xDelta > 0 || yDelta > 0)
-   view.move(xDelta > 0 ? 5*xDelta/10: 0,yDelta > 0 ? 5*yDelta/10:0);
+   view.move(xDelta > 0 ? 5*xDelta/k: 0,yDelta > 0 ? 5*yDelta/k:0);
   else if(xDelta < 0 || yDelta < 0)
-   view.move(xDelta < 0 ? 5*xDelta/10: 0,yDelta < 0 ? 5*yDelta/10:0);
-  if(zoomDelta != 0)
+   view.move(xDelta < 0 ? 5*xDelta/k: 0,yDelta < 0 ? 5*yDelta/k:0);
   view.zoom( zoomDelta > 0 ? std::pow(1.01f,zoomDelta/10) : std::pow(0.99f,-zoomDelta/10)  );
   if (xDelta >0)
    --xDelta;
