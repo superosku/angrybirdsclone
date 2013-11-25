@@ -287,7 +287,6 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
         shape.setTexture(&kone100);
     else if(z<=1)
         shape.setTexture(&kone);
-    std::cout << "z: " << z << std::endl;
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
@@ -454,7 +453,7 @@ void Graphics::drawUnmoveable() {
       bg.setTexture(&amfi4);
   else if(z>3 && z<=5) 
       bg.setTexture(&amfi3);
-  else if(z>2 && z<=3) 
+  else if(z>1 && z<=3) 
       bg.setTexture(&amfi2);
   else if(z<=1)
       bg.setTexture(&amfi1);
