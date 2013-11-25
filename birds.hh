@@ -178,6 +178,7 @@ class GravityBird : public Bird
       return(false);
     for(auto i: m->getObjects()){
      i->getBody()->SetGravityScale(-i->getBody()->GetGravityScale());
+     i->getBody()->SetActive(1);
     }
     std::cout << "action in GravityBird-class" << std::endl;
     return(true);
