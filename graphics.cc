@@ -194,13 +194,13 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::Gear_t) { // hammasratas
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>35) 
+    if(z>5)
         shape.setTexture(&ratas250);
-    else if(z>15 && z<=35) 
+    else if(z>3 && z<=5) 
         shape.setTexture(&ratas100);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=3) 
         shape.setTexture(&ratas50);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&ratas);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
@@ -209,15 +209,15 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::BasicBird) { // Pallo, taffa
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>45)
+    if(z>6)
         shape.setTexture(&taffa900);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         shape.setTexture(&taffa500);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         shape.setTexture(&taffa250);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         shape.setTexture(&taffa100);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&taffa);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
@@ -226,15 +226,15 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::BouncyBird) { // Pallo, prodeko
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>45)
+    if(z>6)
         shape.setTexture(&prodeko900);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         shape.setTexture(&prodeko500);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         shape.setTexture(&prodeko250);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         shape.setTexture(&prodeko100);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&prodeko);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
@@ -243,15 +243,15 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::TangentBird) { // Pallo, pjk
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>45)
+    if(z>6)
         shape.setTexture(&pjk900);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         shape.setTexture(&pjk500);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         shape.setTexture(&pjk250);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2)
         shape.setTexture(&pjk100);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&pjk);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
@@ -260,15 +260,15 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::Type::BombBird) { // Pallo, tik
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>45)
+    if(z>6)
         shape.setTexture(&tik900);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         shape.setTexture(&tik500);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         shape.setTexture(&tik250);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         shape.setTexture(&tik100);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&tik);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
@@ -277,16 +277,17 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   if (type == MoveableObject::BasicEnemy) { // Pallo, kik
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
-    if(z>45)
+    if(z>6)
         shape.setTexture(&kone900);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         shape.setTexture(&kone500);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         shape.setTexture(&kone250);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         shape.setTexture(&kone100);
-    else if(z<=5)
+    else if(z<=1)
         shape.setTexture(&kone);
+    std::cout << "z: " << z << std::endl;
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
@@ -449,13 +450,13 @@ void Graphics::drawUnmoveable() {
   ground.setFillColor(sf::Color(29,76,34));
   window.draw(ground);
   sf::RectangleShape bg(sf::Vector2f(2560, 720));
-  if(z>15) 
+  if(z>5) 
       bg.setTexture(&amfi4);
-  else if(z>10 && z<=15) 
+  else if(z>3 && z<=5) 
       bg.setTexture(&amfi3);
-  else if(z>3 && z<=10) 
+  else if(z>2 && z<=3) 
       bg.setTexture(&amfi2);
-  else if(z<=3)
+  else if(z<=1)
       bg.setTexture(&amfi1);
   bg.setPosition(0,0); 
 
@@ -473,51 +474,51 @@ void Graphics::drawUnmoveable() {
   //set texture according to upcoming bird
   MoveableObject::Type nextType = m->getNextBirdType();
   if(nextType == MoveableObject::Type::BasicBird) {
-    if(z>45)
+    if(z>6)
         catapult.setTexture(&taffa900, 1);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         catapult.setTexture(&taffa500, 1);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         catapult.setTexture(&taffa250, 1);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         catapult.setTexture(&taffa100, 1);
-    else if(z<=5)
+    else if(z<=1)
         catapult.setTexture(&taffa, 1);
   } 
   if(nextType == MoveableObject::Type::BombBird) {
-    if(z>45)
+    if(z>6)
         catapult.setTexture(&tik900, 1);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         catapult.setTexture(&tik500, 1);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         catapult.setTexture(&tik250, 1);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         catapult.setTexture(&tik100, 1);
-    else if(z<=5)
+    else if(z<=1)
         catapult.setTexture(&tik, 1);
   }
   if(nextType == MoveableObject::Type::BouncyBird) {
-    if(z>45)
+    if(z>6)
         catapult.setTexture(&prodeko900, 1);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         catapult.setTexture(&prodeko500, 1);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         catapult.setTexture(&prodeko250, 1);
-    else if(z>5 && z<=15)
+    else if(z>1 && z<=2)
         catapult.setTexture(&prodeko100, 1);
-    else if(z<=5)
+    else if(z<=1)
         catapult.setTexture(&prodeko, 1);
   }
   if(nextType == MoveableObject::Type::TangentBird) {
-    if(z>45)
+    if(z>6)
         catapult.setTexture(&pjk900, 1);
-    else if(z>30 && z<=45) 
+    else if(z>4 && z<=6) 
         catapult.setTexture(&pjk500, 1);
-    else if(z>15 && z<=30) 
+    else if(z>2 && z<=4) 
         catapult.setTexture(&pjk250, 1);
-    else if(z>5 && z<=15) 
+    else if(z>1 && z<=2) 
         catapult.setTexture(&pjk100, 1);
-    else if(z<=5)
+    else if(z<=1)
         catapult.setTexture(&pjk, 1);
   }
   if(nextType == MoveableObject::Type::Else)
