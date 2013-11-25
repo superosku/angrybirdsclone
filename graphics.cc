@@ -412,7 +412,7 @@ void Graphics::pollEvents() {
   else if(xDelta < 0 || yDelta < 0)
    view.move(xDelta < 0 ? 5*xDelta/10: 0,yDelta < 0 ? 5*yDelta/10:0);
   if(zoomDelta != 0)
-    view.zoom( zoomDelta > 0 ? 1.002f : 0.998f  );
+  view.zoom( zoomDelta > 0 ? std::pow(1.01f,zoomDelta/10) : std::pow(0.99f,-zoomDelta/10)  );
   if (xDelta >0)
    --xDelta;
   if (xDelta <0)
