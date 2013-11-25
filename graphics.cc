@@ -54,10 +54,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
   tile2.loadFromFile("images/tiili2.png", sf::IntRect(0, 0, 400, 400));
   tile3.loadFromFile("images/tiili3.png", sf::IntRect(0, 0, 400, 400));
   tile4.loadFromFile("images/tiili4.png", sf::IntRect(0, 0, 400, 400));
-  wood1.loadFromFile("images/wood1.png", sf::IntRect(0, 0, 400, 400));
-  wood2.loadFromFile("images/wood2.png", sf::IntRect(0, 0, 400, 400));
-  wood3.loadFromFile("images/wood3.png", sf::IntRect(0, 0, 400, 400));
-  wood4.loadFromFile("images/wood4.png", sf::IntRect(0, 0, 400, 400));
+  wood1.loadFromFile("images/wood1.png");//, sf::IntRect(0, 0, 400, 400));
+  wood2.loadFromFile("images/wood2.png");//, sf::IntRect(0, 0, 400, 400));
+  wood3.loadFromFile("images/wood3.png");//, sf::IntRect(0, 0, 400, 400));
+  wood4.loadFromFile("images/wood4.png");//, sf::IntRect(0, 0, 400, 400));
   tnt.loadFromFile("images/tnt.png");
   amfi1.loadFromFile("images/amfi1.png");
   amfi2.loadFromFile("images/amfi2.png");
@@ -274,6 +274,23 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);
   }
+  if (type == MoveableObject::Type::GravityBird) { // Pallo, tik
+    sf::CircleShape shape(convertDistance(i->getW()));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    if(z>6)
+        shape.setTexture(&kemma900);
+    else if(z>4 && z<=6) 
+        shape.setTexture(&kemma500);
+    else if(z>2 && z<=4) 
+        shape.setTexture(&kemma250);
+    else if(z>1 && z<=2) 
+        shape.setTexture(&kemma100);
+    else if(z<=1)
+        shape.setTexture(&kemma);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
   if (type == MoveableObject::BasicEnemy) { // Pallo, kik
     sf::CircleShape shape(convertDistance(i->getW()));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
@@ -304,7 +321,7 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
   }
 
   //Draw energy of an object (for debugging purposes)
-  bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
+  /*bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
   if(data->hasEnergy)
   {
     std::ostringstream ss;
@@ -316,7 +333,7 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
     t.setFont(font);
     window.draw(t);
   }
-
+*/
 }
 void Graphics::drawMoveableObjects() {
   // Drawing all movable objects
@@ -519,6 +536,18 @@ void Graphics::drawUnmoveable() {
         catapult.setTexture(&pjk100, 1);
     else if(z<=1)
         catapult.setTexture(&pjk, 1);
+  }
+  if(nextType == MoveableObject::Type::GravityBird) {
+    if(z>6)
+        catapult.setTexture(&kemma900, 1);
+    else if(z>4 && z<=6) 
+        catapult.setTexture(&kemma500, 1);
+    else if(z>2 && z<=4) 
+        catapult.setTexture(&kemma250, 1);
+    else if(z>1 && z<=2) 
+        catapult.setTexture(&kemma100, 1);
+    else if(z<=1)
+        catapult.setTexture(&kemma, 1);
   }
   if(nextType == MoveableObject::Type::Else)
     catapult.setFillColor(sf::Color(0,0,0));
