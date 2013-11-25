@@ -122,7 +122,6 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Game jou", sf:
 
   c = 32;
   s = 25;
-  ss = 10;
   z=0;
   cam_x = 5;
   cam_y = 5;
@@ -405,7 +404,6 @@ void Graphics::pollEvents() {
     }
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
-        std::cout << "catapult_x: " << catapult_x << ", catapult_y: "<< catapult_y << ", mouse x: " << mouse.x << ", mouse y: " << mouse.y << std::endl;
         if (mouse.x < catapult_x+15 && mouse.x > catapult_x-15 && mouse.y < catapult_y+15 && mouse.y > catapult_y-15)
          shoot_aiming = 1;
     }
