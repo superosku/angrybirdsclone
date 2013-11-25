@@ -360,32 +360,15 @@ void Graphics::pollEvents() {
     }
     if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
         xDelta +=s;
-        //this is to refine the movement when the zoom is big
-        /*if(z>20)
-            view.move(ss,0);
-        else
-            view.move(s,0);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
         xDelta -= s;
-        /*if(z>20)
-            view.move(-ss,0);
-        else
-            view.move(-s,0);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
         yDelta += s;
-        /*if(z>20)
-            view.move(0,ss);
-        else
-            view.move(0,s);*/
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
         yDelta -=s;
-        /*if(z>20)
-            view.move(0,-ss);
-        else
-            view.move(0,-s);*/
     }
     if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5)) {
         view = defaultView;
@@ -394,12 +377,10 @@ void Graphics::pollEvents() {
     }
     if( zoomDelta < 50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0))){
         zoomDelta +=s;
-        //view.zoom(1.05f);
         z--;
     }
     if( zoomDelta > -50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Period) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta > 0))){
         zoomDelta -=s;
-        //view.zoom(0.952308952381);
         z++;
     }
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
