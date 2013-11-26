@@ -58,6 +58,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   wood2.loadFromFile("images/wood2.png");//, sf::IntRect(0, 0, 400, 400));
   wood3.loadFromFile("images/wood3.png");//, sf::IntRect(0, 0, 400, 400));
   wood4.loadFromFile("images/wood4.png");//, sf::IntRect(0, 0, 400, 400));
+  glass1.loadFromFile("images/glass1.png");//, sf::IntRect(0, 0, 400, 400));
+  glass2.loadFromFile("images/glass2.png");//, sf::IntRect(0, 0, 400, 400));
+  glass3.loadFromFile("images/glass3.png");//, sf::IntRect(0, 0, 400, 400));
+  glass4.loadFromFile("images/glass4.png");//, sf::IntRect(0, 0, 400, 400));
   tnt.loadFromFile("images/tnt.png");
   amfi1.loadFromFile("images/amfi1.png");
   amfi2.loadFromFile("images/amfi2.png");
@@ -107,6 +111,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   wood2.setSmooth(true);
   wood3.setSmooth(true);
   wood4.setSmooth(true);
+  glass1.setSmooth(true);
+  glass2.setSmooth(true);
+  glass3.setSmooth(true);
+  glass4.setSmooth(true);
   tnt.setSmooth(true);
   amfi1.setSmooth(true);
   amfi2.setSmooth(true);
@@ -161,6 +169,21 @@ void Graphics::drawMoveableObject(MoveableObject *i) {
       shape.setTexture(&wood3);
     if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
       shape.setTexture(&wood4);
+    shape.setPosition(x,y);
+    shape.setRotation(i->getAngle() * -57.295);
+    window.draw(shape);
+  }
+  if (type == MoveableObject::Type::Glass) { // Kuutio / Neliö
+    sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
+    shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+    if(i->getEnergy() > 0.75 && i->getEnergy() <= 1)
+      shape.setTexture(&glass1);
+    if(i->getEnergy() > 0.5 && i->getEnergy() <=0.75)
+      shape.setTexture(&glass2);
+    if(i->getEnergy() > 0.25 && i->getEnergy() <= 0.5)
+      shape.setTexture(&glass3);
+    if(i->getEnergy() > 0 && i->getEnergy() <= 0.25)
+      shape.setTexture(&glass4);
     shape.setPosition(x,y);
     shape.setRotation(i->getAngle() * -57.295);
     window.draw(shape);

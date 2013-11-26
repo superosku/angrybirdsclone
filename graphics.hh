@@ -66,6 +66,10 @@ class Graphics {
     sf::Texture wood2;
     sf::Texture wood3;
     sf::Texture wood4;
+    sf::Texture glass1;
+    sf::Texture glass2;
+    sf::Texture glass3;
+    sf::Texture glass4;
     sf::Texture tnt;
     sf::Texture ratas;
     sf::Texture ratas50;
