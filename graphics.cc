@@ -18,15 +18,18 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   m = new Map(currentMapPath);
   window.setFramerateLimit(60);
   view.reset(sf::FloatRect(0, 0, WINDOW_W, WINDOW_H));
-  //if an error occurs withing loadFromFile, SFML tell about it in the console
+  //If an error occurs withing loadFromFile, SFML will tell about it in the console
+  //Load all images in subdirectories of ./images to textures-map: key = object-number
   for(auto i: readDir("images"))
    for(auto j: readDir("images/"+i)){
     sf::Texture * k = new sf::Texture;
     k->loadFromFile("images/"+i+"/"+j);
-    //k->setSmooth(1);
+    k->setSmooth(1);
     textures[std::atoi(i.c_str())].push_back(k);
   }
   font.loadFromFile("QuinzeNarrow.ttf");
+
+  //Background is still loaded statictly
   amfi1.loadFromFile("images/amfi1.png");
   amfi2.loadFromFile("images/amfi2.png");
   amfi3.loadFromFile("images/amfi3.png");
@@ -45,10 +48,6 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
 }
 
 /*
-  if (type == MoveableObject::Ground) { // Maa
-
-  }
-
   //Draw energy of an object (for debugging purposes)
   bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
   if(data->hasEnergy)
@@ -62,10 +61,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
     t.setFont(font);
     window.draw(t);
   }
+*/
 
-}*/
+//This method draws all moveable objects -> it calls drawCircle- and drawSquare-methods to do the real drawing in most cases
 void Graphics::drawMoveableObjects() {
-  // Drawing all movable objects
   std::vector<MoveableObject*> objects = m->getObjects();
   for(auto& i: objects)
   {
@@ -136,6 +135,7 @@ void Graphics::drawMoveableObjects() {
 }
 
 
+//Draw all circle shaped objects
 void Graphics::drawCircle(std::vector<sf::Texture*> texture, MoveableObject* i){
     int k = std::min(std::max(z/2,0),(int)texture.size()-1);
     sf::CircleShape shape(convertDistance(i->getW()));
@@ -154,6 +154,7 @@ void Graphics::drawCircle(std::vector<sf::Texture*> texture, MoveableObject* i){
     window.draw(t);*/
 }
 
+//Draw all square shaped objects (except )
 void Graphics::drawSquare(std::vector<sf::Texture*> texture, MoveableObject* i){
     sf::RectangleShape shape(sf::Vector2f(convertDistance(i->getW()) * 2, convertDistance(i->getH()) * 2));
     shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
@@ -173,6 +174,7 @@ void Graphics::drawSquare(std::vector<sf::Texture*> texture, MoveableObject* i){
     window.draw(shape);
 }
 
+//This method will handle all events during game
 void Graphics::pollGameEvents() {
   sf::Event event;
   while (window.pollEvent(event)) {
@@ -260,6 +262,7 @@ void Graphics::pollGameEvents() {
 }
 
 
+//Draw all objects which location cannot be changed from map-file
 void Graphics::drawUnmoveable() {
   // Drawing the air and ground
   sf::Vector2f center = view.getCenter();
@@ -297,11 +300,10 @@ void Graphics::drawUnmoveable() {
   sf::CircleShape catapult_bg(convertDistance(0.5));
   catapult_bg.setFillColor(sf::Color(80,225,249));
   catapult_bg.setOrigin(convertDistance(0.5), convertDistance(0.5));
-  //catapult_bg.setPosition(convertX(m->getCatapultX()), convertY(m->getCatapultY()));
   catapult_bg.setPosition(catapult_x, catapult_y);
 
   catapult.setRadius(convertDistance(0.5));
-  //set texture according to upcoming bird
+  //Set texture according to upcoming bird
   MoveableObject::Type nextType = m->getNextBirdType();
   if ( nextType && textures.find(nextType) != textures.end() ) {
     int k = std::min(std::max(z,0),(int)textures[nextType].size()-1);
@@ -328,6 +330,8 @@ void Graphics::drawUnmoveable() {
   window.draw(catapult);
 }
 
+
+//Method to read all filenames in a directory
 std::vector<std::string> Graphics::readDir(std::string dirToRead){
   DIR *d;
   struct dirent *dir;
