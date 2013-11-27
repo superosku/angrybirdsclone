@@ -71,6 +71,7 @@ class MoveableObject
     }
     virtual ~MoveableObject()
     {
+     delete static_cast<bodyData*>(body->GetUserData());
      body->GetWorld()->DestroyBody(body);
     }
     virtual const std::list<std::pair<float, float>> getPointList() {

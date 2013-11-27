@@ -45,9 +45,14 @@ Map::Map(std::string path)
 
 Map::~Map()
 {
-  for(auto object: objects){
-    delete static_cast<bodyData*>(object->body->GetUserData());
-    delete object;
+  for(auto i: objects){
+    delete i;
+  }
+  for(auto i: birds){
+    delete i;
+  }
+  for(auto i: objectsQueue){
+    delete i;
   }
   delete m_world; //This deletes all box2d stuff, movable object doesnt need to do anything about that
 }
@@ -68,7 +73,7 @@ void Map::Step()
       (*i)->destroy(this);
       killCurrentBird(*i);
       delete *i;
-      delete data;
+      //delete data;
       i = objects.erase(i);
       continue;
     }

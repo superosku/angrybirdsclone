@@ -13,7 +13,6 @@
 #include "birds.hh"
 #include "graphics.hh"
 
-
 Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds clone", sf::Style::Default/*, settings*/) {
   //m = new Map(currentMapPath);
   window.setFramerateLimit(60);
@@ -24,7 +23,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   n -= n*3/2;//(n+1)/2;
   
   sf::Vector2f center = view.getCenter();
-  sf::Vector2f inc(15.0f,0.0f);
+  sf::Vector2f inc(10.0f,0.0f);
   sf::Vector2f size = view.getSize();
   sf::Vector2f leftEdge = center-size/2.0f;
   sf::Vector2f bsize(10.0f,10.0f);
@@ -40,7 +39,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   
   for(auto i: imgDir)
   {
-   sf::CircleShape tmp(5.0f);
+   sf::RectangleShape tmp(bsize);
    tmp.setPosition(center+(float)(n++)*inc);
    tmp.setFillColor(sf::Color(255,255,255));
    window.draw(tmp);
@@ -56,10 +55,10 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   font.loadFromFile("QuinzeNarrow.ttf");
 
   //Background is still loaded statictly
-  amfi1.loadFromFile("images/amfi1.png");
-  amfi2.loadFromFile("images/amfi2.png");
-  amfi3.loadFromFile("images/amfi3.png");
-  amfi4.loadFromFile("images/amfi4.png");
+  amfi1.loadFromFile("images/amfi1.png");window.display();
+  amfi2.loadFromFile("images/amfi2.png");window.display();
+  amfi3.loadFromFile("images/amfi3.png");window.display();
+  amfi4.loadFromFile("images/amfi4.png");window.display();
 
   //window.setView(view);
 
