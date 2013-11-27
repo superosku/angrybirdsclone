@@ -146,6 +146,7 @@ class Graphics {
        window.draw(t);
      }
 
+     window.setView(defaultView);
      pollMenuEvents();
      std::ostringstream ss;
      for(auto i: maps)
@@ -177,8 +178,10 @@ class Graphics {
             ssize_t act = -1;
             for (size_t i = 0; i < 4; i++)
             {
-              if (abs(event.mouseButton.x - view.getCenter().x) < 90 && abs(event.mouseButton.y - (100.0f + i * 90.0f)) < 40)
+              sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
+              if (abs(mouse.x-view.getCenter().x) < 90 && abs(mouse.y-90.0f*i-105.0f) < 40)
                 act = i;
+              //std::cout << mouse.x << " " << mouse.y << " " << abs(mouse.x-view.getCenter().x) << " " << abs(mouse.y-90.0f*i-105.0f) << std::endl;
             }
             switch(act)
             {
