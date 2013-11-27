@@ -34,7 +34,7 @@ class Graphics {
     std::map<size_t,std::vector<sf::Texture*>> textures;
     sf::ContextSettings settings;
     sf::View defaultView = window.getDefaultView();
-    Map* m;
+    Map* m = nullptr;
     // the constant used to change coordinates
     int c;
     // the constant used to move the screen
@@ -76,7 +76,8 @@ class Graphics {
 
   public:
     ~Graphics() {
-      delete m;
+      if (m != nullptr)
+        delete m;
     }
     Graphics();
     void drawMoveableObject(MoveableObject *i);
