@@ -97,38 +97,38 @@ void Graphics::drawMoveableObjects() {
     switch(type)
     {
        case(MoveableObject::Type::BasicBird):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::BouncyBird):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::TangentBird):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::BombBird):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::GravityBird):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::BasicEnemy):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::Gear_t):
-         drawCircle(textures[type],i);
-         break;
+         /*drawCircle(textures[type],i);
+         break;*/
        case(MoveableObject::Type::Smoke_t):
          drawCircle(textures[type],i);
          break;
        case(MoveableObject::Type::Brick):
-         drawSquare(textures[type],i);
-         break;
+         /*drawSquare(textures[type],i);
+         break;*/
        case(MoveableObject::Type::Glass):
-         drawSquare(textures[type],i);
-         break;
+         /*drawSquare(textures[type],i);
+         break;*/
        case(MoveableObject::Type::Wood):
-         drawSquare(textures[type],i);
-         break;
+         /*drawSquare(textures[type],i);
+         break;*/
        case(MoveableObject::Type::TNT):
          drawSquare(textures[type],i);
          break;
