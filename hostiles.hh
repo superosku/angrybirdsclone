@@ -21,7 +21,7 @@ class Hostile : public MoveableObject
   Hostile(const Hostile&) = delete;*/
 
   // Function to check if hostile has energy left after hit, returns energy after hit as size_t.
-  
+
   // Function to perform special action of obstacles/enemies. Returns energy left after hit as size_t value.
   virtual size_t hit(mass_t)
   {
@@ -42,7 +42,7 @@ class Hostile : public MoveableObject
      */
     return 0;
   }
-  
+
   virtual void destroy(Map*);
 };
 
@@ -58,7 +58,7 @@ class Ground : public MoveableObject
         vertices[counter].Set(point.first, point.second);
         counter ++;
       }
-      
+
       b2PolygonShape shape;
       shape.Set(vertices, point_list.size());
 
@@ -107,14 +107,14 @@ class TNT : public Hostile
 
     body->CreateFixture(&fixtureDef);
   }
-  
+
   void destroy(Map* m);
 };
 
 class Smoke : public Hostile
 {
   public:
-  Smoke(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::Smoke_t,0,60+std::rand()%20*15) 
+  Smoke(b2World* world, float x = 0.0f, float y = 0.0f, float w = 1.0f, float h = 1.0f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::Smoke_t,0,60+std::rand()%20*15)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -136,7 +136,7 @@ class Smoke : public Hostile
 class BlastBullet : public Hostile
 {
   public:
-  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,120+std::rand()%20*15) 
+  BlastBullet(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f) : Hostile(world, x, y, w, h,0,MoveableObject::Type::BlastBullet_t,0,120+std::rand()%20*15)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);
@@ -163,7 +163,7 @@ class BlastBullet : public Hostile
 class Particle : public Hostile
 {
   public:
-  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,0,180+std::rand()%20*15) 
+  Particle(b2World* world, float x = 0.0f, float y = 0.0f, float w = 0.05f, float h = 0.05f, MoveableObject::Type t = MoveableObject::Type::Else) : Hostile(world, x, y, w, h,0,t,0,180+std::rand()%20*15)
   {
     b2PolygonShape shape;
     shape.SetAsBox(w, h);

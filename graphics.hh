@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <string>
 #include <cmath>
+#include <map>
 #include <dirent.h>
 #include "map.hh"
 #include "moveable.hh"
@@ -28,57 +29,9 @@ class Graphics {
     sf::Texture amfi3;
     sf::Texture amfi4;
     sf::Font font;
-    sf::Texture kemma;
-    sf::Texture kemma100;
-    sf::Texture kemma250;
-    sf::Texture kemma500;
-    sf::Texture kemma900;
-    sf::Texture kone;
-    sf::Texture kone100;
-    sf::Texture kone250;
-    sf::Texture kone500;
-    sf::Texture kone900;
-    sf::Texture prodeko;
-    sf::Texture prodeko100;
-    sf::Texture prodeko250;
-    sf::Texture prodeko500;
-    sf::Texture prodeko900;
-    sf::Texture pjk;
-    sf::Texture pjk100;
-    sf::Texture pjk250;
-    sf::Texture pjk500;
-    sf::Texture pjk900;
-    sf::Texture taffa;
-    sf::Texture taffa100;
-    sf::Texture taffa250;
-    sf::Texture taffa500;
-    sf::Texture taffa900;
-    sf::Texture tik;
-    sf::Texture tik100;
-    sf::Texture tik250;
-    sf::Texture tik500;
-    sf::Texture tik900;
-    sf::Texture tile1;
-    sf::Texture tile2;
-    sf::Texture tile3;
-    sf::Texture tile4;
-    sf::Texture wood1;
-    sf::Texture wood2;
-    sf::Texture wood3;
-    sf::Texture wood4;
-    sf::Texture glass1;
-    sf::Texture glass2;
-    sf::Texture glass3;
-    sf::Texture glass4;
-    sf::Texture tnt;
-    sf::Texture ratas;
-    sf::Texture ratas50;
-    sf::Texture ratas100;
-    sf::Texture ratas250;
-    sf::Texture smoke;
 
     sf::CircleShape catapult;
-
+    std::map<size_t,std::vector<sf::Texture*>> textures;
     sf::ContextSettings settings;
     sf::View defaultView = window.getDefaultView();
     Map* m;
@@ -118,6 +71,8 @@ class Graphics {
     void drawMoveableObjects();
     void pollGameEvents();
     void drawUnmoveable();
+    void drawCircle(std::vector<sf::Texture*>, MoveableObject*);
+    void drawSquare(std::vector<sf::Texture*>, MoveableObject*);
 
     void run() {
       //Test for directory listing
@@ -131,7 +86,6 @@ class Graphics {
         {
           case(gamePhase::Menu):
             runMenu();
-            std::cout << "MENU" << std::endl;
             break;
 
           case(gamePhase::Game):
@@ -143,6 +97,13 @@ class Graphics {
     }
 
     void runMenu(){
+     std::ostringstream ss;
+     for(auto i: readDir("maps"))
+       ss << i << std::endl;
+     sf::Text t(ss.str(),font);
+     pollMenuEvents();
+     window.setView(view);
+
      sf::Vector2f center = view.getCenter();
      sf::Vector2f size = view.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
@@ -152,12 +113,6 @@ class Graphics {
      ground3.setFillColor(sf::Color(113,218,226));
      window.draw(ground3);
 
-
-     std::ostringstream ss;
-     for(auto i: readDir("maps"))
-       ss << i << std::endl;
-     sf::Text t(ss.str(),font);
-     pollMenuEvents();
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
      window.draw(t);
     }
@@ -181,6 +136,7 @@ class Graphics {
 
     void runGame(){
         pollGameEvents();
+        window.setView(view);
         m->Step(); // Advance simulation
         drawUnmoveable();
         drawMoveableObjects() ;
