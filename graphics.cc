@@ -15,16 +15,41 @@
 
 
 Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds clone", sf::Style::Default/*, settings*/) {
-  m = new Map(currentMapPath);
+  //m = new Map(currentMapPath);
   window.setFramerateLimit(60);
   view.reset(sf::FloatRect(0, 0, WINDOW_W, WINDOW_H));
-  //if an error occurs withing loadFromFile, SFML tell about it in the console
-  for(auto i: readDir("images"))
+  //if an error occurs withing loadFromFile, SFML tells about it in the console
+  std::vector<std::string> imgDir = readDir("images");
+  ssize_t n = imgDir.size();//!(imgDir.size() % 2) ? imgDir.size() : imgDir.size() + 1;
+  n -= n/2;//(n+1)/2;
+  
+  sf::Vector2f center = view.getCenter();
+  sf::Vector2f inc(15.0f,0.0f);
+  sf::Vector2f size = view.getSize();
+  sf::Vector2f leftEdge = center-size/2.0f;
+  sf::Vector2f bsize(10.0f,10.0f);
+  
+  //window.setView(view);
+  
+  //background
+  sf::RectangleShape backg(size);
+  backg.setPosition(leftEdge);
+  backg.setFillColor(sf::Color(0,0,0));
+  window.draw(backg);
+  
+  for(auto i: imgDir)
+  {
+   sf::CircleShape tmp(5.0f);
+   tmp.setPosition(center+(float)n*inc);
+   tmp.setFillColor(sf::Color(255,255,255));
+   window.draw(tmp);
+   
    for(auto j: readDir("images/"+i)){
     sf::Texture * k = new sf::Texture;
     k->loadFromFile("images/"+i+"/"+j);
     //k->setSmooth(1);
     textures[std::atoi(i.c_str())].push_back(k);
+   }
   }
   font.loadFromFile("QuinzeNarrow.ttf");
   amfi1.loadFromFile("images/amfi1.png");
