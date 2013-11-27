@@ -143,7 +143,6 @@ class Graphics {
     }
 
     void runMenu(){
-     pollMenuEvents();
      sf::Vector2f center = view.getCenter();
      sf::Vector2f size = view.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
@@ -152,6 +151,15 @@ class Graphics {
      ground3.setPosition(leftEdge);
      ground3.setFillColor(sf::Color(113,218,226));
      window.draw(ground3);
+
+
+     std::ostringstream ss;
+     for(auto i: readDir("maps"))
+       ss << i << std::endl;
+     sf::Text t(ss.str(),font);
+     pollMenuEvents();
+     //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
+     window.draw(t);
     }
 
     void pollMenuEvents() {
@@ -167,7 +175,6 @@ class Graphics {
         }
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left){
           phase = gamePhase::Game;
-          std::cout << "CLICK" << std::endl;
         }
       }
     }

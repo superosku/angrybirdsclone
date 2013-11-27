@@ -580,10 +580,9 @@ std::vector<std::string> Graphics::readDir(std::string dirToRead){
   if(d){
     while ((dir = readdir(d)) != NULL)
     {
-      dirlist.push_back(dir->d_name);
+      if(dir->d_name[0] != '.')
+        dirlist.push_back(dir->d_name);
     }
-    for(size_t i=0;i<dirlist.size();i++)
-          std::cout<<dirlist[i]<<std::endl;
     closedir(d);
   }
   return dirlist;
