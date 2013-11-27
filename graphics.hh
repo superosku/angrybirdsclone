@@ -118,7 +118,7 @@ class Graphics {
      std::ostringstream ss;
      //std::vector<std::string> maps = readDir("maps");
      for(auto i: maps)
-       ss << i << std::endl;
+       ss << (i == maps[currentMapI]? " * ": "   ") << i << std::endl;
      sf::Text t(ss.str(),font);
      pollMenuEvents();
      window.setView(view);
@@ -147,8 +147,13 @@ class Graphics {
        else
         tmp.setFillColor(sf::Color(0,104,55));
        window.draw(tmp);
+       std::ostringstream ss;
+       ss << menuTitle[i];
+       sf::Text t(ss.str(),font);
+       t.setPosition(tmp.getPosition()+tmp.getSize()/2.0f-sf::Vector2f(t.getGlobalBounds().width,t.getGlobalBounds().height)/2.0f);
+       window.draw(t);
      }
-     
+ 
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
      window.draw(t);
     }
