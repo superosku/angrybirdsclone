@@ -167,7 +167,7 @@ class Graphics {
             ssize_t act = -1;
             for (size_t i = 0; i < 4; i++)
             {
-              if (abs(event.mouseButton.x - view.getCenter().x) < 90 && abs(event.mouseButton.y - (60.0f + i * 90.0f)) < 40)
+              if (abs(event.mouseButton.x - view.getCenter().x) < 90 && abs(event.mouseButton.y - (100.0f + i * 90.0f)) < 40)
                 act = i;
             }
             switch(act)
@@ -198,7 +198,7 @@ class Graphics {
     }
 
     void runGame(){
-        pollGameEvents();
+        //pollGameEvents();
         window.setView(view);
         m->Step(); // Advance simulation
         drawUnmoveable();
@@ -211,7 +211,8 @@ class Graphics {
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
-    }
+        pollGameEvents();
+        }
     
     int convertX(float x) {
       return x * c + WINDOW_W/2.0 + cam_x * c;
