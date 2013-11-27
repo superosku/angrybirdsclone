@@ -29,39 +29,39 @@ class Map : public b2ContactListener,b2ContactFilter {
     //Calculate score and new energies after the impact
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
 
-    bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB){
+    bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) const {
       bodyData* bodyDataA =static_cast<bodyData*>(fixtureA->GetBody()->GetUserData());
       bodyData* bodyDataB =static_cast<bodyData*>(fixtureB->GetBody()->GetUserData());
       if((bodyDataA && bodyDataA->object->type == MoveableObject::Type::Smoke_t ) ||(bodyDataB && bodyDataB->object->type == MoveableObject::Type::Smoke_t ))
-        return 0;
-      return 1;
+        return (false);
+      return (true);
     }
 
     //This can be called to shoot the bird
     void ShootBird(float x, float y);
 
-    float getCatapultX() {
+    float getCatapultX() const {
       return catapult_x;
     }
-    float getCatapultY() {
+    float getCatapultY() const {
       return catapult_y;
     }
-    size_t getScore() {
+    size_t getScore() const {
       return totalScore;
     }
-    size_t getBirdsLeft() {
+    size_t getBirdsLeft() const {
       return birds.size();
     }
-    size_t getEnemyCount() {
+    size_t getEnemyCount() const {
       return enemiesLeft;
     }
 
     void addObject(MoveableObject* o);
     void removeObject(MoveableObject* o);
 
-    std::vector<MoveableObject*> getObjects() {return objects;}
+    std::vector<MoveableObject*> getObjects() const {return objects;}
 
-    MoveableObject* getCurrentBird() {return(current_b);}
+    MoveableObject* getCurrentBird() const {return(current_b);}
 
     void killCurrentBird() {current_b = nullptr;std::cout << "killed current bird" << std::endl;}
 
@@ -73,7 +73,7 @@ class Map : public b2ContactListener,b2ContactFilter {
       }
     }
     
-    MoveableObject::Type getNextBirdType();
+    MoveableObject::Type getNextBirdType() const;
 
   private:
     void loadMap(std::string filepath);

@@ -10,6 +10,7 @@
 #define PI 3.14159265359
 #define N_BULLETS 16
 #define GEAR_COUNT 5
+
 class Map;
 class MoveableObject;
 
@@ -74,7 +75,7 @@ class MoveableObject
      delete static_cast<bodyData*>(body->GetUserData());
      body->GetWorld()->DestroyBody(body);
     }
-    virtual const std::list<std::pair<float, float>> getPointList() {
+    virtual const std::list<std::pair<float, float>> getPointList() const {
       return point_list;
     }
     
@@ -89,31 +90,31 @@ class MoveableObject
       body->ApplyLinearImpulse(b2Vec2(x,y), body->GetWorldCenter());
       //body->SetLinearVelocity(b2Vec2(x,y));
     }
-    MoveableObject::Type getType() {
+    MoveableObject::Type getType() const {
       return type;
     }
-    float getX() {
+    float getX() const {
       return body->GetPosition().x;
     }
-    float getY() {
+    float getY() const {
       return body->GetPosition().y;
     }
-    float getAngle() { 
+    float getAngle() const { 
       return body->GetAngle();
     }
-    virtual float getH() {
+    virtual float getH() const {
       return h;
     }
-    virtual float getW() {
+    virtual float getW() const {
       return w;
     }
-    mass_t getMass() {
+    mass_t getMass() const {
       return body->GetMass();
     }
-    b2Body* getBody(){
+    b2Body* getBody() const {
       return body;
     }
-    float getEnergy(){
+    float getEnergy() const {
       bodyData* data =static_cast<bodyData*>(body->GetUserData());
       return (data->hasEnergy && data->fullEnergy != 0) ? data->energy/data->fullEnergy : 1;
     }

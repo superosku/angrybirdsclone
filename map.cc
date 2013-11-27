@@ -140,7 +140,7 @@ void Map::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
   }
 }
 
-MoveableObject::Type Map::getNextBirdType() {
+MoveableObject::Type Map::getNextBirdType() const {
   if (birds.empty())
     return Bird::Type::Else;
   return birds.back()->getType();
