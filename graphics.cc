@@ -211,7 +211,8 @@ void Graphics::pollGameEvents() {
     }
     if(event.type == sf::Event::KeyPressed){
       if(event.key.code == sf::Keyboard::Escape){
-        window.close();
+        phase = gamePhase::Menu;
+        delete m;
       }
       if(event.key.code == sf::Keyboard::Right){
         xDelta +=s;
@@ -228,7 +229,7 @@ void Graphics::pollGameEvents() {
       if(event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5) {
         view = defaultView;
         delete m;
-        m = new Map(currentMapPath);
+        m = new Map("maps/" + maps[currentMapI]);
       }
     }
     if(zoomDelta < 50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0))){
