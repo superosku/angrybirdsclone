@@ -21,7 +21,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   //if an error occurs withing loadFromFile, SFML tells about it in the console
   std::vector<std::string> imgDir = readDir("images");
   ssize_t n = imgDir.size();//!(imgDir.size() % 2) ? imgDir.size() : imgDir.size() + 1;
-  n -= n/2;//(n+1)/2;
+  n -= n*3/2;//(n+1)/2;
   
   sf::Vector2f center = view.getCenter();
   sf::Vector2f inc(15.0f,0.0f);
@@ -29,20 +29,23 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   sf::Vector2f leftEdge = center-size/2.0f;
   sf::Vector2f bsize(10.0f,10.0f);
   
-  //window.setView(view);
+  window.setView(view);
   
   //background
   sf::RectangleShape backg(size);
   backg.setPosition(leftEdge);
   backg.setFillColor(sf::Color(0,0,0));
   window.draw(backg);
+  window.display();
   
   for(auto i: imgDir)
   {
    sf::CircleShape tmp(5.0f);
-   tmp.setPosition(center+(float)n*inc);
+   tmp.setPosition(center+(float)(n++)*inc);
    tmp.setFillColor(sf::Color(255,255,255));
    window.draw(tmp);
+   window.display();
+
    for(auto j: readDir("images/"+i)){
     sf::Texture * k = new sf::Texture;
     k->loadFromFile("images/"+i+"/"+j);
@@ -58,7 +61,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   amfi3.loadFromFile("images/amfi3.png");
   amfi4.loadFromFile("images/amfi4.png");
 
-  window.setView(view);
+  //window.setView(view);
 
   c = 32;
   s = 25;
@@ -213,7 +216,11 @@ void Graphics::pollGameEvents() {
       if(event.key.code == sf::Keyboard::Escape){
         phase = gamePhase::Menu;
         delete m;
+<<<<<<< HEAD
         m = NULL;
+=======
+        m = nullptr;
+>>>>>>> 5df4f6be9c4d536294d9c78057552bf7becb2ac5
       }
       if(event.key.code == sf::Keyboard::Right){
         xDelta +=s;
