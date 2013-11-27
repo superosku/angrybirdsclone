@@ -220,16 +220,16 @@ class Graphics {
         pollGameEvents();
         }
     
-    int convertX(float x) {
+    int convertX(float x) const {
       return x * c + WINDOW_W/2.0 + cam_x * c;
     }
-    int convertY(float y) {
+    int convertY(float y) const {
       return -y * c + WINDOW_H/2.0 + cam_y * c;
     }
-    int convertDistance(float d) {
+    int convertDistance(float d) const {
       return c * d;
     }
-    float convertDistanceReverse(int d) {
+    float convertDistanceReverse(int d) const {
       return d / c +0.1;
     }
     std::vector<std::string> readDir(std::string dir);
