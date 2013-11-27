@@ -213,6 +213,7 @@ void Graphics::pollGameEvents() {
       if(event.key.code == sf::Keyboard::Escape){
         phase = gamePhase::Menu;
         delete m;
+        m = NULL;
       }
       if(event.key.code == sf::Keyboard::Right){
         xDelta +=s;
