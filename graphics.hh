@@ -115,14 +115,6 @@ class Graphics {
     }
 
     void runMenu(){
-     std::ostringstream ss;
-     //std::vector<std::string> maps = readDir("maps");
-     for(auto i: maps)
-       ss << (i == maps[currentMapI]? " * ": "   ") << i << std::endl;
-     sf::Text t(ss.str(),font);
-     pollMenuEvents();
-     window.setView(view);
-
      sf::Vector2f center = view.getCenter();
      sf::Vector2f size = view.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
@@ -153,9 +145,16 @@ class Graphics {
        t.setPosition(tmp.getPosition()+tmp.getSize()/2.0f-sf::Vector2f(t.getGlobalBounds().width,t.getGlobalBounds().height)/2.0f);
        window.draw(t);
      }
+
+     pollMenuEvents();
+     std::ostringstream ss;
+     for(auto i: maps)
+       ss << (i == maps[currentMapI]? " * ": "   ") << i << std::endl;
+     sf::Text t(ss.str(),font);
+     window.draw(t);
+
  
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
-     window.draw(t);
     }
 
     void pollMenuEvents() {
@@ -223,8 +222,8 @@ class Graphics {
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
         pollGameEvents();
-        }
-    
+    }
+
     int convertX(float x) const {
       return x * c + WINDOW_W/2.0 + cam_x * c;
     }
