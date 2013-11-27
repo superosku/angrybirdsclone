@@ -34,11 +34,7 @@ class Graphics {
     std::map<size_t,std::vector<sf::Texture*>> textures;
     sf::ContextSettings settings;
     sf::View defaultView = window.getDefaultView();
-<<<<<<< HEAD
-    Map* m = NULL;
-=======
     Map* m = nullptr;
->>>>>>> 5df4f6be9c4d536294d9c78057552bf7becb2ac5
     // the constant used to change coordinates
     int c;
     // the constant used to move the screen
@@ -80,17 +76,13 @@ class Graphics {
 
   public:
     ~Graphics() {
-<<<<<<< HEAD
-      if(m != NULL)
-       delete m;
       //Free all loaded textures
       for(auto i = textures.begin();i != textures.end();++i)
        for(auto j = i->second.begin();j != i->second.end();++j)
         delete *j;
-=======
+
       if (m != nullptr)
         delete m;
->>>>>>> 5df4f6be9c4d536294d9c78057552bf7becb2ac5
     }
     Graphics();
     void drawMoveableObject(MoveableObject *i);
