@@ -553,6 +553,8 @@ void Graphics::drawUnmoveable() {
   }
   if(nextType == MoveableObject::Type::Else)
     catapult.setFillColor(sf::Color(0,0,0));
+  else
+    catapult.setFillColor(sf::Color(255,255,255));
 
   catapult.setOrigin(convertDistance(0.5), convertDistance(0.5));
   if (shoot_aiming){
