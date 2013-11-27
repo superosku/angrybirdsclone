@@ -234,6 +234,9 @@ void Graphics::pollGameEvents() {
         delete m;
         m = new Map("maps/" + maps[currentMapI]);
       }
+      if(event.key.code == sf::Keyboard::D) {
+        std::cout << "End: " << m->isEnd() << " Win: " << m->isWin() << std::endl;
+      }
     }
     if(zoomDelta < 50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0))){
         zoomDelta +=s;

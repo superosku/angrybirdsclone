@@ -55,6 +55,14 @@ class Map : public b2ContactListener,b2ContactFilter {
     size_t getEnemyCount() const {
       return enemiesLeft;
     }
+    
+    bool isEnd() const {
+      return ((!getBirdsLeft() || !getEnemyCount()) && current_b == nullptr);
+    }
+    
+    bool isWin() const {
+      return (!getEnemyCount());
+    }
 
     void addObject(MoveableObject* o);
     void removeObject(MoveableObject* o);
