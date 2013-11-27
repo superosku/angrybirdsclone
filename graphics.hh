@@ -53,7 +53,7 @@ class Graphics {
     int catapult_x, catapult_y;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
-    std::string currentMapPath = "maps/basic_map.csv";
+    //std::string currentMapPath = "maps/basic_map.csv";
     std::vector<std::string> maps = readDir("maps");
     size_t currentMapI = 0;
 
