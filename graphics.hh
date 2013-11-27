@@ -54,6 +54,8 @@ class Graphics {
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
     std::string currentMapPath = "maps/basic_map.csv";
+    std::vector<std::string> maps = readDir("maps");
+    size_t currentMapI = 0;
 
     enum gamePhase
     {
@@ -61,6 +63,16 @@ class Graphics {
       Game
     };
     gamePhase phase = gamePhase::Menu;
+    
+    enum menuAction
+    {
+      Play = 0,
+      Previous = 1,
+      Next = 2,
+      Quit = 3
+    };
+    
+    std::map<size_t,std::string> menuTitle = {{0,"Play"},{1,"Previous"},{2,"Next"},{3,"Quit"}};
 
   public:
     ~Graphics() {
@@ -98,7 +110,8 @@ class Graphics {
 
     void runMenu(){
      std::ostringstream ss;
-     for(auto i: readDir("maps"))
+     //std::vector<std::string> maps = readDir("maps");
+     for(auto i: maps)
        ss << i << std::endl;
      sf::Text t(ss.str(),font);
      pollMenuEvents();
@@ -107,12 +120,29 @@ class Graphics {
      sf::Vector2f center = view.getCenter();
      sf::Vector2f size = view.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
-
-     sf::RectangleShape ground3(size);
-     ground3.setPosition(leftEdge);
-     ground3.setFillColor(sf::Color(113,218,226));
-     window.draw(ground3);
-
+     
+     //background
+     sf::RectangleShape backg(size);
+     backg.setPosition(leftEdge);
+     backg.setFillColor(sf::Color(113,218,226));
+     window.draw(backg);
+     
+     //buttons
+     sf::Vector2f fpos(center.x-90.0f,60.0f);
+     sf::Vector2f bsize(180.0f,80.0f);
+     sf::Vector2f inc(0.0f,90.0f);
+     
+     for (size_t i = 0; i < 4; i++)
+     {
+       sf::RectangleShape tmp(bsize);
+       tmp.setPosition(fpos + (float)i*inc);
+       if ((i == 1 && currentMapI == 0) || (i == 2 && currentMapI == (maps.size()-1)))
+        tmp.setFillColor(sf::Color(0,44,5));
+       else
+        tmp.setFillColor(sf::Color(0,104,55));
+       window.draw(tmp);
+     }
+     
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
      window.draw(t);
     }
@@ -128,8 +158,41 @@ class Graphics {
           view.setSize(event.size.width, event.size.height);
           defaultView=view;
         }
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left){
+        /*if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left){
+          m = new Map(currentMapPath);
           phase = gamePhase::Game;
+        }*/
+        if(event.type == sf::Event::MouseButtonReleased){
+          if (event.mouseButton.button == sf::Mouse::Left) {
+            ssize_t act = -1;
+            for (size_t i = 0; i < 4; i++)
+            {
+              if (abs(event.mouseButton.x - view.getCenter().x) < 90 && abs(event.mouseButton.y - (60.0f + i * 90.0f)) < 40)
+                act = i;
+            }
+            switch(act)
+            {
+              case(menuAction::Play):
+                std::cout << "play" << std::endl;
+                m = new Map("maps/" + maps[currentMapI]);
+                phase = gamePhase::Game;
+                break;
+              case(menuAction::Previous):
+                std::cout << "prev" << std::endl;
+                if (currentMapI > 0)
+                  currentMapI--;
+                break;
+              case(menuAction::Next):
+                std::cout << "next" << std::endl;
+                if (currentMapI < (maps.size()-1))
+                  currentMapI++;
+                break;
+              case(menuAction::Quit):
+                std::cout << "quit" << std::endl;
+                window.close();
+                break;
+            }
+          }
         }
       }
     }
@@ -149,7 +212,7 @@ class Graphics {
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
     }
-
+    
     int convertX(float x) {
       return x * c + WINDOW_W/2.0 + cam_x * c;
     }
