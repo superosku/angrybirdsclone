@@ -88,7 +88,7 @@ class Graphics {
     int s;
     int ss;
     // the constants to correct view and catapult when zooming
-    float zx; 
+    float zx;
     int z;
     float temp;
     int zoomDelta = 0;
@@ -102,14 +102,21 @@ class Graphics {
     size_t shoot_aiming;
     std::string currentMapPath = "maps/basic_map.csv";
 
+    enum gamePhase
+    {
+      Menu,
+      Game
+    };
+    gamePhase phase = gamePhase::Menu;
+
   public:
     ~Graphics() {
       delete m;
     }
-    Graphics(); 
-    void drawMoveableObject(MoveableObject *i); 
+    Graphics();
+    void drawMoveableObject(MoveableObject *i);
     void drawMoveableObjects();
-    void pollEvents();
+    void pollGameEvents();
     void drawUnmoveable();
 
     void run() {
@@ -118,12 +125,59 @@ class Graphics {
         //for(auto i: list)
         //  std::cout << i << std::endl;
       while (window.isOpen()) {
-        pollEvents();
         window.clear(/*sf::Color(160,160,255)*/);
         window.setView(view);
-        drawUnmoveable(); 
+        switch(phase)
+        {
+          case(gamePhase::Menu):
+            runMenu();
+            std::cout << "MENU" << std::endl;
+            break;
+
+          case(gamePhase::Game):
+            runGame();
+            break;
+        }
+        window.display(); // Display windows
+      }
+    }
+
+    void runMenu(){
+     pollMenuEvents();
+     sf::Vector2f center = view.getCenter();
+     sf::Vector2f size = view.getSize();
+     sf::Vector2f leftEdge = center-size/2.0f;
+
+     sf::RectangleShape ground3(size);
+     ground3.setPosition(leftEdge);
+     ground3.setFillColor(sf::Color(113,218,226));
+     window.draw(ground3);
+    }
+
+    void pollMenuEvents() {
+      sf::Event event;
+      while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+          window.close();
+        }
+        if(event.type == sf::Event::Resized)
+        {
+          view.setSize(event.size.width, event.size.height);
+          defaultView=view;
+        }
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left){
+          phase = gamePhase::Game;
+          std::cout << "CLICK" << std::endl;
+        }
+      }
+    }
+
+    void runGame(){
+        pollGameEvents();
+        m->Step(); // Advance simulation
+        drawUnmoveable();
         drawMoveableObjects() ;
-        
+
         //Draw score, display and advance the simulation one step ahead
         window.setView(defaultView);
         std::ostringstream ss;
@@ -131,10 +185,6 @@ class Graphics {
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
-
-        window.display(); // Display windows
-        m->Step(); // Advance simulation
-      }
     }
 
     int convertX(float x) {
@@ -153,4 +203,5 @@ class Graphics {
 };
 
 #endif
+
 
