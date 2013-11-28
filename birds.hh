@@ -133,17 +133,18 @@ class BombBird : public Bird
     std::cout << "Blast at " << x << ", " << y << "." << std::endl;
     
     body->SetActive(false);
-    
+    BlastBullet* tmp;
+
     for (size_t i = 0; i < N_BULLETS; ++i)
     {
       float a = 2*PI/N_BULLETS;
       
-      BlastBullet* tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
+      tmp = new BlastBullet(world,(x+0.2*cos(a*i)),(y+0.2*sin(a*i)));
       tmp->setImpulse(20*cos(a*i),20*sin(a*i));
       
       m->addObject(tmp);
     }
-    m->killCurrentBird(this);
+    m->setCurrentBird(tmp);
     //m->removeObject(this);
     //delete this;
     //bodyData* bData =static_cast<bodyData*>(body->GetUserData());

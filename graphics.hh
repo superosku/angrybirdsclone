@@ -54,7 +54,7 @@ class Graphics {
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
     //std::string currentMapPath = "maps/basic_map.csv";
-    std::vector<std::string> maps = readDir("maps");
+    std::vector<sf::Text> maps; // = readDir("maps");
     size_t currentMapI = 0;
 
     enum gamePhase
@@ -63,7 +63,7 @@ class Graphics {
       Game
     };
     gamePhase phase = gamePhase::Menu;
-    
+
     enum menuAction
     {
       Play = 0,
@@ -71,7 +71,7 @@ class Graphics {
       Next = 2,
       Quit = 3
     };
-    
+
     std::map<size_t,std::string> menuTitle = {{0,"Play"},{1,"Previous"},{2,"Next"},{3,"Quit"}};
 
   public:
@@ -118,18 +118,18 @@ class Graphics {
      sf::Vector2f center = view.getCenter();
      sf::Vector2f size = view.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
-     
+
      //background
      sf::RectangleShape backg(size);
      backg.setPosition(leftEdge);
      backg.setFillColor(sf::Color(113,218,226));
      window.draw(backg);
-     
+
      //buttons
      sf::Vector2f fpos(center.x-90.0f,60.0f);
      sf::Vector2f bsize(180.0f,80.0f);
      sf::Vector2f inc(0.0f,90.0f);
-     
+
      for (size_t i = 0; i < 4; i++)
      {
        sf::RectangleShape tmp(bsize);
@@ -149,12 +149,16 @@ class Graphics {
      window.setView(defaultView);
      pollMenuEvents();
      std::ostringstream ss;
-     for(auto i: maps)
-       ss << (i == maps[currentMapI]? " * ": "   ") << i << std::endl;
-     sf::Text t(ss.str(),font);
-     window.draw(t);
+     for(size_t i = 0;i < maps.size();++i){
+       maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(0,i*(maps[i].getGlobalBounds().height+10))));
+       window.draw(maps[i]);
+     }
+      /* ss << (i.getString() == maps[currentMapI].getString()? " * ": "   ") << std::string(i.getString()) << std::endl;
+     sf::Text t(ss.str(),font);*/
 
- 
+
+
+
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
     }
 
@@ -174,8 +178,18 @@ class Graphics {
           phase = gamePhase::Game;
         }*/
         if(event.type == sf::Event::MouseButtonReleased){
-          if (event.mouseButton.button == sf::Mouse::Left) {
-            ssize_t act = -1;
+          if (event.mouseButton.button == sf::Mouse::Left){}
+            sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
+            for(size_t i = 0;i < maps.size();++i)
+              if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y)){
+                m = new Map("maps/" + maps[i].getString());
+                phase = gamePhase::Game;
+                break;
+              }
+        }
+            /*ssize_t act = -1;
+
+
             for (size_t i = 0; i < 4; i++)
             {
               sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
@@ -187,8 +201,7 @@ class Graphics {
             {
               case(menuAction::Play):
                 std::cout << "play" << std::endl;
-                m = new Map("maps/" + maps[currentMapI]);
-                phase = gamePhase::Game;
+
                 break;
               case(menuAction::Previous):
                 std::cout << "prev" << std::endl;
@@ -204,11 +217,9 @@ class Graphics {
                 std::cout << "quit" << std::endl;
                 window.close();
                 break;
-            }
+            }*/
           }
         }
-      }
-    }
 
     void runGame(){
         //pollGameEvents();

@@ -70,6 +70,13 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   catapult_x = convertX(-20);
   catapult_y = convertY(6);
   shoot_aiming = 0;
+
+     for(auto i: readDir("maps")){
+       sf::Text t(i,font);
+       t.setPosition(0,0);
+       maps.push_back(t);
+     }
+
 }
 
 /*
@@ -232,7 +239,7 @@ void Graphics::pollGameEvents() {
       if(event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5) {
         view = defaultView;
         delete m;
-        m = new Map("maps/" + maps[currentMapI]);
+        m = new Map("maps/" + maps[currentMapI].getString());
       }
       if(event.key.code == sf::Keyboard::D) {
         std::cout << "End: " << m->isEnd() << " Win: " << m->isWin() << std::endl;
