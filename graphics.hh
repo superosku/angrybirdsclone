@@ -150,7 +150,12 @@ class Graphics {
      pollMenuEvents();
      std::ostringstream ss;
      for(size_t i = 0;i < maps.size();++i){
-       maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(0,i*(maps[i].getGlobalBounds().height+10))));
+       sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window),view);
+       maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(20,i*(maps[i].getCharacterSize()))));
+       if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y))
+         maps[i].setColor(sf::Color::Red);
+       else
+         maps[i].setColor(sf::Color::White);
        window.draw(maps[i]);
      }
       /* ss << (i.getString() == maps[currentMapI].getString()? " * ": "   ") << std::string(i.getString()) << std::endl;
@@ -236,6 +241,8 @@ class Graphics {
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
         pollGameEvents();
+        if(m && m->isEnd())
+          phase= gamePhase::Menu;
     }
 
     int convertX(float x) const {
