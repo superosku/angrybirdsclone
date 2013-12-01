@@ -140,7 +140,8 @@ class Graphics {
      window.draw(backg);
 
      //buttons
-     /*sf::Vector2f fpos(center.x-90.0f,60.0f);
+     /*
+     sf::Vector2f fpos(center.x-90.0f,60.0f);
      sf::Vector2f bsize(180.0f,80.0f);
      sf::Vector2f inc(0.0f,90.0f);
 
@@ -158,8 +159,8 @@ class Graphics {
        sf::Text t(ss.str(),font);
        t.setPosition(tmp.getPosition()+tmp.getSize()/2.0f-sf::Vector2f(t.getGlobalBounds().width,t.getGlobalBounds().height)/2.0f);
        window.draw(t);
-     }
-*/
+     }*/
+
 
      //window.setView(defaultView);
      pollMenuEvents();
@@ -201,6 +202,7 @@ class Graphics {
               if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y)){
                 m = new Map("maps/" + maps[i].getString());
                 phase = gamePhase::Game;
+                currentMapI = i;
                 break;
               }
         }
@@ -248,13 +250,14 @@ class Graphics {
         //Draw score, display and advance the simulation one step ahead
         window.setView(defaultView);
         std::ostringstream ss;
-        ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " << m->getEnemyCount();
+        ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " 
+          << m->getEnemyCount() << std::endl << "Game won: " << (m->isEnd()? "Yes" : "No");
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
         pollGameEvents();
-        if(m && m->isEnd())
-          phase= gamePhase::Menu;
+        //if(m && m->isEnd())
+          //phase= gamePhase::Menu;
     }
 
     int convertX(float x) const {
