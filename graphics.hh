@@ -99,7 +99,6 @@ class Graphics {
         //  std::cout << i << std::endl;
       while (window.isOpen()) {
         window.clear(/*sf::Color(160,160,255)*/);
-        window.setView(view);
         switch(phase)
         {
           case(gamePhase::Menu):
@@ -115,8 +114,16 @@ class Graphics {
     }
 
     void runMenu(){
-     sf::Vector2f center = view.getCenter();
-     sf::Vector2f size = view.getSize();
+     //Reset zoom variables (might be != 0 if eg. user pressed escape during zooming)
+     z=0;
+     zoomDelta = 0;
+     xDelta = 0;
+     yDelta = 0;
+
+     view=defaultView;
+     window.setView(view);
+     sf::Vector2f center = defaultView.getCenter();
+     sf::Vector2f size = defaultView.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
 
      //background
@@ -146,11 +153,11 @@ class Graphics {
        window.draw(t);
      }
 
-     window.setView(defaultView);
+     //window.setView(defaultView);
      pollMenuEvents();
      std::ostringstream ss;
      for(size_t i = 0;i < maps.size();++i){
-       sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window),view);
+       sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window));
        maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(20,i*(maps[i].getCharacterSize()))));
        if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y))
          maps[i].setColor(sf::Color::Red);
@@ -184,7 +191,7 @@ class Graphics {
         }*/
         if(event.type == sf::Event::MouseButtonReleased){
           if (event.mouseButton.button == sf::Mouse::Left){}
-            sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
+            sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y));
             for(size_t i = 0;i < maps.size();++i)
               if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y)){
                 m = new Map("maps/" + maps[i].getString());
