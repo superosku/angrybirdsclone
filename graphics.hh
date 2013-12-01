@@ -28,6 +28,7 @@ class Graphics {
     sf::Texture amfi2;
     sf::Texture amfi3;
     sf::Texture amfi4;
+    sf::Texture menu;
     sf::Font font;
 
     sf::CircleShape catapult;
@@ -120,13 +121,16 @@ class Graphics {
      sf::Vector2f leftEdge = center-size/2.0f;
 
      //background
+     menu.loadFromFile("images/menu.png");
+     menu.setSmooth(1);
      sf::RectangleShape backg(size);
      backg.setPosition(leftEdge);
-     backg.setFillColor(sf::Color(113,218,226));
+     backg.setTexture(&menu);
+     //backg.setFillColor(sf::Color(113,218,226));
      window.draw(backg);
 
      //buttons
-     sf::Vector2f fpos(center.x-90.0f,60.0f);
+     /*sf::Vector2f fpos(center.x-90.0f,60.0f);
      sf::Vector2f bsize(180.0f,80.0f);
      sf::Vector2f inc(0.0f,90.0f);
 
@@ -145,6 +149,7 @@ class Graphics {
        t.setPosition(tmp.getPosition()+tmp.getSize()/2.0f-sf::Vector2f(t.getGlobalBounds().width,t.getGlobalBounds().height)/2.0f);
        window.draw(t);
      }
+*/
 
      window.setView(defaultView);
      pollMenuEvents();
