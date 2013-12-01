@@ -127,13 +127,16 @@ class Graphics {
      sf::Vector2f size = defaultView.getSize();
      sf::Vector2f leftEdge = center-size/2.0f;
 
-     //background
+     //menu background
      menu.loadFromFile("images/menu.png");
      menu.setSmooth(1);
      sf::RectangleShape backg(size);
+     sf::RectangleShape backgr(size);
      backg.setPosition(leftEdge);
+     backgr.setPosition(leftEdge);
      backg.setTexture(&menu);
-     //backg.setFillColor(sf::Color(113,218,226));
+     backgr.setFillColor(sf::Color(113,218,226));
+     window.draw(backgr);
      window.draw(backg);
 
      //buttons
@@ -172,9 +175,6 @@ class Graphics {
      }
       /* ss << (i.getString() == maps[currentMapI].getString()? " * ": "   ") << std::string(i.getString()) << std::endl;
      sf::Text t(ss.str(),font);*/
-
-
-
 
      //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
     }
@@ -273,5 +273,4 @@ class Graphics {
 };
 
 #endif
-
 
