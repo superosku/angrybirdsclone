@@ -3,7 +3,6 @@
 
 #define WINDOW_W 1280
 #define WINDOW_H 720
-
 #define MAX_FORCE 200
 
 #include <SFML/Graphics.hpp>
@@ -40,7 +39,6 @@ class Graphics {
     int c;
     // the constant used to move the screen
     int s;
-    int ss;
     // the constants to correct view and catapult when zooming
     float zx;
     int z;
@@ -99,7 +97,7 @@ class Graphics {
         //for(auto i: list)
         //  std::cout << i << std::endl;
       while (window.isOpen()) {
-        window.clear(/*sf::Color(160,160,255)*/);
+        window.clear();
         switch(phase)
         {
           case(gamePhase::Menu):
@@ -206,8 +204,7 @@ class Graphics {
                 break;
               }
         }
-            /*ssize_t act = -1;
-
+            /*size_t act = -1;
 
             for (size_t i = 0; i < 4; i++)
             {
@@ -251,7 +248,7 @@ class Graphics {
         window.setView(defaultView);
         std::ostringstream ss;
         ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " 
-          << m->getEnemyCount() << std::endl << "Game won: " << (m->isEnd()? "Yes" : "No");
+          << m->getEnemyCount() << std::endl << "Game won: " << (m->isWin()?"Yes":"No") << std::endl << "Game end: " << (m->isEnd()?"Yes\npress ESC for menu":"No");
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);

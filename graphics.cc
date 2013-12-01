@@ -219,11 +219,13 @@ void Graphics::pollGameEvents() {
         defaultView=view;
     }
     if(event.type == sf::Event::KeyPressed){
+      //ESC to menu
       if(event.key.code == sf::Keyboard::Escape){
         phase = gamePhase::Menu;
         delete m;
         m = nullptr;
       }
+      //Arrows to move view
       if(event.key.code == sf::Keyboard::Right){
         xDelta +=s;
       }
@@ -236,6 +238,7 @@ void Graphics::pollGameEvents() {
       if(event.key.code == sf::Keyboard::Up){
         yDelta -=s;
       }
+      //R & F5 to reload map
       if(event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5) {
         view = defaultView;
         delete m;
@@ -245,6 +248,7 @@ void Graphics::pollGameEvents() {
         std::cout << "End: " << m->isEnd() << " Win: " << m->isWin() << std::endl;
       }
     }
+    //the zooming with keys or mouse wheel
     if(zoomDelta < 50 && ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Comma) || ( event.type == sf::Event::MouseWheelMoved && event.mouseWheel.delta < 0))){
         zoomDelta +=s;
         z--;
@@ -253,6 +257,7 @@ void Graphics::pollGameEvents() {
         zoomDelta -=s;
         z++;
     }
+    //shooting the birds
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
         if (mouse.x < catapult_x+15 && mouse.x > catapult_x-15 && mouse.y < catapult_y+15 && mouse.y > catapult_y-15)
@@ -295,7 +300,6 @@ void Graphics::pollGameEvents() {
    --zoomDelta;
   if(zoomDelta < 0)
    ++zoomDelta;
-
 }
 
 
