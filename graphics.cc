@@ -79,21 +79,7 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
 
 }
 
-/*
-  //Draw energy of an object (for debugging purposes)
-  bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
-  if(data->hasEnergy)
-  {
-    std::ostringstream ss;
-    ss << std::setprecision(2) << data->energy;
-    sf::Text t;
-    t.setPosition(x,y);
-    t.setCharacterSize(20);
-    t.setString(ss.str());
-    t.setFont(font);
-    window.draw(t);
-  }
-*/
+
 
 //This method draws all moveable objects -> it calls drawCircle- and drawSquare-methods to do the real drawing in most cases
 void Graphics::drawMoveableObjects() {
@@ -163,6 +149,22 @@ void Graphics::drawMoveableObjects() {
          window.draw(shape);
          break;
     }
+  //Draw energy of an object (for debugging purposes)
+  bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
+  if(data->hasEnergy)
+  {
+    std::ostringstream ss;
+    ss << std::setprecision(2) << data->energy;
+    sf::Text t;
+    //t.setPosition(x,y);
+    t.setPosition(convertX(i->getX()),convertY(i->getY()));
+    t.setCharacterSize(20);
+    t.setString(ss.str());
+    t.setFont(font);
+    window.draw(t);
+  }
+
+
   }
 }
 
