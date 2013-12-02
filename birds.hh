@@ -172,12 +172,17 @@ class GravityBird : public Bird
 {
   public:
   GravityBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f, size_t a = 1) : Bird(world , x, y, 0.5f, d, a, MoveableObject::Type::GravityBird){}
-
-  virtual bool action(Map* m)
+ virtual bool action(Map* m)
   {
     if (!Bird::action(m))
       return(false);
-    body->GetWorld()->SetGravity( b2Vec2(0,9.8) );
+    //Reverses gravity for all objects within 10 meters radius
+    for ( b2Body* b = body->GetWorld()->GetBodyList(); b; b = b->GetNext())
+      if(b2Distance(body->GetPosition(), b->GetPosition()) < 10 && b != body){
+        b->SetGravityScale(-1);
+        b->SetAwake(1);
+      }
+    //body->GetWorld()->SetGravity( b2Vec2(0,9.8) );
     std::cout << "action in GravityBird-class" << std::endl;
     return(true);
   }
