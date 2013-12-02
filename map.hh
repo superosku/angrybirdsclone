@@ -46,7 +46,7 @@ class Map : public b2ContactListener,b2ContactFilter {
     float getCatapultY() const {
       return catapult_y;
     }
-    size_t getScore() const {
+    int getScore() const {
       return totalScore;
     }
     size_t getBirdsLeft() const {
@@ -54,6 +54,10 @@ class Map : public b2ContactListener,b2ContactFilter {
     }
     size_t getEnemyCount() const {
       return enemiesLeft;
+    }
+
+    size_t getHighScore() const {
+      return highScore;
     }
     
     bool isEnd() const {
@@ -124,6 +128,7 @@ class Map : public b2ContactListener,b2ContactFilter {
     b2World* m_world;
     //b2Body* m_groundBody;
     MoveableObject* current_b = nullptr;
+    size_t highScore=0;
     float totalScore=0;
     float catapult_x, catapult_y;
     size_t enemiesLeft=0;

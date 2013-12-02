@@ -182,6 +182,9 @@ void Map::loadMap(std::string filepath)
   std::ifstream input(filepath);
   // First line is for map parameters
   std::getline(input,tmpStr);
+  //Currently first line has only highscore
+  highScore=std::atoi(tmpStr.c_str());
+
   // Object_id,x,y,w,h,d,energy,image_path
   while (std::getline(input,tmpStr))
   {

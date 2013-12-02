@@ -21,22 +21,22 @@ Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds cl
   std::vector<std::string> imgDir = readDir("images");
   ssize_t n = imgDir.size();//!(imgDir.size() % 2) ? imgDir.size() : imgDir.size() + 1;
   n -= n*3/2;//(n+1)/2;
-  
+
   sf::Vector2f center = view.getCenter();
   sf::Vector2f inc(10.0f,0.0f);
   sf::Vector2f size = view.getSize();
   sf::Vector2f leftEdge = center-size/2.0f;
   sf::Vector2f bsize(10.0f,10.0f);
-  
+
   window.setView(view);
-  
+
   //background
   sf::RectangleShape backg(size);
   backg.setPosition(leftEdge);
   backg.setFillColor(sf::Color(0,0,0));
   window.draw(backg);
   window.display();
-  
+
   for(auto i: imgDir)
   {
    sf::RectangleShape tmp(bsize);
@@ -221,6 +221,8 @@ void Graphics::pollGameEvents() {
     if(event.type == sf::Event::KeyPressed){
       //ESC to menu
       if(event.key.code == sf::Keyboard::Escape){
+        if(m->isWin())
+          saveHighScore("maps/" + maps[currentMapI].getString());
         phase = gamePhase::Menu;
         delete m;
         m = nullptr;

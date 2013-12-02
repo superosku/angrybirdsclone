@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -91,6 +92,36 @@ class Graphics {
     void drawCircle(std::vector<sf::Texture*>, MoveableObject*);
     void drawSquare(std::vector<sf::Texture*>, MoveableObject*);
 
+    void saveHighScore(std::string mapName)
+    {
+      std::ifstream input(mapName);
+      std::string tmpStr;
+      std::vector<std::string> v;
+      std::getline(input,tmpStr);
+
+      if(std::atoi(tmpStr.c_str()) > m->getScore())
+        v.push_back(tmpStr);
+      else
+      {
+        std::ostringstream ss;
+        ss << m->getScore();
+        v.push_back(ss.str());
+      }
+
+      while(std::getline(input,tmpStr))
+      {
+        v.push_back(tmpStr);
+      }
+      input.close();
+
+      std::ofstream output(mapName);
+      for(auto i: v)
+       output << i << std::endl;
+
+      output.close();
+
+    }
+
     void run() {
       //Test for directory listing
         //std::vector<std::string> list = readDir(".");
@@ -165,11 +196,16 @@ class Graphics {
      std::ostringstream ss;
      for(size_t i = 0;i < maps.size();++i){
        sf::Vector2f mouse =window.mapPixelToCoords(sf::Mouse::getPosition(window));
-       maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(20,i*(maps[i].getCharacterSize()))));
        if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y))
+       {
+         maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(40,i*(maps[i].getCharacterSize()))));
          maps[i].setColor(sf::Color::Red);
+       }
        else
+       {
+         maps[i].setPosition(window.mapPixelToCoords(sf::Vector2i(20,i*(maps[i].getCharacterSize()))));
          maps[i].setColor(sf::Color::White);
+       }
        window.draw(maps[i]);
      }
       /* ss << (i.getString() == maps[currentMapI].getString()? " * ": "   ") << std::string(i.getString()) << std::endl;
@@ -247,8 +283,8 @@ class Graphics {
         //Draw score, display and advance the simulation one step ahead
         window.setView(defaultView);
         std::ostringstream ss;
-        ss << "Points: " << m->getScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: " 
-          << m->getEnemyCount() << std::endl << "Game won: " << (m->isWin()?"Yes":"No") << std::endl << "Game end: " << (m->isEnd()?"Yes\npress ESC for menu":"No");
+        ss << "Points: " << m->getScore() << "/" << m->getHighScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: "
+          << m->getEnemyCount() << std::endl << "Game won: " << (m->isWin()?"Yes":"No") << std::endl << (m->isEnd()?"press ESC for menu":"");
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
