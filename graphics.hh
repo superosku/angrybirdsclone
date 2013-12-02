@@ -128,9 +128,9 @@ class Graphics {
      //menu background
      menu.loadFromFile("images/menu.png");
      menu.setSmooth(1);
-     sf::RectangleShape backg(size);
+     sf::RectangleShape backg((sf::Vector2f)menu.getSize());
      sf::RectangleShape backgr(size);
-     backg.setPosition(leftEdge);
+     backg.setPosition(center-(sf::Vector2f)menu.getSize()/2.0f);
      backgr.setPosition(leftEdge);
      backg.setTexture(&menu);
      backgr.setFillColor(sf::Color(113,218,226));
