@@ -283,7 +283,7 @@ class Graphics {
         //Draw score, display and advance the simulation one step ahead
         window.setView(defaultView);
         std::ostringstream ss;
-        ss << "Points: " << m->getScore() << "/" << m->getHighScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: "
+        ss << "Score: " << m->getScore() << std::endl << "Highscore: " << m->getHighScore() << std::endl << "Birds left: " << m->getBirdsLeft() << std::endl << "Enemies left: "
           << m->getEnemyCount() << std::endl << "Game won: " << (m->isWin()?"Yes":"No") << std::endl << (m->isEnd()?"press ESC for menu":"");
         sf::Text t(ss.str(),font);
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));

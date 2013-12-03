@@ -90,38 +90,16 @@ void Graphics::drawMoveableObjects() {
     switch(type)
     {
        case(MoveableObject::Type::BasicBird):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::BouncyBird):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::TangentBird):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::BombBird):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::GravityBird):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::BasicEnemy):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::Gear_t):
-         /*drawCircle(textures[type],i);
-         break;*/
        case(MoveableObject::Type::Smoke_t):
-         drawCircle(textures[type],i);
-         break;
        case(MoveableObject::Type::Brick):
-         /*drawSquare(textures[type],i);
-         break;*/
        case(MoveableObject::Type::Glass):
-         /*drawSquare(textures[type],i);
-         break;*/
        case(MoveableObject::Type::Wood):
-         /*drawSquare(textures[type],i);
-         break;*/
        case(MoveableObject::Type::TNT):
          drawSquare(textures[type],i);
          break;
@@ -149,21 +127,21 @@ void Graphics::drawMoveableObjects() {
          window.draw(shape);
          break;
     }
-  //Draw energy of an object (for debugging purposes)
+
+    
+  /*//Draw energy of an object (for debugging purposes)
   bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
   if(data->hasEnergy)
   {
     std::ostringstream ss;
     ss << std::setprecision(2) << data->energy;
     sf::Text t;
-    //t.setPosition(x,y);
     t.setPosition(convertX(i->getX()),convertY(i->getY()));
     t.setCharacterSize(20);
     t.setString(ss.str());
     t.setFont(font);
     window.draw(t);
-  }
-
+  }*/
 
   }
 }
@@ -223,6 +201,7 @@ void Graphics::pollGameEvents() {
     if(event.type == sf::Event::KeyPressed){
       //ESC to menu
       if(event.key.code == sf::Keyboard::Escape){
+        //saving the highscore
         if(m->isWin())
           saveHighScore("maps/" + maps[currentMapI].getString());
         phase = gamePhase::Menu;
