@@ -95,6 +95,8 @@ void Graphics::drawMoveableObjects() {
        case(MoveableObject::Type::BombBird):
        case(MoveableObject::Type::GravityBird):
        case(MoveableObject::Type::BasicEnemy):
+         drawCircle(textures[type],i);
+         break;
        case(MoveableObject::Type::Gear_t):
        case(MoveableObject::Type::Smoke_t):
        case(MoveableObject::Type::Brick):
