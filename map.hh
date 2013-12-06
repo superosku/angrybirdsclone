@@ -78,7 +78,9 @@ class Map : public b2ContactListener,b2ContactFilter {
       current_b = a;
     }
 
-    MoveableObject* getCurrentBird() const {return(current_b);}
+    MoveableObject* getCurrentBird() const {
+      return(current_b);
+    }
 
     void killCurrentBird() {current_b = nullptr;std::cout << "killed current bird" << std::endl;}
 

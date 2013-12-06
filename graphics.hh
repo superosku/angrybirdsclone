@@ -56,6 +56,9 @@ class Graphics {
     //std::string currentMapPath = "maps/basic_map.csv";
     std::vector<sf::Text> maps; // = readDir("maps");
     size_t currentMapI = 0;
+    
+    std::list<std::pair<float, float>> dot_list;
+    int dot_counter = 0;
 
     enum gamePhase
     {
