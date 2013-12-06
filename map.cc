@@ -154,7 +154,6 @@ void Map::ShootBird(float x, float y)
     std::cout << "No birds left..." << std::endl;
     return;
   }
-
   current_b = birds.back();
   current_b->getBody()->SetActive(true);
   current_b->setImpulse(x, y);

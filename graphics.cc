@@ -258,6 +258,8 @@ void Graphics::pollGameEvents() {
           sf::Vector2f location = catapult.getPosition();
           //std::cout << "Shot Bird" << std::endl;
           m->ShootBird((catapult_x - location.x)/10.0, -(catapult_y - location.y)/10.0);
+          dot_list.clear();
+          dot_counter = 0;
           shoot_aiming = 0;
         }
       }
@@ -352,6 +354,24 @@ void Graphics::drawUnmoveable() {
     catapult.setPosition(catapult_x, catapult_y);
   window.draw(catapult_bg);
   window.draw(catapult);
+
+  // Handling the dots
+  MoveableObject* b = m->getCurrentBird();
+  if (dot_counter%5 == 0 && b != nullptr && dot_list.size() < 15) {
+    dot_list.push_back(std::pair<float,float>(b->getX(), b->getY()));
+  }
+  dot_counter += 1;
+
+  sf::CircleShape dot(convertDistance(0.1));
+  dot.setOrigin(convertDistance(0.05), convertDistance(0.05));
+  int dot_alpha = 255;
+  for (auto &i: dot_list) {
+    dot.setFillColor(sf::Color(255,255,255,dot_alpha));
+    if (dot_alpha - 20 >= 0)
+      dot_alpha -= 20;
+    dot.setPosition(convertX(i.first), convertY(i.second));
+    window.draw(dot);
+  }
 }
 
 
