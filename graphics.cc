@@ -228,6 +228,7 @@ void Graphics::pollGameEvents() {
         view = defaultView;
         delete m;
         m = new Map("maps/" + maps[currentMapI].getString());
+        dot_list.clear();
       }
       if(event.key.code == sf::Keyboard::D) {
         std::cout << "End: " << m->isEnd() << " Win: " << m->isWin() << std::endl;

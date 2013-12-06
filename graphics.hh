@@ -238,6 +238,7 @@ class Graphics {
             for(size_t i = 0;i < maps.size();++i)
               if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y)){
                 m = new Map("maps/" + maps[i].getString());
+                dot_list.clear();
                 phase = gamePhase::Game;
                 currentMapI = i;
                 break;
