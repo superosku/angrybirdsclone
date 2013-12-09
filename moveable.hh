@@ -23,7 +23,7 @@ struct bodyData {
 };
 
 //Abstract base class. Provides API to get coordinates of objects.
-class MoveableObject 
+class MoveableObject
 {
   public:
     enum Type {
@@ -32,7 +32,7 @@ class MoveableObject
       TangentBird = 102,
       BombBird = 103,
       GravityBird = 104,
-      
+
       Brick = 200,
       TNT = 201,
       Glass = 202,
@@ -44,11 +44,12 @@ class MoveableObject
 
       BlastBullet_t = 800,
       Gear_t = 801,
+      GravityCircle_t = 802,
       Else = 900,
       Smoke_t = 901
     };
     typedef float mass_t;
-    
+
     MoveableObject(b2World* world, float x = 0.0f, float y= 0.0f, float w = 1.0f, float h = 1.0f, MoveableObject::Type type = MoveableObject::Type::Else, float energy= 100.0f, float angle = 0, float t = 180+std::rand()%20*15, bool dynamic = true): timer(t), w(w), h(h)
     {
       this->type = type;
@@ -78,9 +79,9 @@ class MoveableObject
     virtual const std::list<std::pair<float, float>> getPointList() const {
       return point_list;
     }
-    
+
     virtual bool action(Map*){return(true);}
-    
+
     //Ro3
     MoveableObject& operator=(const MoveableObject&) = delete;
     MoveableObject(const MoveableObject&) = delete;
@@ -99,7 +100,7 @@ class MoveableObject
     float getY() const {
       return body->GetPosition().y;
     }
-    float getAngle() const { 
+    float getAngle() const {
       return body->GetAngle();
     }
     virtual float getH() const {
@@ -110,6 +111,10 @@ class MoveableObject
     }
     mass_t getMass() const {
       return body->GetMass();
+    }
+    void setRadius(float r){
+      w = r;
+      h = r;
     }
     b2Body* getBody() const {
       return body;

@@ -97,6 +97,19 @@ void Graphics::drawMoveableObjects() {
        case(MoveableObject::Type::BasicEnemy):
          drawCircle(textures[type],i);
          break;
+       case(MoveableObject::Type::GravityCircle_t):
+       {
+         sf::CircleShape shape(convertDistance(i->getW()));
+         shape.setOrigin(convertDistance(i->getW()), convertDistance(i->getH()));
+         shape.setFillColor(sf::Color::Transparent);
+         i->setRadius(i->getW()+2/i->getW());
+         shape.setOutlineColor(sf::Color(20*i->getW(), 20*i->getW(), 20*i->getW()));
+         shape.setOutlineThickness(1);
+         shape.setPosition(convertX(i->getX()),convertY(i->getY()));
+         shape.setRotation(i->getAngle() * -57.295);
+         window.draw(shape);
+         break;
+       }
        case(MoveableObject::Type::Gear_t):
        case(MoveableObject::Type::Smoke_t):
        case(MoveableObject::Type::Brick):
@@ -130,7 +143,7 @@ void Graphics::drawMoveableObjects() {
          break;
     }
 
-    
+
   /*//Draw energy of an object (for debugging purposes)
   bodyData* data =static_cast<bodyData*>(i->getBody()->GetUserData());
   if(data->hasEnergy)

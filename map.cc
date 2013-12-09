@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <algorithm> 
+#include <algorithm>
 #include <map>
 #include <random>
 #include <list>
@@ -68,8 +68,8 @@ void Map::Step()
     if((*i)->type == MoveableObject::Type::BasicEnemy)
       ++enemiesLeft;
     bodyData* data =static_cast<bodyData*>((*i)->body->GetUserData());
-    if(data && ( (data->hasEnergy && data->energy <= 0 ) ||  ( data->timerEnabled && (*i)->timer == 0))){
-      //(*i)->getBody()->SetActive(false);
+    if(((data &&  (data->hasEnergy && data->energy <= 0 )) ||  ( data->timerEnabled && (*i)->timer == 0)) || ((*i)->type == MoveableObject::Type::GravityCircle_t && (*i)->getW() > 10)){
+      // (*i)->getBody()->SetActive(false);
       (*i)->destroy(this);
       killCurrentBird(*i);
       delete *i;

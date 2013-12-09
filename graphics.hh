@@ -58,6 +58,7 @@ class Graphics {
     size_t currentMapI = 0;
     
     std::list<std::pair<float, float>> dot_list;
+    std::list<std::pair<float, float>> circle_list;
     int dot_counter = 0;
 
     enum gamePhase
