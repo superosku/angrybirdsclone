@@ -81,9 +81,12 @@ void Map::Step()
       --(*i)->timer;
     ++i;
   }
-  for (auto i : objectsQueue)
+  for(auto i =  objectsQueue.begin();i != objectsQueue.begin()+std::min((size_t)5,objectsQueue.size());++i)
+   objects.push_back(*i);
+  objectsQueue.erase(objectsQueue.begin(), objectsQueue.begin() +std::min((size_t)5,objectsQueue.size()));
+ /*  for (auto i : objectsQueue)
     objects.push_back(i);
-  objectsQueue.clear();
+  objectsQueue.clear();*/
 }
 
 void Map::PreSolve(b2Contact* contact, const b2Manifold*)
@@ -148,7 +151,6 @@ MoveableObject::Type Map::getNextBirdType() const {
 
 void Map::ShootBird(float x, float y)
 {
-  //BasicBird * bird = new BasicBird(m_world, catapult_x, catapult_y);
   if (birds.empty())
   {
     std::cout << "No birds left..." << std::endl;
@@ -171,7 +173,6 @@ void Map::removeObject(MoveableObject* o)
 {
   auto erase_iter = std::remove(objects.begin(),objects.end(),o);
   objects.erase(erase_iter);
-  //delete o;
 }
 
 void Map::loadMap(std::string filepath)

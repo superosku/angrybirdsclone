@@ -32,6 +32,7 @@ class Graphics {
     sf::Font font;
 
     sf::CircleShape catapult;
+    //All needed textures are loaded to this map
     std::map<size_t,std::vector<sf::Texture*>> textures;
     sf::ContextSettings settings;
     sf::View defaultView = window.getDefaultView();
@@ -53,12 +54,11 @@ class Graphics {
     int catapult_x, catapult_y;
     // Mouse pos. needed for cannon
     size_t shoot_aiming;
-    //std::string currentMapPath = "maps/basic_map.csv";
-    std::vector<sf::Text> maps; // = readDir("maps");
+    std::vector<sf::Text> maps;
     size_t currentMapI = 0;
     
+    //List needed for drawing the dots to projectory of the bird
     std::list<std::pair<float, float>> dot_list;
-    std::list<std::pair<float, float>> circle_list;
     int dot_counter = 0;
 
     enum gamePhase
@@ -89,42 +89,19 @@ class Graphics {
         delete m;
     }
     Graphics();
-    void drawMoveableObject(MoveableObject *i);
+
+    //These methods are used to draw objects
     void drawMoveableObjects();
-    void pollGameEvents();
     void drawUnmoveable();
     void drawCircle(std::vector<sf::Texture*>, MoveableObject*);
     void drawSquare(std::vector<sf::Texture*>, MoveableObject*);
 
-    void saveHighScore(std::string mapName)
-    {
-      std::ifstream input(mapName);
-      std::string tmpStr;
-      std::vector<std::string> v;
-      std::getline(input,tmpStr);
+    //Method to poll all events during the gameplay
+    void pollGameEvents();
 
-      if(std::atoi(tmpStr.c_str()) > m->getScore())
-        v.push_back(tmpStr);
-      else
-      {
-        std::ostringstream ss;
-        ss << m->getScore();
-        v.push_back(ss.str());
-      }
 
-      while(std::getline(input,tmpStr))
-      {
-        v.push_back(tmpStr);
-      }
-      input.close();
-
-      std::ofstream output(mapName);
-      for(auto i: v)
-       output << i << std::endl;
-
-      output.close();
-
-    }
+    //Saves the highscore to the first row of the map
+    void saveHighScore(std::string mapName);
 
     void run() {
       //Test for directory listing
@@ -172,30 +149,6 @@ class Graphics {
      window.draw(backgr);
      window.draw(backg);
 
-     //buttons
-     /*
-     sf::Vector2f fpos(center.x-90.0f,60.0f);
-     sf::Vector2f bsize(180.0f,80.0f);
-     sf::Vector2f inc(0.0f,90.0f);
-
-     for (size_t i = 0; i < 4; i++)
-     {
-       sf::RectangleShape tmp(bsize);
-       tmp.setPosition(fpos + (float)i*inc);
-       if ((i == 1 && currentMapI == 0) || (i == 2 && currentMapI == (maps.size()-1)))
-        tmp.setFillColor(sf::Color(0,44,5));
-       else
-        tmp.setFillColor(sf::Color(0,104,55));
-       window.draw(tmp);
-       std::ostringstream ss;
-       ss << menuTitle[i];
-       sf::Text t(ss.str(),font);
-       t.setPosition(tmp.getPosition()+tmp.getSize()/2.0f-sf::Vector2f(t.getGlobalBounds().width,t.getGlobalBounds().height)/2.0f);
-       window.draw(t);
-     }*/
-
-
-     //window.setView(defaultView);
      pollMenuEvents();
      std::ostringstream ss;
      for(size_t i = 0;i < maps.size();++i){
@@ -212,73 +165,14 @@ class Graphics {
        }
        window.draw(maps[i]);
      }
-      /* ss << (i.getString() == maps[currentMapI].getString()? " * ": "   ") << std::string(i.getString()) << std::endl;
-     sf::Text t(ss.str(),font);*/
-
-     //t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
     }
 
-    void pollMenuEvents() {
-      sf::Event event;
-      while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-          window.close();
-        }
-        if(event.type == sf::Event::Resized)
-        {
-          view.setSize(event.size.width, event.size.height);
-          defaultView=view;
-        }
-        /*if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left){
-          m = new Map(currentMapPath);
-          phase = gamePhase::Game;
-        }*/
-        if(event.type == sf::Event::MouseButtonReleased){
-          if (event.mouseButton.button == sf::Mouse::Left){}
-            sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y));
-            for(size_t i = 0;i < maps.size();++i)
-              if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y)){
-                m = new Map("maps/" + maps[i].getString());
-                dot_list.clear();
-                phase = gamePhase::Game;
-                currentMapI = i;
-                break;
-              }
-        }
-            /*size_t act = -1;
+    //This method polls all events which will affect menu behaviour
+    void pollMenuEvents();
 
-            for (size_t i = 0; i < 4; i++)
-            {
-              sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y),view);
-              if (abs(mouse.x-view.getCenter().x) < 90 && abs(mouse.y-90.0f*i-105.0f) < 40)
-                act = i;
-              //std::cout << mouse.x << " " << mouse.y << " " << abs(mouse.x-view.getCenter().x) << " " << abs(mouse.y-90.0f*i-105.0f) << std::endl;
-            }
-            switch(act)
-            {
-              case(menuAction::Play):
-                std::cout << "play" << std::endl;
-
-                break;
-              case(menuAction::Previous):
-                std::cout << "prev" << std::endl;
-                if (currentMapI > 0)
-                  currentMapI--;
-                break;
-              case(menuAction::Next):
-                std::cout << "next" << std::endl;
-                if (currentMapI < (maps.size()-1))
-                  currentMapI++;
-                break;
-              case(menuAction::Quit):
-                std::cout << "quit" << std::endl;
-                window.close();
-                break;
-            }*/
-          }
-        }
-
-    void runGame(){
+    //This method handles running the actual game
+    void runGame()
+    {
         //pollGameEvents();
         window.setView(view);
         m->Step(); // Advance simulation
@@ -294,8 +188,6 @@ class Graphics {
         t.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
         window.draw(t);
         pollGameEvents();
-        //if(m && m->isEnd())
-          //phase= gamePhase::Menu;
     }
 
     int convertX(float x) const {

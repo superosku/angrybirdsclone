@@ -373,7 +373,7 @@ void Graphics::drawUnmoveable() {
 
   // Handling the dots
   MoveableObject* b = m->getCurrentBird();
-  if (dot_counter%5 == 0 && b != nullptr && dot_list.size() < 15) {
+  if (dot_counter%5 == 0 && b != nullptr && dot_list.size() < 15 && b->getType() != MoveableObject::BlastBullet_t) {
     dot_list.push_back(std::pair<float,float>(b->getX(), b->getY()));
   }
   dot_counter += 1;
@@ -407,5 +407,61 @@ std::vector<std::string> Graphics::readDir(std::string dirToRead){
   }
   std::sort(dirlist.begin(),dirlist.end());
   return dirlist;
+}
+
+
+void Graphics::saveHighScore(std::string mapName)
+{
+  std::ifstream input(mapName);
+  std::string tmpStr;
+  std::vector<std::string> v;
+  std::getline(input,tmpStr);
+
+  if(std::atoi(tmpStr.c_str()) > m->getScore())
+    v.push_back(tmpStr);
+  else
+  {
+    std::ostringstream ss;
+    ss << m->getScore();
+    v.push_back(ss.str());
+  }
+
+  while(std::getline(input,tmpStr))
+  {
+    v.push_back(tmpStr);
+  }
+  input.close();
+
+  std::ofstream output(mapName);
+  for(auto i: v)
+    output << i << std::endl;
+  output.close();
+}
+
+void Graphics::pollMenuEvents() {
+  sf::Event event;
+  while (window.pollEvent(event))
+  {
+    if (event.type == sf::Event::Closed)
+      window.close();
+    if(event.type == sf::Event::Resized)
+    {
+      view.setSize(event.size.width, event.size.height);
+      defaultView=view;
+    }
+    if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    {
+      sf::Vector2f mouse =window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x,event.mouseButton.y));
+      for(size_t i = 0;i < maps.size();++i)
+        if(maps[i].getGlobalBounds().contains(mouse.x,mouse.y))
+        {
+          m = new Map("maps/" + maps[i].getString());
+          dot_list.clear();
+          phase = gamePhase::Game;
+          currentMapI = i;
+          break;
+        }
+    }
+  }
 }
 
