@@ -179,7 +179,7 @@ class GravityBird : public Bird
     //Reverses gravity for all objects within 10 meters radius
     for ( b2Body* b = body->GetWorld()->GetBodyList(); b; b = b->GetNext()){
       bodyData* data =static_cast<bodyData*>(b->GetUserData());
-      if(b2Distance(body->GetPosition(), b->GetPosition()) < 10 && b != body && data && data->object->getType() != MoveableObject::Type::BasicEnemy){
+      if(b2Distance(body->GetPosition(), b->GetPosition()) < 10 && b != body && data && data->object->getType() != MoveableObject::Type::BasicEnemy && b->IsActive()){
         std::cout << data->object->getType() << std::endl;
         b->SetGravityScale(-1*(b->GetGravityScale()));
         b->SetAwake(1);
