@@ -81,9 +81,12 @@ void Map::Step()
       --(*i)->timer;
     ++i;
   }
-  for (auto i : objectsQueue)
+  for(auto i =  objectsQueue.begin();i != objectsQueue.begin()+std::min((size_t)5,objectsQueue.size());++i)
+   objects.push_back(*i);
+  objectsQueue.erase(objectsQueue.begin(), objectsQueue.begin() +std::min((size_t)5,objectsQueue.size()));
+ /*  for (auto i : objectsQueue)
     objects.push_back(i);
-  objectsQueue.clear();
+  objectsQueue.clear();*/
 }
 
 void Map::PreSolve(b2Contact* contact, const b2Manifold*)

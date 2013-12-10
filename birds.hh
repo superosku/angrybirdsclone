@@ -48,8 +48,15 @@ class BasicBird : public Bird
   public:
   BasicBird(b2World* world, float x = 0.0f, float y = 0.0f, float d = 1.0f/*TODO: Parametres of MoveableObject()*/) : Bird(/*TODO: Parametres of MoveableObject()*/world , x, y, 0.5f, d)
   {
-    //Initialization (might be empty).
+    //TODO: Initialization (might be empty).
   }
+  /*float getH() {
+    return radius;
+  }
+  float getW() {
+    return radius;
+  }*/
+  // virtual ~BasicBird() {}
 
   // Function to perform special action of bird. Returns boolean value to tell if action was performed correctly.
   virtual bool action(Map*)
@@ -138,6 +145,9 @@ class BombBird : public Bird
       m->addObject(tmp);
     }
     m->setCurrentBird(tmp);
+    //m->removeObject(this);
+    //delete this;
+    //bodyData* bData =static_cast<bodyData*>(body->GetUserData());
     timer = 0;
 
   return(true);
@@ -179,7 +189,7 @@ class GravityBird : public Bird
     for ( b2Body* b = body->GetWorld()->GetBodyList(); b; b = b->GetNext()){
       bodyData* data =static_cast<bodyData*>(b->GetUserData());
       if(b2Distance(body->GetPosition(), b->GetPosition()) < 10 && b != body && data && data->object->getType() != MoveableObject::Type::BasicEnemy && b->IsActive()){
-        //std::cout << data->object->getType() << std::endl;
+        std::cout << data->object->getType() << std::endl;
         b->SetGravityScale(-1*(b->GetGravityScale()));
         b->SetAwake(1);
       }

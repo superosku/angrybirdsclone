@@ -206,6 +206,8 @@ void Graphics::pollGameEvents() {
   sf::Event event;
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
+      if(m->isWin())
+        saveHighScore("maps/" + maps[currentMapI].getString());
       window.close();
     }
     if(event.type == sf::Event::Resized)
@@ -216,6 +218,11 @@ void Graphics::pollGameEvents() {
     if(event.type == sf::Event::KeyPressed){
       //ESC to menu
       if(event.key.code == sf::Keyboard::Escape){
+        //Reset zoom variables (might be != 0 if eg. user pressed escape during zooming)
+        z=0;
+        zoomDelta = 0;
+        xDelta = 0;
+        yDelta = 0;
         //saving the highscore
         if(m->isWin())
           saveHighScore("maps/" + maps[currentMapI].getString());
@@ -239,6 +246,13 @@ void Graphics::pollGameEvents() {
       //R & F5 to reload map
       if(event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::F5) {
         view = defaultView;
+	//Reset zoom variables (might be != 0 if eg. user pressed escape during zooming)
+        z=0;
+        zoomDelta = 0;
+        xDelta = 0;
+        yDelta = 0;
+        if(m->isWin())
+          saveHighScore("maps/" + maps[currentMapI].getString());
         delete m;
         m = new Map("maps/" + maps[currentMapI].getString());
         dot_list.clear();
