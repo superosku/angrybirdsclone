@@ -125,11 +125,6 @@ class Graphics {
     }
 
     void runMenu(){
-     //Reset zoom variables (might be != 0 if eg. user pressed escape during zooming)
-     z=0;
-     zoomDelta = 0;
-     xDelta = 0;
-     yDelta = 0;
 
      view=defaultView;
      window.setView(view);
