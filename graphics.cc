@@ -13,7 +13,7 @@
 #include "birds.hh"
 #include "graphics.hh"
 
-Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Angry birds clone", sf::Style::Default/*, settings*/) {
+Graphics::Graphics() : window(sf::VideoMode(WINDOW_W, WINDOW_H), "Happy Teekkari", sf::Style::Default/*, settings*/) {
   //m = new Map(currentMapPath);
   window.setFramerateLimit(60);
   view.reset(sf::FloatRect(0, 0, WINDOW_W, WINDOW_H));
